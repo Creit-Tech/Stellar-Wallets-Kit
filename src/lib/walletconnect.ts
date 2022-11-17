@@ -72,15 +72,16 @@ export const connectWalletConnect = async (params: {
           reject(error);
         });
     });
-  } catch (e: any) {
+  } catch (e: unknown) {
     QRCodeModal.close();
-    throw new Error(e);
+    console.error(e);
+    throw new Error('There was an error when trying to connect');
   }
 };
 
 export const parseWalletConnectSession = (session: SessionTypes.Struct): IParsedWalletConnectSession => {
   const accounts = session.namespaces.stellar.accounts
-    .map(account => ({
+    .map((account: string) => ({
       network: account.split(':')[1] as 'pubnet' | 'tesnet',
       publicKey: account.split(':')[2],
     }));
