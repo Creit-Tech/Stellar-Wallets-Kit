@@ -1,23 +1,25 @@
 import albedo, {
   PublicKeyIntentResult,
-  TxIntentResult
+  TxIntentResult,
 } from '@albedo-link/intent';
 
 export const albedoGetPublicKey = async (): Promise<PublicKeyIntentResult> => {
   return albedo.publicKey({});
 };
 
-export const albedoSignTransaction = async (params: IAlbedoSignParams): Promise<TxIntentResult> => {
+export const albedoSignTransaction = async (
+  params: IAlbedoSignParams
+): Promise<TxIntentResult> => {
   return albedo.tx({
     xdr: params.xdr,
     pubkey: params.pubKey,
-    network: params.network
+    network: params.network,
   });
 };
 
 export enum AlbedoNetwork {
   PUBLIC = 'public',
-  TESTNET = 'testnet'
+  TESTNET = 'testnet',
 }
 
 export interface IAlbedoSignParams {

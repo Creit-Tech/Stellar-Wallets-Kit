@@ -1,11 +1,9 @@
-import {
-  ISignClient
-} from '@walletconnect/types/dist/types/sign-client/client';
+import { ISignClient } from '@walletconnect/types/dist/types/sign-client/client';
 
 import {
   albedoGetPublicKey,
   AlbedoNetwork,
-  albedoSignTransaction
+  albedoSignTransaction,
 } from './albedo';
 import { freighterGetPublicKey, freighterSignTransaction } from './freighter';
 import { rabetGetPublicKey, RabetNetwork, rabetSignTransaction } from './rabet';
@@ -16,7 +14,7 @@ import {
   makeWalletConnectRequest,
   parseWalletConnectSession,
   WalletConnectAllowedMethods,
-  WalletConnectTargetChain
+  WalletConnectTargetChain,
 } from './walletconnect';
 import { xBullGetPublicKey, xBullSignTransaction } from './xbull';
 
@@ -30,8 +28,8 @@ export enum WalletType {
 
 export enum WalletNetwork {
   PUBLIC = 'Public Global Stellar Network ; September 2015',
-  FUTURENET = "Test SDF Future Network ; October 2022",
-  TESTNET = 'Test SDF Network ; September 2015'
+  FUTURENET = 'Test SDF Future Network ; October 2022',
+  TESTNET = 'Test SDF Network ; September 2015',
 }
 
 export interface IStellarWalletsKitSignParams {
@@ -51,7 +49,7 @@ export interface IConnectWalletConnectParams {
 }
 
 interface ISignClientExtended extends ISignClient {
-  on: (event: string, cb: (data: { topic: string }) => void) => void
+  on: (event: string, cb: (data: { topic: string }) => void) => void;
 }
 
 export class StellarWalletsKit {
@@ -92,12 +90,10 @@ export class StellarWalletsKit {
         return freighterGetPublicKey();
 
       case WalletType.ALBEDO:
-        return albedoGetPublicKey()
-          .then(response => response.pubkey);
+        return albedoGetPublicKey().then((response) => response.pubkey);
 
       case WalletType.RABET:
-        return rabetGetPublicKey()
-          .then(response => response.publicKey);
+        return rabetGetPublicKey().then((response) => response.publicKey);
 
       case WalletType.WALLET_CONNECT:
         return this.getWalletConnectPublicKey();
@@ -107,7 +103,9 @@ export class StellarWalletsKit {
     }
   }
 
-  public async sign(params: IStellarWalletsKitSignParams): Promise<{ signedXDR: string }> {
+  public async sign(
+    params: IStellarWalletsKitSignParams
+  ): Promise<{ signedXDR: string }> {
     if (!this.selectedWallet) {
       throw new Error('Please set the wallet type first');
     }
@@ -117,7 +115,7 @@ export class StellarWalletsKit {
         return xBullSignTransaction({
           xdr: params.xdr,
           publicKey: params.publicKey,
-          networkPassphrase: params.network
+          networkPassphrase: params.network,
         });
 
       case WalletType.FREIGHTER:
@@ -125,27 +123,26 @@ export class StellarWalletsKit {
           xdr: params.xdr,
           networkPassphrase: params.network || this.network,
           accountToSign: params.publicKey,
-        })
-          .then(response => ({ signedXDR: response }));
+        }).then((response) => ({ signedXDR: response }));
 
       case WalletType.ALBEDO:
         return albedoSignTransaction({
           xdr: params.xdr,
           pubKey: params.publicKey,
-          network: this.network === WalletNetwork.PUBLIC
-            ? AlbedoNetwork.PUBLIC
-            : AlbedoNetwork.TESTNET,
-        })
-          .then(response => ({ signedXDR: response.xdr }));
+          network:
+            this.network === WalletNetwork.PUBLIC
+              ? AlbedoNetwork.PUBLIC
+              : AlbedoNetwork.TESTNET,
+        }).then((response) => ({ signedXDR: response.xdr }));
 
       case WalletType.RABET:
         return rabetSignTransaction({
           xdr: params.xdr,
-          network: this.network === WalletNetwork.PUBLIC
-            ? RabetNetwork.PUBLIC
-            : RabetNetwork.TESTNET,
-        })
-          .then(response => ({ signedXDR: response.xdr }));
+          network:
+            this.network === WalletNetwork.PUBLIC
+              ? RabetNetwork.PUBLIC
+              : RabetNetwork.TESTNET,
+        }).then((response) => ({ signedXDR: response.xdr }));
 
       case WalletType.WALLET_CONNECT:
         return this.signWalletConnectTransaction({
@@ -155,10 +152,11 @@ export class StellarWalletsKit {
         });
 
       default:
-        throw new Error(`Something went wrong, wallet type ${this.selectedWallet} not handled`);
+        throw new Error(
+          `Something went wrong, wallet type ${this.selectedWallet} not handled`
+        );
     }
   }
-
 
   // ---- WalletConnect methods
   private WCSignClient?: ISignClientExtended;
@@ -167,7 +165,7 @@ export class StellarWalletsKit {
   /**
    * Allows manually setting the current active session to be used in the kit when doing WalletConnect requests
    *
-   * @param sessionId The session ID is a placeholder for the session "topic", term used in WallectConnect
+   * @param sessionId The session ID is a placeholder for the session "topic", term used in WalletConnect
    * */
   public setSession(sessionId: string) {
     this.WCActiveSession = sessionId;
@@ -194,10 +192,14 @@ export class StellarWalletsKit {
       throw new Error('WalletConnect is already running');
     }
 
-    this.WCSignClient = await createWalletConnectClient(params) as ISignClientExtended;
+    this.WCSignClient = (await createWalletConnectClient(
+      params
+    )) as ISignClientExtended;
   }
 
-  public async connectWalletConnect(params?: IConnectWalletConnectParams): Promise<IParsedWalletConnectSession> {
+  public async connectWalletConnect(
+    params?: IConnectWalletConnectParams
+  ): Promise<IParsedWalletConnectSession> {
     if (!this.WCSignClient) {
       throw new Error('WalletConnect is not running yet');
     }
@@ -208,12 +210,12 @@ export class StellarWalletsKit {
       chains: params?.chains || [
         this.network === WalletNetwork.PUBLIC
           ? WalletConnectTargetChain.PUBLIC
-          : WalletConnectTargetChain.TESTNET
+          : WalletConnectTargetChain.TESTNET,
       ],
-      methods: params?.methods
+      methods: params?.methods,
     })
       .then(parseWalletConnectSession)
-      .then(session => {
+      .then((session) => {
         this.WCActiveSession = session.id;
         return session;
       });
@@ -233,10 +235,14 @@ export class StellarWalletsKit {
     }
 
     const activeSessions = await this.getSessions();
-    const targetSession = activeSessions.find(session => session.id === this.WCActiveSession);
+    const targetSession = activeSessions.find(
+      (session) => session.id === this.WCActiveSession
+    );
 
     if (!targetSession) {
-      throw new Error('There is no active session handled by Stellar Wallets Kit, please create a new session or connect with an already existing session');
+      throw new Error(
+        'There is no active session handled by Stellar Wallets Kit, please create a new session or connect with an already existing session'
+      );
     }
 
     return targetSession.accounts[0].publicKey;
@@ -252,19 +258,24 @@ export class StellarWalletsKit {
     }
 
     const activeSessions = await this.getSessions();
-    const targetSession = activeSessions.find(session => session.id === this.WCActiveSession);
+    const targetSession = activeSessions.find(
+      (session) => session.id === this.WCActiveSession
+    );
 
     if (!targetSession) {
-      throw new Error('There is no active session handled by Stellar Wallets Kit, please create a new session or set an existing session');
+      throw new Error(
+        'There is no active session handled by Stellar Wallets Kit, please create a new session or set an existing session'
+      );
     }
 
     return makeWalletConnectRequest({
       topic: targetSession.id,
       xdr: params.xdr,
       client: this.WCSignClient,
-      chain: params.chain || this.network === WalletNetwork.PUBLIC
-        ? WalletConnectTargetChain.PUBLIC
-        : WalletConnectTargetChain.TESTNET,
+      chain:
+        params.chain || this.network === WalletNetwork.PUBLIC
+          ? WalletConnectTargetChain.PUBLIC
+          : WalletConnectTargetChain.TESTNET,
       method: params.method,
     });
   }

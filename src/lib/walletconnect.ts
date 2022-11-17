@@ -1,11 +1,7 @@
 import QRCodeModal from '@walletconnect/qrcode-modal';
 import { SignClient } from '@walletconnect/sign-client';
-import {
-  ISignClient
-} from '@walletconnect/types/dist/types/sign-client/client';
-import {
-  SessionTypes
-} from '@walletconnect/types/dist/types/sign-client/session';
+import { ISignClient } from '@walletconnect/types/dist/types/sign-client/client';
+import { SessionTypes } from '@walletconnect/types/dist/types/sign-client/session';
 
 export enum WalletConnectTargetChain {
   PUBLIC = 'stellar:pubnet',
@@ -33,7 +29,7 @@ export const createWalletConnectClient = async (params: {
       icons: params.icons,
     },
   });
-}
+};
 
 export const connectWalletConnect = async (params: {
   client: ISignClient;
@@ -57,17 +53,17 @@ export const connectWalletConnect = async (params: {
       // Open QRCode modal if a URI was returned (i.e. we're not connecting an existing pairing).
       if (uri) {
         QRCodeModal.open(uri, () => {
-          reject('QR Code Modal closed')
+          reject('QR Code Modal closed');
         });
       }
 
       // Await session approval from the wallet.
       approval()
-        .then(session => {
+        .then((session) => {
           QRCodeModal.close();
           resolve(session);
         })
-        .catch(error => {
+        .catch((error) => {
           QRCodeModal.close();
           reject(error);
         });
@@ -79,12 +75,15 @@ export const connectWalletConnect = async (params: {
   }
 };
 
-export const parseWalletConnectSession = (session: SessionTypes.Struct): IParsedWalletConnectSession => {
-  const accounts = session.namespaces.stellar.accounts
-    .map((account: string) => ({
-      network: account.split(':')[1] as 'pubnet' | 'tesnet',
+export const parseWalletConnectSession = (
+  session: SessionTypes.Struct
+): IParsedWalletConnectSession => {
+  const accounts = session.namespaces.stellar.accounts.map(
+    (account: string) => ({
+      network: account.split(':')[1] as 'pubnet' | 'testnet',
       publicKey: account.split(':')[2],
-    }));
+    })
+  );
 
   return {
     id: session.topic,
@@ -92,20 +91,22 @@ export const parseWalletConnectSession = (session: SessionTypes.Struct): IParsed
     description: session.peer.metadata.description,
     url: session.peer.metadata.url,
     icons: session.peer.metadata.icons[0],
-    accounts
-  }
-}
+    accounts,
+  };
+};
 
-export const makeWalletConnectRequest = (params: IWalletConnectRequestParams): Promise<{ signedXDR: string }> => {
+export const makeWalletConnectRequest = (
+  params: IWalletConnectRequestParams
+): Promise<{ signedXDR: string }> => {
   return params.client.request({
     topic: params.topic,
     chainId: params.chain,
     request: {
       method: params.method || WalletConnectAllowedMethods.SIGN,
-      params: { xdr: params.xdr }
-    }
-  })
-}
+      params: { xdr: params.xdr },
+    },
+  });
+};
 
 export interface IParsedWalletConnectSession {
   // "id" is the topic, we call it "id" to make it easier for those not familiarized with WalletConnect
@@ -115,7 +116,7 @@ export interface IParsedWalletConnectSession {
   url: string;
   icons: string;
   accounts: Array<{
-    network: 'pubnet' | 'tesnet';
+    network: 'pubnet' | 'testnet';
     publicKey: string;
   }>;
 }

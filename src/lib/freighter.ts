@@ -1,7 +1,7 @@
 import {
   getPublicKey,
   isConnected,
-  signTransaction
+  signTransaction,
 } from '@stellar/freighter-api';
 
 export const freighterGetPublicKey = async (): Promise<string> => {
@@ -12,7 +12,9 @@ export const freighterGetPublicKey = async (): Promise<string> => {
   return getPublicKey();
 };
 
-export const freighterSignTransaction = async (params: IFreighterSignParams): Promise<string> => {
+export const freighterSignTransaction = async (
+  params: IFreighterSignParams
+): Promise<string> => {
   if (!isConnected()) {
     throw new Error(`Freighter is not connected`);
   }

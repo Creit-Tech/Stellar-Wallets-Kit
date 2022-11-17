@@ -22,7 +22,7 @@ Install the latest version available in our repo, we use Github instead of NPM b
 
 ## The StellarWalletsKit class
 
-The first step will be creating a new instance from the main class, you should only create one instance in order to avoid unexpected behaviours.
+The first step will be creating a new instance from the main class, you should only create one instance in order to avoid unexpected results.
 
 ```typescript
 import { StellarWalletsKit, WalletNetwork, WalletType } from 'stellar-wallets-kit';
