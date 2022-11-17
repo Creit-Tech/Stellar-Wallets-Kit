@@ -1,6 +1,7 @@
+.DS_Store
 .idea/*
 .nyc_output
-build
+build/docs
 node_modules
 test
 src/**.js
