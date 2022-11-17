@@ -1,6 +1,6 @@
 {
   "name": "stellar-wallets-kit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A kit to handle all Stellar Wallets at once",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
