@@ -5,8 +5,17 @@ import {
   AlbedoNetwork,
   albedoSignTransaction,
 } from './albedo';
-import { freighterGetPublicKey, freighterSignTransaction } from './freighter';
-import { rabetGetPublicKey, RabetNetwork, rabetSignTransaction } from './rabet';
+import {
+  freighterGetPublicKey,
+  freighterSignTransaction,
+  isFreighterInstalled,
+} from './freighter';
+import {
+  isRabetAvailable,
+  rabetGetPublicKey,
+  RabetNetwork,
+  rabetSignTransaction,
+} from './rabet';
 import {
   connectWalletConnect,
   createWalletConnectClient,
@@ -48,6 +57,12 @@ export interface IConnectWalletConnectParams {
   pairingTopic?: string;
 }
 
+export interface ISupportedWallet {
+  name: string;
+  type: WalletType;
+  isAvailable: boolean;
+}
+
 interface ISignClientExtended extends ISignClient {
   on: (event: string, cb: (data: { topic: string }) => void) => void;
 }
@@ -59,6 +74,32 @@ export class StellarWalletsKit {
   constructor(params: { selectedWallet: WalletType; network: WalletNetwork }) {
     this.setWallet(params.selectedWallet);
     this.setNetwork(params.network);
+  }
+
+  /**
+   * This method will return an array with all wallets supported by this kit but will let you know those the user have already installed/has access to
+   * There are wallets that are by default available since they either don't need to be installed or have a fallback
+   */
+  getSupportedWallets(): ISupportedWallet[] {
+    return [
+      { name: 'xBull', type: WalletType.XBULL, isAvailable: true },
+      {
+        name: 'WalletConnect',
+        type: WalletType.WALLET_CONNECT,
+        isAvailable: true,
+      },
+      { name: 'Albedo', type: WalletType.ALBEDO, isAvailable: true },
+      {
+        name: 'Freighter',
+        type: WalletType.FREIGHTER,
+        isAvailable: isFreighterInstalled(),
+      },
+      {
+        name: 'Rabet',
+        type: WalletType.RABET,
+        isAvailable: isRabetAvailable(),
+      },
+    ];
   }
 
   public setNetwork(network: WalletNetwork): void {

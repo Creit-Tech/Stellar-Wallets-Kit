@@ -132,6 +132,8 @@ kit.onSessionDeleted((sessionId: string) => {
 });
 ```
 
+And more methods, check the documentation to see all the methods available.
+
 ## License
 ![](https://img.shields.io/badge/License-MIT-lightgrey)
 

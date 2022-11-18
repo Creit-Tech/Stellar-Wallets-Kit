@@ -6,6 +6,8 @@ declare const window: Window &
     };
   };
 
+export const isRabetAvailable = () => !!window.rabet;
+
 export const rabetGetPublicKey = async (): Promise<{ publicKey: string }> => {
   if (!window?.rabet) {
     throw new Error('Rabet is not installed');
