@@ -23,6 +23,11 @@ export interface IConnectWalletConnectParams {
     methods?: WalletConnectAllowedMethods[];
     pairingTopic?: string;
 }
+export interface ISupportedWallet {
+    name: string;
+    type: WalletType;
+    isAvailable: boolean;
+}
 export declare class StellarWalletsKit {
     private selectedWallet;
     private network;
@@ -30,6 +35,11 @@ export declare class StellarWalletsKit {
         selectedWallet: WalletType;
         network: WalletNetwork;
     });
+    /**
+     * This method will return an array with all wallets supported by this kit but will let you know those the user have already installed/has access to
+     * There are wallets that are by default available since they either don't need to be installed or have a fallback
+     */
+    getSupportedWallets(): ISupportedWallet[];
     setNetwork(network: WalletNetwork): void;
     setWallet(type: WalletType): void;
     getPublicKey(): Promise<string>;

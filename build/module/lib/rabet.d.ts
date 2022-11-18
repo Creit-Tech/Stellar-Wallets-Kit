@@ -1,3 +1,4 @@
+export declare const isRabetAvailable: () => boolean;
 export declare const rabetGetPublicKey: () => Promise<{
     publicKey: string;
 }>;
