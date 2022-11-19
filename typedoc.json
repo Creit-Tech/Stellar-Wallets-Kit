@@ -1,0 +1,14 @@
+{
+  "entryPoints": ["src/"],
+  "exclude": ["**/*.spec.ts"],
+  "out": "build/docs",
+  "name": "Stellar Wallets Kit",
+  "includeVersion": true,
+  "htmlLang": "en",
+  "cleanOutputDir": true,
+  "navigationLinks": {
+    "Github": "https://github.com/Creit-Tech/Stellar-Wallets-Kit",
+    "Creit Tech": "https://creit.tech"
+  },
+  "visibilityFilters": {}
+}

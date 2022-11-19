@@ -1,5 +1,3 @@
-# Stellar Wallets Kit
-
 A kit to handle all Stellar Wallets at once with a simple API and without caring about individual configurations for each one of them. This library cares only about the connection and interaction with the wallets, allowing developers handling the UI/UX in the way they want.
 
 ## Documentation
@@ -122,7 +120,7 @@ const sessions = await kit.getSessions();
 
 ### Set the WalletConnect session ID
 ```typescript
-await kit.setSession(WalletNetwork.TESTNET);
+await kit.setSession(sessionId);
 ```
 
 ### Listen to WalletConnect sessions being removed
