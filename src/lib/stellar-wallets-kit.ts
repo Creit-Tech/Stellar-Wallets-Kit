@@ -262,6 +262,20 @@ export class StellarWalletsKit {
       });
   }
 
+  public async closeSession(sessionId: string, reason?: string): Promise<void> {
+    if (!this.WCSignClient) {
+      throw new Error('WalletConnect is not running yet');
+    }
+
+    await this.WCSignClient.disconnect({
+      topic: sessionId,
+      reason: {
+        message: reason || 'Session closed',
+        code: -1
+      }
+    });
+  }
+
   public async getSessions(): Promise<IParsedWalletConnectSession[]> {
     if (!this.WCSignClient) {
       throw new Error('WalletConnect is not running yet');
