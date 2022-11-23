@@ -63,6 +63,7 @@ export declare class StellarWalletsKit {
         icons: string[];
     }): Promise<void>;
     connectWalletConnect(params?: IConnectWalletConnectParams): Promise<IParsedWalletConnectSession>;
+    closeSession(sessionId: string, reason?: string): Promise<void>;
     getSessions(): Promise<IParsedWalletConnectSession[]>;
     private getWalletConnectPublicKey;
     private signWalletConnectTransaction;
