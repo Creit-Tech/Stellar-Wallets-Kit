@@ -39,7 +39,7 @@ export declare class StellarWalletsKit {
      * This method will return an array with all wallets supported by this kit but will let you know those the user have already installed/has access to
      * There are wallets that are by default available since they either don't need to be installed or have a fallback
      */
-    getSupportedWallets(): ISupportedWallet[];
+    static getSupportedWallets(): ISupportedWallet[];
     setNetwork(network: WalletNetwork): void;
     setWallet(type: WalletType): void;
     getPublicKey(): Promise<string>;
