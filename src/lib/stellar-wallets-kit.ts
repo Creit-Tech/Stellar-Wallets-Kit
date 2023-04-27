@@ -174,7 +174,7 @@ export class StellarWalletsKit {
             this.network === WalletNetwork.PUBLIC
               ? AlbedoNetwork.PUBLIC
               : AlbedoNetwork.TESTNET,
-        }).then((response) => ({ signedXDR: response.xdr }));
+        }).then((response) => ({ signedXDR: response.signed_envelope_xdr }));
 
       case WalletType.RABET:
         return rabetSignTransaction({
