@@ -80,7 +80,7 @@ export class StellarWalletsKit {
    * This method will return an array with all wallets supported by this kit but will let you know those the user have already installed/has access to
    * There are wallets that are by default available since they either don't need to be installed or have a fallback
    */
-  static getSupportedWallets(): ISupportedWallet[] {
+  static async getSupportedWallets(): Promise<ISupportedWallet[]> {
     return [
       { name: 'xBull', type: WalletType.XBULL, isAvailable: true },
       {
@@ -92,7 +92,7 @@ export class StellarWalletsKit {
       {
         name: 'Freighter',
         type: WalletType.FREIGHTER,
-        isAvailable: isFreighterInstalled(),
+        isAvailable: await isFreighterInstalled(),
       },
       {
         name: 'Rabet',

@@ -4,7 +4,7 @@ import {
   signTransaction,
 } from '@stellar/freighter-api';
 
-export const isFreighterInstalled = () => isConnected();
+export const isFreighterInstalled = async () => isConnected();
 
 export const freighterGetPublicKey = async (): Promise<string> => {
   if (!isConnected()) {
