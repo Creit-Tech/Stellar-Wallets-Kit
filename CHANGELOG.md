@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.0.7...v0.0.8) (2023-05-30)
+#### Change
+- Upgrade the packages to support the latest Freighter wallet
+
 ### [0.0.7](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.0.6...v0.0.7) (2023-04-27)
 #### Change
 - Fix XDR returned from Albedo didn't include the signatures
