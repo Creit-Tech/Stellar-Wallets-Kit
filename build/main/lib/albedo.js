@@ -1,25 +1,17 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+import albedo from '@albedo-link/intent';
+export const albedoGetPublicKey = async () => {
+    return albedo.publicKey({});
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AlbedoNetwork = exports.albedoSignTransaction = exports.albedoGetPublicKey = void 0;
-const intent_1 = __importDefault(require("@albedo-link/intent"));
-const albedoGetPublicKey = async () => {
-    return intent_1.default.publicKey({});
-};
-exports.albedoGetPublicKey = albedoGetPublicKey;
-const albedoSignTransaction = async (params) => {
-    return intent_1.default.tx({
+export const albedoSignTransaction = async (params) => {
+    return albedo.tx({
         xdr: params.xdr,
         pubkey: params.pubKey,
         network: params.network,
     });
 };
-exports.albedoSignTransaction = albedoSignTransaction;
-var AlbedoNetwork;
+export var AlbedoNetwork;
 (function (AlbedoNetwork) {
     AlbedoNetwork["PUBLIC"] = "public";
     AlbedoNetwork["TESTNET"] = "testnet";
-})(AlbedoNetwork = exports.AlbedoNetwork || (exports.AlbedoNetwork = {}));
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYWxiZWRvLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL2xpYi9hbGJlZG8udHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7O0FBQUEsaUVBRzZCO0FBRXRCLE1BQU0sa0JBQWtCLEdBQUcsS0FBSyxJQUFvQyxFQUFFO0lBQzNFLE9BQU8sZ0JBQU0sQ0FBQyxTQUFTLENBQUMsRUFBRSxDQUFDLENBQUM7QUFDOUIsQ0FBQyxDQUFDO0FBRlcsUUFBQSxrQkFBa0Isc0JBRTdCO0FBRUssTUFBTSxxQkFBcUIsR0FBRyxLQUFLLEVBQ3hDLE1BQXlCLEVBQ0EsRUFBRTtJQUMzQixPQUFPLGdCQUFNLENBQUMsRUFBRSxDQUFDO1FBQ2YsR0FBRyxFQUFFLE1BQU0sQ0FBQyxHQUFHO1FBQ2YsTUFBTSxFQUFFLE1BQU0sQ0FBQyxNQUFNO1FBQ3JCLE9BQU8sRUFBRSxNQUFNLENBQUMsT0FBTztLQUN4QixDQUFDLENBQUM7QUFDTCxDQUFDLENBQUM7QUFSVyxRQUFBLHFCQUFxQix5QkFRaEM7QUFFRixJQUFZLGFBR1g7QUFIRCxXQUFZLGFBQWE7SUFDdkIsa0NBQWlCLENBQUE7SUFDakIsb0NBQW1CLENBQUE7QUFDckIsQ0FBQyxFQUhXLGFBQWEsR0FBYixxQkFBYSxLQUFiLHFCQUFhLFFBR3hCIn0=
+})(AlbedoNetwork || (AlbedoNetwork = {}));
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYWxiZWRvLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL2xpYi9hbGJlZG8udHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxNQUdOLE1BQU0scUJBQXFCLENBQUM7QUFFN0IsTUFBTSxDQUFDLE1BQU0sa0JBQWtCLEdBQUcsS0FBSyxJQUFvQyxFQUFFO0lBQzNFLE9BQU8sTUFBTSxDQUFDLFNBQVMsQ0FBQyxFQUFFLENBQUMsQ0FBQztBQUM5QixDQUFDLENBQUM7QUFFRixNQUFNLENBQUMsTUFBTSxxQkFBcUIsR0FBRyxLQUFLLEVBQ3hDLE1BQXlCLEVBQ0EsRUFBRTtJQUMzQixPQUFPLE1BQU0sQ0FBQyxFQUFFLENBQUM7UUFDZixHQUFHLEVBQUUsTUFBTSxDQUFDLEdBQUc7UUFDZixNQUFNLEVBQUUsTUFBTSxDQUFDLE1BQU07UUFDckIsT0FBTyxFQUFFLE1BQU0sQ0FBQyxPQUFPO0tBQ3hCLENBQUMsQ0FBQztBQUNMLENBQUMsQ0FBQztBQUVGLE1BQU0sQ0FBTixJQUFZLGFBR1g7QUFIRCxXQUFZLGFBQWE7SUFDdkIsa0NBQWlCLENBQUE7SUFDakIsb0NBQW1CLENBQUE7QUFDckIsQ0FBQyxFQUhXLGFBQWEsS0FBYixhQUFhLFFBR3hCIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IGFsYmVkbywge1xuICBQdWJsaWNLZXlJbnRlbnRSZXN1bHQsXG4gIFR4SW50ZW50UmVzdWx0LFxufSBmcm9tICdAYWxiZWRvLWxpbmsvaW50ZW50JztcblxuZXhwb3J0IGNvbnN0IGFsYmVkb0dldFB1YmxpY0tleSA9IGFzeW5jICgpOiBQcm9taXNlPFB1YmxpY0tleUludGVudFJlc3VsdD4gPT4ge1xuICByZXR1cm4gYWxiZWRvLnB1YmxpY0tleSh7fSk7XG59O1xuXG5leHBvcnQgY29uc3QgYWxiZWRvU2lnblRyYW5zYWN0aW9uID0gYXN5bmMgKFxuICBwYXJhbXM6IElBbGJlZG9TaWduUGFyYW1zXG4pOiBQcm9taXNlPFR4SW50ZW50UmVzdWx0PiA9PiB7XG4gIHJldHVybiBhbGJlZG8udHgoe1xuICAgIHhkcjogcGFyYW1zLnhkcixcbiAgICBwdWJrZXk6IHBhcmFtcy5wdWJLZXksXG4gICAgbmV0d29yazogcGFyYW1zLm5ldHdvcmssXG4gIH0pO1xufTtcblxuZXhwb3J0IGVudW0gQWxiZWRvTmV0d29yayB7XG4gIFBVQkxJQyA9ICdwdWJsaWMnLFxuICBURVNUTkVUID0gJ3Rlc3RuZXQnLFxufVxuXG5leHBvcnQgaW50ZXJmYWNlIElBbGJlZG9TaWduUGFyYW1zIHtcbiAgeGRyOiBzdHJpbmc7XG4gIHB1YktleT86IHN0cmluZztcbiAgbmV0d29yazogQWxiZWRvTmV0d29yaztcbn1cbiJdfQ==

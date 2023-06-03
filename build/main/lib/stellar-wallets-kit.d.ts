@@ -27,13 +27,16 @@ export interface ISupportedWallet {
     name: string;
     type: WalletType;
     isAvailable: boolean;
+    icon: string;
 }
 export declare class StellarWalletsKit {
     private selectedWallet;
     private network;
+    private readonly modalElement?;
     constructor(params: {
         selectedWallet: WalletType;
         network: WalletNetwork;
+        injectModalComponent?: boolean;
     });
     /**
      * This method will return an array with all wallets supported by this kit but will let you know those the user have already installed/has access to
@@ -46,6 +49,8 @@ export declare class StellarWalletsKit {
     sign(params: IStellarWalletsKitSignParams): Promise<{
         signedXDR: string;
     }>;
+    openModal(): void;
+    closeModal(): void;
     private WCSignClient?;
     private WCActiveSession?;
     /**
@@ -68,3 +73,4 @@ export declare class StellarWalletsKit {
     private getWalletConnectPublicKey;
     private signWalletConnectTransaction;
 }
+//# sourceMappingURL=stellar-wallets-kit.d.ts.map

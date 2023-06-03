@@ -1,0 +1,1 @@
+{"version":3,"file":"freighter.d.ts","sourceRoot":"","sources":["../../../src/lib/freighter.ts"],"names":[],"mappings":"AAMA,eAAO,MAAM,oBAAoB,wBAA4B,CAAC;AAE9D,eAAO,MAAM,qBAAqB,QAAa,QAAQ,MAAM,CAM5D,CAAC;AAEF,eAAO,MAAM,wBAAwB,WAC3B,oBAAoB,KAC3B,QAAQ,MAAM,CAShB,CAAC;AAEF,MAAM,WAAW,oBAAoB;IACnC,GAAG,EAAE,MAAM,CAAC;IACZ,aAAa,CAAC,EAAE,MAAM,CAAC;IACvB,iBAAiB,EAAE,MAAM,CAAC;CAC3B"}

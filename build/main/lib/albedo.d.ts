@@ -10,3 +10,4 @@ export interface IAlbedoSignParams {
     pubKey?: string;
     network: AlbedoNetwork;
 }
+//# sourceMappingURL=albedo.d.ts.map

@@ -6,3 +6,4 @@ export interface IFreighterSignParams {
     accountToSign?: string;
     networkPassphrase: string;
 }
+//# sourceMappingURL=freighter.d.ts.map

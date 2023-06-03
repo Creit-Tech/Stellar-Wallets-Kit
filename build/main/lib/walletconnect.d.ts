@@ -43,3 +43,4 @@ export interface IWalletConnectRequestParams {
     method?: WalletConnectAllowedMethods;
     chain: WalletConnectTargetChain;
 }
+//# sourceMappingURL=walletconnect.d.ts.map

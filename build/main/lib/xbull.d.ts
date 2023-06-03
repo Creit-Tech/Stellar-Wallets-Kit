@@ -7,3 +7,4 @@ export interface IxBullSignParams {
     publicKey?: string;
     networkPassphrase?: string;
 }
+//# sourceMappingURL=xbull.d.ts.map
