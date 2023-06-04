@@ -5,6 +5,9 @@ export declare class StellarWalletsModal extends LitElement {
     showModal: boolean;
     modalTitle: string;
     notAvailableText: string;
+    modalDialogStyles: {
+        zIndex: number;
+    };
     private availableWallets;
     connectedCallback(): void;
     closeModal(): void;

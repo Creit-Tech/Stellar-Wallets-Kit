@@ -32,11 +32,10 @@ export interface ISupportedWallet {
 export declare class StellarWalletsKit {
     private selectedWallet;
     private network;
-    private readonly modalElement?;
+    private modalElement?;
     constructor(params: {
         selectedWallet: WalletType;
         network: WalletNetwork;
-        injectModalComponent?: boolean;
     });
     /**
      * This method will return an array with all wallets supported by this kit but will let you know those the user have already installed/has access to
@@ -49,8 +48,13 @@ export declare class StellarWalletsKit {
     sign(params: IStellarWalletsKitSignParams): Promise<{
         signedXDR: string;
     }>;
-    openModal(): void;
-    closeModal(): void;
+    openModal(params: {
+        onWalletSelected: (option: ISupportedWallet) => void;
+        onClosed?: (err: Error) => void;
+        modalDialogStyles?: {
+            [name: string]: string | number | undefined | null;
+        };
+    }): void;
     private WCSignClient?;
     private WCActiveSession?;
     /**

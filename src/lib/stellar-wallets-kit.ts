@@ -72,20 +72,14 @@ interface ISignClientExtended extends ISignClient {
 export class StellarWalletsKit {
   private selectedWallet!: WalletType;
   private network!: WalletNetwork;
-  private readonly modalElement?: StellarWalletsModal;
+  private modalElement?: StellarWalletsModal;
 
   constructor(params: {
     selectedWallet: WalletType;
     network: WalletNetwork;
-    injectModalComponent?: boolean;
   }) {
     this.setWallet(params.selectedWallet);
     this.setNetwork(params.network);
-
-    if (params.injectModalComponent) {
-      this.modalElement = document.createElement('stellar-wallets-modal');
-      document.body.appendChild(this.modalElement);
-    }
   }
 
   /**
@@ -225,24 +219,60 @@ export class StellarWalletsKit {
   }
 
   // ---- Modal methods
-  public openModal() {
-    if (!this.modalElement) {
-      throw new Error(
-        `Modal element is not defined. Don't forget setting "injectModalComponent: true" when instantiating the StellarWalletsKit Classe`
-      );
+  public openModal(params: {
+    onWalletSelected: (option: ISupportedWallet) => void;
+    onClosed?: (err: Error) => void;
+    modalDialogStyles?: { [name: string]: string | number | undefined | null; }
+  }) {
+    if (this.modalElement) {
+      throw new Error(`Stellar Wallets Modal is already open`);
     }
 
+    this.modalElement = document.createElement('stellar-wallets-modal') as StellarWalletsModal;
     this.modalElement.setAttribute('showModal', '');
-  }
 
-  public closeModal() {
-    if (!this.modalElement) {
-      throw new Error(
-        `Modal element is not defined. Don't forget setting "injectModalComponent: true" when instantiating the StellarWalletsKit Classe`
-      );
+    if (params.modalDialogStyles) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      this.modalElement.setAttribute('modalDialogStyles', JSON.stringify(params.modalDialogStyles))
     }
 
-    this.modalElement.removeAttribute('showModal');
+    document.body.appendChild(this.modalElement);
+
+    const listener = (event: CustomEvent) => {
+      params.onWalletSelected(event.detail);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      this.modalElement.removeEventListener('wallet-selected', listener, false);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      document.body.removeChild(this.modalElement);
+      this.modalElement = undefined;
+    };
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    this.modalElement.addEventListener('wallet-selected', listener, false);
+
+    const errorListener = (event: CustomEvent) => {
+      if (params.onClosed) {
+        params.onClosed(event.detail);
+      }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      this.modalElement.removeEventListener('wallet-selected', listener, false);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      this.modalElement.removeEventListener('modal-closed', errorListener, false);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      document.body.removeChild(this.modalElement);
+      this.modalElement = undefined;
+    };
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    this.modalElement.addEventListener('modal-closed', errorListener, false);
   }
   // ---- END Modal methods
 

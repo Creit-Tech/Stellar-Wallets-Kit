@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { styleMap } from 'lit/directives/style-map.js';
 import { customElement, property, state } from 'lit/decorators.js';
 
 import {
@@ -35,6 +36,14 @@ export class StellarWalletsModal extends LitElement {
   @property({ type: String, reflect: true })
   notAvailableText = 'Not available';
 
+  @property({
+    converter: {
+      fromAttribute: (value: string) =>
+        (value && { ...JSON.parse(value), zIndex: 990 }),
+    }
+  })
+  modalDialogStyles = { zIndex: 990 };
+
   @state()
   private availableWallets: ISupportedWallet[] = [];
 
@@ -45,6 +54,14 @@ export class StellarWalletsModal extends LitElement {
 
   closeModal() {
     this.showModal = false;
+
+    this.dispatchEvent(
+      new CustomEvent('modal-closed', {
+        detail: new Error('Modal closed'),
+        bubbles: true,
+        composed: true
+      })
+    );
   }
 
   updateAvailableWallets() {
@@ -67,8 +84,11 @@ export class StellarWalletsModal extends LitElement {
   }
 
   override render() {
+    console.log(this.modalDialogStyles)
     return html`
-      <dialog style='z-index: 990' class='dialog-modal' .open=${this.showModal}>
+      <dialog style=${styleMap(this.modalDialogStyles)}
+              class='dialog-modal' .open=${this.showModal}>
+
         <section class='layout'>
           <header class='layout-header'>
             <h2 class='layout-header__modal-title'>
@@ -99,6 +119,7 @@ export class StellarWalletsModal extends LitElement {
             Stellar Wallets Kit by Creit Technologies LLP
           </footer>
         </section>
+
       </dialog>
 
       <div style='position: fixed; z-index: 950'
