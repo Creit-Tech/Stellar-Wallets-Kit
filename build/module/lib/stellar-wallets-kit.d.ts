@@ -27,10 +27,12 @@ export interface ISupportedWallet {
     name: string;
     type: WalletType;
     isAvailable: boolean;
+    icon: string;
 }
 export declare class StellarWalletsKit {
     private selectedWallet;
     private network;
+    private modalElement?;
     constructor(params: {
         selectedWallet: WalletType;
         network: WalletNetwork;
@@ -46,6 +48,16 @@ export declare class StellarWalletsKit {
     sign(params: IStellarWalletsKitSignParams): Promise<{
         signedXDR: string;
     }>;
+    openModal(params: {
+        onWalletSelected: (option: ISupportedWallet) => void;
+        onClosed?: (err: Error) => void;
+        modalDialogStyles?: {
+            [name: string]: string | number | undefined | null;
+        };
+        allowedWallets?: WalletType[];
+        modalTitle?: string;
+        notAvailableText?: string;
+    }): void;
     private WCSignClient?;
     private WCActiveSession?;
     /**
@@ -68,3 +80,4 @@ export declare class StellarWalletsKit {
     private getWalletConnectPublicKey;
     private signWalletConnectTransaction;
 }
+//# sourceMappingURL=stellar-wallets-kit.d.ts.map
