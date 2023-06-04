@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.0.8...v0.1.0) (2023-06-03)
+#### add
+- Add new modal component integrated with the wallet kit
+
 ### [0.0.8](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.0.7...v0.0.8) (2023-05-30)
 #### Change
 - Upgrade the packages to support the latest Freighter wallet

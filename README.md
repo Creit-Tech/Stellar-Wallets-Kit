@@ -34,6 +34,35 @@ const kit = new StellarWalletsKit({
 });
 ```
 
+## Integrated UI modal
+
+The library integrates a UI modal you can show your users after you have started the kit. Once they pick the wallet they want to use you can then use the other methods available. Here is how you can use it:
+```typescript
+await kit.openModal({
+  onWalletSelected: async (option: ISupportedWallet) => {
+    kit.setWallet(option.type);
+    const publicKey = await kit.getPublicKey();
+    // Do something else
+  }
+});
+```
+
+And as simple as that you will give full support to all the Stellar wallets plus you don't even need to handle the modal UI yourself. 
+
+The `openModal` method also lets you update multiple things about the model like the title, the allowed wallets or even the styles of it! Here are the accepted parameters:
+
+```typescript
+function openModal(params: {
+    onWalletSelected: (option: ISupportedWallet) => void;
+    onClosed?: (err: Error) => void;
+    modalDialogStyles?: { [name: string]: string | number | undefined | null; }
+    allowedWallets?: WalletType[];
+    modalTitle?: string;
+    notAvailableText?: string;
+}) {}
+```
+
+
 ## Request the public key and sign transactions
 
 Each wallet has its own way when it comes to both requesting the public key and signing a transaction. Using this kit you can do both actions with a unified API:

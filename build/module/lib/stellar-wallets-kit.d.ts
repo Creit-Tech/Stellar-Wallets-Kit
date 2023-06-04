@@ -54,6 +54,9 @@ export declare class StellarWalletsKit {
         modalDialogStyles?: {
             [name: string]: string | number | undefined | null;
         };
+        allowedWallets?: WalletType[];
+        modalTitle?: string;
+        notAvailableText?: string;
     }): void;
     private WCSignClient?;
     private WCActiveSession?;

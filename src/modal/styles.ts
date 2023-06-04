@@ -9,7 +9,6 @@ export const modalDialogStyles = css`
     padding: 1rem;
     width: 100%;
     max-width: 320px;
-    min-height: 360px;
     border-radius: 1rem;
     border-width: 0;
     background: #1A1C20;

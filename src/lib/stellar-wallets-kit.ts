@@ -223,6 +223,9 @@ export class StellarWalletsKit {
     onWalletSelected: (option: ISupportedWallet) => void;
     onClosed?: (err: Error) => void;
     modalDialogStyles?: { [name: string]: string | number | undefined | null; }
+    allowedWallets?: WalletType[];
+    modalTitle?: string;
+    notAvailableText?: string;
   }) {
     if (this.modalElement) {
       throw new Error(`Stellar Wallets Modal is already open`);
@@ -232,9 +235,19 @@ export class StellarWalletsKit {
     this.modalElement.setAttribute('showModal', '');
 
     if (params.modalDialogStyles) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      this.modalElement.setAttribute('modalDialogStyles', JSON.stringify(params.modalDialogStyles))
+      this.modalElement.setAttribute('modalDialogStyles', JSON.stringify(params.modalDialogStyles));
+    }
+
+    if (params.allowedWallets) {
+      this.modalElement.setAttribute('allowedWallets', JSON.stringify(params.allowedWallets));
+    }
+
+    if (params.modalTitle) {
+      this.modalElement.setAttribute('modalTitle', params.modalTitle);
+    }
+
+    if (params.notAvailableText) {
+      this.modalElement.setAttribute('notAvailableText', params.notAvailableText);
     }
 
     document.body.appendChild(this.modalElement);

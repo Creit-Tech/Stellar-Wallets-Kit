@@ -1,10 +1,11 @@
 import { LitElement } from 'lit';
-import { ISupportedWallet } from '../lib/stellar-wallets-kit';
+import { ISupportedWallet, WalletType } from '../lib/stellar-wallets-kit';
 export declare class StellarWalletsModal extends LitElement {
     static styles: import("lit").CSSResult[];
     showModal: boolean;
     modalTitle: string;
     notAvailableText: string;
+    allowedWallets: WalletType[];
     modalDialogStyles: {
         zIndex: number;
     };

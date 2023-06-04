@@ -4,7 +4,8 @@ import { customElement, property, state } from 'lit/decorators.js';
 
 import {
   ISupportedWallet,
-  StellarWalletsKit
+  StellarWalletsKit,
+  WalletType
 } from '../lib/stellar-wallets-kit';
 import {
   backdropStyles,
@@ -37,9 +38,15 @@ export class StellarWalletsModal extends LitElement {
   notAvailableText = 'Not available';
 
   @property({
+    type: Array,
+    reflect: true,
+    converter: { fromAttribute: (v: string) => JSON.parse(v) },
+  })
+  allowedWallets: WalletType[] = Object.values(WalletType);
+
+  @property({
     converter: {
-      fromAttribute: (value: string) =>
-        (value && { ...JSON.parse(value), zIndex: 990 }),
+      fromAttribute: (v: string) => (v && { ...JSON.parse(v), zIndex: 990 }),
     }
   })
   modalDialogStyles = { zIndex: 990 };
@@ -84,7 +91,6 @@ export class StellarWalletsModal extends LitElement {
   }
 
   override render() {
-    console.log(this.modalDialogStyles)
     return html`
       <dialog style=${styleMap(this.modalDialogStyles)}
               class='dialog-modal' .open=${this.showModal}>
@@ -102,17 +108,19 @@ export class StellarWalletsModal extends LitElement {
           </header>
 
           <ul class='layout-body'>
-            ${this.availableWallets.map((item) =>
-              html`
-                <li @click=${() => this.pickWalletOption(item)}
-                    class='layout-body__item ${!item.isAvailable ? 'not-available' : ''}'>
-                  <img src=${item.icon} alt=${item.name}>
-                  ${item.name}
+            ${this.availableWallets
+              .filter(item => this.allowedWallets.find(aw => aw === item.type))
+              .map((item) =>
+                html`
+                  <li @click=${() => this.pickWalletOption(item)}
+                      class='layout-body__item ${!item.isAvailable ? 'not-available' : ''}'>
+                    <img src=${item.icon} alt=${item.name}>
+                    ${item.name}
 
-                  ${!item.isAvailable ? html`<small class='not-available'>${this.notAvailableText}</small>` : ''}
-                </li>
-              `
-            )}
+                    ${!item.isAvailable ? html`<small class='not-available'>${this.notAvailableText}</small>` : ''}
+                  </li>
+                `
+              )}
           </ul>
 
           <footer class='layout-footer'>

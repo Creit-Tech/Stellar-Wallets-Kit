@@ -1,6 +1,6 @@
 {
   "name": "stellar-wallets-kit",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "description": "A kit to handle all Stellar Wallets at once",
   "author": {
     "name": "Creit Technologies LLP",
