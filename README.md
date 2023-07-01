@@ -36,6 +36,8 @@ const kit = new StellarWalletsKit({
 
 ## Integrated UI modal
 
+![](./modal-ui.gif)
+
 The library integrates a UI modal you can show your users after you have started the kit. Once they pick the wallet they want to use you can then use the other methods available. Here is how you can use it:
 ```typescript
 await kit.openModal({
@@ -164,7 +166,7 @@ And more methods, check the documentation to see all the methods available.
 ## License
 ![](https://img.shields.io/badge/License-MIT-lightgrey)
 
-Licensed under the MIT License, Copyright © 2022-present Creit Tech International Corp.
+Licensed under the MIT License, Copyright © 2023-present Creit Technologies LLP.
 
 Checkout the `LICENSE.md` file for more details.
 
