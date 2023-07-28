@@ -2,6 +2,7 @@ import {
   getPublicKey,
   isConnected,
   signTransaction,
+  signBlob
 } from '@stellar/freighter-api';
 
 export const isFreighterInstalled = async () => isConnected();
@@ -15,7 +16,7 @@ export const freighterGetPublicKey = async (): Promise<string> => {
 };
 
 export const freighterSignTransaction = async (
-  params: IFreighterSignParams
+  params: IFreighterSignTxParams
 ): Promise<string> => {
   if (!isConnected()) {
     throw new Error(`Freighter is not connected`);
@@ -27,8 +28,27 @@ export const freighterSignTransaction = async (
   });
 };
 
-export interface IFreighterSignParams {
+export const freighterSignBlob = async (
+  params: IFreighterSignBlobParams
+): Promise<string> => {
+  if (!isConnected()) {
+    throw new Error(`Freighter is not connected`);
+  }
+
+  return signBlob(params.b64blob, {
+    accountToSign: params.accountToSign,
+    networkPassphrase: params.networkPassphrase,
+  });
+};
+
+export interface IFreighterSignTxParams {
   xdr: string;
+  accountToSign?: string;
+  networkPassphrase: string;
+}
+
+export interface IFreighterSignBlobParams {
+  b64blob: string;
   accountToSign?: string;
   networkPassphrase: string;
 }
