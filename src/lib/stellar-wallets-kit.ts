@@ -8,6 +8,7 @@ import {
 } from './albedo';
 import {
   freighterGetPublicKey,
+  freighterSignBlob,
   freighterSignTransaction,
   isFreighterInstalled,
 } from './freighter';
@@ -42,8 +43,8 @@ export enum WalletNetwork {
   TESTNET = 'Test SDF Network ; September 2015',
 }
 
-export interface IStellarWalletsKitSignParams {
-  xdr: string;
+export interface IStellarWalletsSignBlob {
+  blob: string
   publicKey?: string;
   network?: WalletNetwork;
 
@@ -51,6 +52,18 @@ export interface IStellarWalletsKitSignParams {
   method?: WalletConnectAllowedMethods;
   chain?: WalletConnectTargetChain;
 }
+
+export interface IStellarWalletsSignTx {
+  xdr: string
+  publicKey?: string;
+  network?: WalletNetwork;
+
+  // Values only used for wallet connect, if not supplied we will use the defaults
+  method?: WalletConnectAllowedMethods;
+  chain?: WalletConnectTargetChain;
+}
+
+export type IStellarWalletsKitSignParams = IStellarWalletsSignBlob | IStellarWalletsSignTx
 
 export interface IConnectWalletConnectParams {
   chains?: WalletConnectTargetChain[];
@@ -172,6 +185,9 @@ export class StellarWalletsKit {
 
     switch (this.selectedWallet) {
       case WalletType.XBULL:
+        if ("blob" in params) {
+          throw new Error("X Bull does not suport signing arbitrary blobs")
+        }
         return xBullSignTransaction({
           xdr: params.xdr,
           publicKey: params.publicKey,
@@ -179,6 +195,13 @@ export class StellarWalletsKit {
         });
 
       case WalletType.FREIGHTER:
+        if ("blob" in params) {
+          return freighterSignBlob({
+            b64blob: params.blob,
+            networkPassphrase: params.network || this.network,
+            accountToSign: params.publicKey,
+          }).then((response) => ({ signedXDR: response }));
+        }
         return freighterSignTransaction({
           xdr: params.xdr,
           networkPassphrase: params.network || this.network,
@@ -186,6 +209,9 @@ export class StellarWalletsKit {
         }).then((response) => ({ signedXDR: response }));
 
       case WalletType.ALBEDO:
+        if ("blob" in params) {
+          throw new Error("Albedo does not suport signing arbitrary blobs")
+        }
         return albedoSignTransaction({
           xdr: params.xdr,
           pubKey: params.publicKey,
@@ -196,6 +222,9 @@ export class StellarWalletsKit {
         }).then((response) => ({ signedXDR: response.signed_envelope_xdr }));
 
       case WalletType.RABET:
+        if ("blob" in params) {
+          throw new Error("Rabet does not suport signing arbitrary blobs")
+        }
         return rabetSignTransaction({
           xdr: params.xdr,
           network:
@@ -205,6 +234,9 @@ export class StellarWalletsKit {
         }).then((response) => ({ signedXDR: response.xdr }));
 
       case WalletType.WALLET_CONNECT:
+        if ("blob" in params) {
+          throw new Error("Wallet Connect does not suport signing arbitrary blobs")
+        }
         return this.signWalletConnectTransaction({
           xdr: params.xdr,
           method: params.method,
