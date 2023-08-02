@@ -198,7 +198,6 @@ export class StellarWalletsKit {
         if ("blob" in params) {
           return freighterSignBlob({
             b64blob: params.blob,
-            networkPassphrase: params.network || this.network,
             accountToSign: params.publicKey,
           }).then((response) => ({ signedXDR: response }));
         }

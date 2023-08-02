@@ -36,8 +36,7 @@ export const freighterSignBlob = async (
   }
 
   return signBlob(params.b64blob, {
-    accountToSign: params.accountToSign,
-    networkPassphrase: params.networkPassphrase,
+    accountToSign: params.accountToSign
   });
 };
 
@@ -50,5 +49,4 @@ export interface IFreighterSignTxParams {
 export interface IFreighterSignBlobParams {
   b64blob: string;
   accountToSign?: string;
-  networkPassphrase: string;
 }
