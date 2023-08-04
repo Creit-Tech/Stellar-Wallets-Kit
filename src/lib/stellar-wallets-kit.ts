@@ -186,7 +186,7 @@ export class StellarWalletsKit {
     switch (this.selectedWallet) {
       case WalletType.XBULL:
         if ("blob" in params) {
-          throw new Error("X Bull does not suport signing arbitrary blobs")
+          throw new Error("xBull does not support signing arbitrary blobs")
         }
         return xBullSignTransaction({
           xdr: params.xdr,
@@ -209,7 +209,7 @@ export class StellarWalletsKit {
 
       case WalletType.ALBEDO:
         if ("blob" in params) {
-          throw new Error("Albedo does not suport signing arbitrary blobs")
+          throw new Error("Albedo does not support signing arbitrary blobs")
         }
         return albedoSignTransaction({
           xdr: params.xdr,
@@ -222,7 +222,7 @@ export class StellarWalletsKit {
 
       case WalletType.RABET:
         if ("blob" in params) {
-          throw new Error("Rabet does not suport signing arbitrary blobs")
+          throw new Error("Rabet does not support signing arbitrary blobs")
         }
         return rabetSignTransaction({
           xdr: params.xdr,
@@ -234,7 +234,7 @@ export class StellarWalletsKit {
 
       case WalletType.WALLET_CONNECT:
         if ("blob" in params) {
-          throw new Error("Wallet Connect does not suport signing arbitrary blobs")
+          throw new Error("Wallet Connect does not support signing arbitrary blobs")
         }
         return this.signWalletConnectTransaction({
           xdr: params.xdr,
