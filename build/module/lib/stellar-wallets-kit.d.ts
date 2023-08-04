@@ -11,13 +11,21 @@ export declare enum WalletNetwork {
     FUTURENET = "Test SDF Future Network ; October 2022",
     TESTNET = "Test SDF Network ; September 2015"
 }
-export interface IStellarWalletsKitSignParams {
+export interface IStellarWalletsSignBlob {
+    blob: string;
+    publicKey?: string;
+    network?: WalletNetwork;
+    method?: WalletConnectAllowedMethods;
+    chain?: WalletConnectTargetChain;
+}
+export interface IStellarWalletsSignTx {
     xdr: string;
     publicKey?: string;
     network?: WalletNetwork;
     method?: WalletConnectAllowedMethods;
     chain?: WalletConnectTargetChain;
 }
+export declare type IStellarWalletsKitSignParams = IStellarWalletsSignBlob | IStellarWalletsSignTx;
 export interface IConnectWalletConnectParams {
     chains?: WalletConnectTargetChain[];
     methods?: WalletConnectAllowedMethods[];
