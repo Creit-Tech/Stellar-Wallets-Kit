@@ -2,7 +2,8 @@ import {
   getPublicKey,
   isConnected,
   signTransaction,
-  signBlob
+  signBlob,
+  signAuthEntry
 } from '@stellar/freighter-api';
 
 export const isFreighterInstalled = async () => isConnected();
@@ -40,6 +41,18 @@ export const freighterSignBlob = async (
   });
 };
 
+export const freighterSignAuthEntry = async (
+  params: IFreighterSignAuthEntryParams
+): Promise<string> => {
+  if (!isConnected()) {
+    throw new Error(`Freighter is not connected`);
+  }
+
+  return signAuthEntry(params.entryPreimageXDR, {
+    accountToSign: params.accountToSign
+  });
+};
+
 export interface IFreighterSignTxParams {
   xdr: string;
   accountToSign?: string;
@@ -48,5 +61,10 @@ export interface IFreighterSignTxParams {
 
 export interface IFreighterSignBlobParams {
   b64blob: string;
+  accountToSign?: string;
+}
+
+export interface IFreighterSignAuthEntryParams {
+  entryPreimageXDR: string;
   accountToSign?: string;
 }
