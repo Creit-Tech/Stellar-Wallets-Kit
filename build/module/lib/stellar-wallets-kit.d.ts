@@ -18,6 +18,13 @@ export interface IStellarWalletsSignBlob {
     method?: WalletConnectAllowedMethods;
     chain?: WalletConnectTargetChain;
 }
+export interface IStellarWalletsSignAuthEntry {
+    entryPreimageXDR: string;
+    publicKey?: string;
+    network?: WalletNetwork;
+    method?: WalletConnectAllowedMethods;
+    chain?: WalletConnectTargetChain;
+}
 export interface IStellarWalletsSignTx {
     xdr: string;
     publicKey?: string;
@@ -25,7 +32,7 @@ export interface IStellarWalletsSignTx {
     method?: WalletConnectAllowedMethods;
     chain?: WalletConnectTargetChain;
 }
-export declare type IStellarWalletsKitSignParams = IStellarWalletsSignBlob | IStellarWalletsSignTx;
+export declare type IStellarWalletsKitSignParams = IStellarWalletsSignBlob | IStellarWalletsSignTx | IStellarWalletsSignAuthEntry;
 export interface IConnectWalletConnectParams {
     chains?: WalletConnectTargetChain[];
     methods?: WalletConnectAllowedMethods[];

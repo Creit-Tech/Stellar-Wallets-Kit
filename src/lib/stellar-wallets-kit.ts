@@ -10,6 +10,7 @@ import {
   freighterGetPublicKey,
   freighterSignBlob,
   freighterSignTransaction,
+  freighterSignAuthEntry,
   isFreighterInstalled,
 } from './freighter';
 import {
@@ -53,6 +54,16 @@ export interface IStellarWalletsSignBlob {
   chain?: WalletConnectTargetChain;
 }
 
+export interface IStellarWalletsSignAuthEntry {
+  entryPreimageXDR: string
+  publicKey?: string;
+  network?: WalletNetwork;
+
+  // Values only used for wallet connect, if not supplied we will use the defaults
+  method?: WalletConnectAllowedMethods;
+  chain?: WalletConnectTargetChain;
+}
+
 export interface IStellarWalletsSignTx {
   xdr: string
   publicKey?: string;
@@ -63,7 +74,7 @@ export interface IStellarWalletsSignTx {
   chain?: WalletConnectTargetChain;
 }
 
-export type IStellarWalletsKitSignParams = IStellarWalletsSignBlob | IStellarWalletsSignTx
+export type IStellarWalletsKitSignParams = IStellarWalletsSignBlob | IStellarWalletsSignTx | IStellarWalletsSignAuthEntry
 
 export interface IConnectWalletConnectParams {
   chains?: WalletConnectTargetChain[];
@@ -188,6 +199,9 @@ export class StellarWalletsKit {
         if ("blob" in params) {
           throw new Error("xBull does not support signing arbitrary blobs")
         }
+        if ("entryPreimageXDR" in params) {
+          throw new Error("xBull does not support signing authorization entries")
+        }
         return xBullSignTransaction({
           xdr: params.xdr,
           publicKey: params.publicKey,
@@ -201,6 +215,12 @@ export class StellarWalletsKit {
             accountToSign: params.publicKey,
           }).then((response) => ({ signedXDR: response }));
         }
+        if ("entryPreimageXDR" in params) {
+          return freighterSignAuthEntry({
+            entryPreimageXDR: params.entryPreimageXDR,
+            accountToSign: params.publicKey,
+          }).then((response) => ({ signedXDR: response }));
+        }
         return freighterSignTransaction({
           xdr: params.xdr,
           networkPassphrase: params.network || this.network,
@@ -210,6 +230,9 @@ export class StellarWalletsKit {
       case WalletType.ALBEDO:
         if ("blob" in params) {
           throw new Error("Albedo does not support signing arbitrary blobs")
+        }
+        if ("entryPreimageXDR" in params) {
+          throw new Error("Albedo does not support signing authorization entries")
         }
         return albedoSignTransaction({
           xdr: params.xdr,
@@ -224,6 +247,9 @@ export class StellarWalletsKit {
         if ("blob" in params) {
           throw new Error("Rabet does not support signing arbitrary blobs")
         }
+        if ("entryPreimageXDR" in params) {
+          throw new Error("Rabet does not support signing authorization entries")
+        }
         return rabetSignTransaction({
           xdr: params.xdr,
           network:
@@ -235,6 +261,9 @@ export class StellarWalletsKit {
       case WalletType.WALLET_CONNECT:
         if ("blob" in params) {
           throw new Error("Wallet Connect does not support signing arbitrary blobs")
+        }
+        if ("entryPreimageXDR" in params) {
+          throw new Error("Wallet Connect does not support signing authorization entries")
         }
         return this.signWalletConnectTransaction({
           xdr: params.xdr,
