@@ -2,11 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [0.1.2](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.1.1...v0.1.2) (2023-11-16)
+### [0.1.3](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.1.1...v0.1.3) (2023-11-16)
 #### add
 - Fix height issues (ios devices)
 
-### [0.1.2](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.1.0...v0.1.1) (2023-09-30)
+### [0.1.2](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.1.0...v0.1.2) (2023-09-30)
 #### add
 - New version of the Freighter API (1.7.0)
 - Merge PR [#4](https://github.com/Creit-Tech/Stellar-Wallets-Kit/pull/4)
