@@ -1,6 +1,6 @@
 {
-  "name": "stellar-wallets-kit",
-  "version": "0.1.4",
+  "name": "@creit.tech/stellar-wallets-kit",
+  "version": "0.2.0",
   "description": "A kit to handle all Stellar Wallets at once",
   "author": {
     "name": "Creit Technologies LLP",
@@ -27,7 +27,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "build:all": "npm run build:main && npm run build:module",
+    "build:all": "npx rimraf ./build && npm run build:main && npm run build:module",
     "build:main": "tsc -p tsconfig.json",
     "build:main:watch": "tsc -p tsconfig.json --watch",
     "build:module": "tsc -p tsconfig.module.json",
@@ -93,14 +93,13 @@
     "typescript": "~4.7.4"
   },
   "files": [
-    "src",
     "build/main",
     "build/module",
-    "!**/*.spec.*",
-    "!**/*.json",
     "CHANGELOG.md",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "package.json",
+    "custom-elements.json"
   ],
   "customElements": "custom-elements.json"
 }

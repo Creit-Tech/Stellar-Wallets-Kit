@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.1.4...v0.2.0) (2024-01-12)
+#### Change
+- Move away from Github distribution to a classic npm package distribution
+
 ### [0.1.4](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.1.3...v0.1.4) (2023-11-16)
 #### Change
 - Upgrade xBull-Wallet-connect library to the latest one

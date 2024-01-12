@@ -1,8 +1,5 @@
 A kit to handle all Stellar Wallets at once with a simple API and without caring about individual configurations for each one of them. This library cares only about the connection and interaction with the wallets, allowing developers handling the UI/UX in the way they want.
 
-## Documentation
-[https://creit-tech.github.io/Stellar-Wallets-Kit/](https://creit-tech.github.io/Stellar-Wallets-Kit/)
-
 ## Compatible Wallets:
 
 - xBull Wallet (Both PWA and extension version)
@@ -14,12 +11,8 @@ A kit to handle all Stellar Wallets at once with a simple API and without caring
 ## Installation
 
 ```shell
-npm i --save github:Creit-Tech/Stellar-Wallets-Kit
+npm i @creit.tech/stellar-wallets-kit
 ```
-
-Install the latest version available in our repo, we use Github instead of NPM because this way you can check the code before installing it which in our view is safer.
-
-> We recommend you using version tags when installing the library, this way you have control when doing an `npm i` like this: `npm i github:Creit-Tech/Stellar-Wallets-Kit#<tag or commit hash>`
 
 ## The StellarWalletsKit class
 
