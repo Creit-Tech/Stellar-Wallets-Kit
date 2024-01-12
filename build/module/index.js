@@ -1,3 +1,0 @@
-export * from './lib/stellar-wallets-kit';
-export * from './modal/stellar-wallets-modal';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsY0FBYywyQkFBMkIsQ0FBQztBQUMxQyxjQUFjLCtCQUErQixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0ICogZnJvbSAnLi9saWIvc3RlbGxhci13YWxsZXRzLWtpdCc7XG5leHBvcnQgKiBmcm9tICcuL21vZGFsL3N0ZWxsYXItd2FsbGV0cy1tb2RhbCc7XG4iXX0=
