@@ -1,8 +1,4 @@
 import { StellarWalletsModal } from './modal/stellar-wallets-modal';
-import { AlbedoModule } from './modules/albedo/albedo.module';
-import { FreighterModule } from './modules/freighter/freighter.module';
-import { RabetModule } from './modules/rabet/rabet.module';
-import { xBullModule } from './modules/xbull/xbull.module';
 import {
   IStellarWalletsSignAuthEntry,
   IStellarWalletsSignBlob,
@@ -13,20 +9,21 @@ import {
   WalletNetwork,
 } from './types';
 
+export interface StellarWalletsKitParams {
+  selectedWalletId: string;
+  network: WalletNetwork;
+  modules: ModuleInterface[];
+}
+
 export class StellarWalletsKit implements KitActions {
   private selectedWallet!: string;
   private selectedModule!: ModuleInterface;
   private network!: WalletNetwork;
   private modalElement?: StellarWalletsModal;
-  private readonly modules: ModuleInterface[] = [];
+  private readonly modules: ModuleInterface[];
 
-  constructor(params: { selectedWalletId: string; network: WalletNetwork; modules?: ModuleInterface[] }) {
-    if (params.modules && params.modules.length > 1) {
-      this.modules = params.modules;
-    } else {
-      this.modules = [new xBullModule(), new FreighterModule(), new AlbedoModule(), new RabetModule()];
-    }
-
+  constructor(params: StellarWalletsKitParams) {
+    this.modules = params.modules;
     this.setWallet(params.selectedWalletId);
     this.setNetwork(params.network);
   }

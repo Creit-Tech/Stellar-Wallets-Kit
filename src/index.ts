@@ -1,8 +1,9 @@
 export * from './stellar-wallets-kit';
 export * from './modal/stellar-wallets-modal';
 export * from './types';
+export * from './utils';
 
-export { XBULL_ID } from './modules/xbull/xbull.module';
-export { FREIGHTER_ID } from './modules/freighter/freighter.module';
-export { ALBEDO_ID } from './modules/albedo/albedo.module';
-export { RABET_ID } from './modules/rabet/rabet.module';
+export * from './modules/xbull/xbull.module';
+export * from './modules/freighter/freighter.module';
+export * from './modules/albedo/albedo.module';
+export * from './modules/rabet/rabet.module';
