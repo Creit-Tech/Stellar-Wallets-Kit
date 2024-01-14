@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.2.0...v0.5.0) (2024-01-12)
+#### Change
+- Wallets/services are now handled as "modules" (a module is basically a driver for a wallet/service) and they all share a common interface. This way wallets' developers can create their own modules and make their products compatible with this kit.
+- BREAKING: Modules now need to be imported when starting the kit, a function called `allowAllModules` is included and this one will inject all the builtin modules 
+- BREAKING: When creating a new instance of `StellarWalletsKit`, you now send the wallet id (provided either by this kit or by the third party module) instead of `WalletType`.
+- BREAKING: When using the modal, you need to pass the id of the selected wallet instead of the type. Check `README.md` for an example
+- BREAKING: `allowedWallets` is no longer a valid parameter for the integrated modal, instead the modal uses the modules from the kit.
+- BREAKING: WalletConnect support has been dropped, the integration got outdated and needs to be upgraded before we add it again.
+
 ### [0.2.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.1.4...v0.2.0) (2024-01-12)
 #### Change
 - Move away from Github distribution to a classic npm package distribution
