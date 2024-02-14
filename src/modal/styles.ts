@@ -17,19 +17,11 @@ export const modalDialogStyles = css`
 
   @media screen and (min-width: 768px) {
     .dialog-modal {
-      position: fixed;
-      z-index: 99;
-      font-family: 'Open Sans', arial, sans-serif;
-      margin: 0 auto;
-      padding: 1rem;
-      width: 100%;
-      max-width: 320px;
+      z-index: 990;
+      bottom: auto;
+      top: 5rem;
+      max-width: 45rem;
       border-radius: 1rem;
-      border-width: 0;
-      background: #1a1c20;
-      color: #fafafa;
-      box-shadow: 0 0.125rem 0.75rem rgba(0, 0, 0, 0.25);
-      top: 3rem;
     }
   }
 `;
@@ -37,7 +29,7 @@ export const modalDialogStyles = css`
 export const modalDialogBodyStyles = css`
   .dialog-modal-body {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 
   .dialog-modal-body__help,
@@ -47,27 +39,34 @@ export const modalDialogBodyStyles = css`
   }
 
   .dialog-modal-body__help {
-    order: 2;
-    padding: 1rem;
+    padding: 1.5rem;
   }
 
   .dialog-modal-body__wallets {
-    order: 1;
-    padding: 2rem 1.5rem 1rem 1.5rem;
+    padding: 1.5rem;
   }
 
   .dialog-text-solid {
-    font-size: 1.25rem;
+    font-size: 1rem;
+    line-height: 1.25rem;
   }
 
   .dialog-text {
-    font-size: 1rem;
+    font-size: 0.875rem;
+    line-height: 1.125rem;
   }
 
   @media (prefers-color-scheme: light) {
     .dialog-modal-body__help {
       background-color: #f8f8f8;
       border-top: 1px solid rgba(0, 0, 0, 0.15);
+    }
+
+    @media screen and (min-width: 768px) {
+      .dialog-modal-body__help {
+        border-top: none;
+        border-right: 1px solid rgba(0, 0, 0, 0.15);
+      }
     }
 
     .dialog-modal-body__wallets,
@@ -90,6 +89,13 @@ export const modalDialogBodyStyles = css`
       border-top: 1px solid rgba(255, 255, 255, 0.15);
     }
 
+    @media screen and (min-width: 768px) {
+      .dialog-modal-body__help {
+        border-top: none;
+        border-right: 1px solid rgba(255, 255, 255, 0.15);
+      }
+    }
+
     .dialog-modal-body__wallets,
     .dialog-modal-body {
       background-color: #161616;
@@ -103,6 +109,17 @@ export const modalDialogBodyStyles = css`
       color: #a0a0a0;
     }
   }
+
+  @media screen and (min-width: 768px) {
+    .dialog-modal-body {
+      flex-direction: row;
+    }
+
+    .dialog-modal-body__help,
+    .dialog-modal-body__wallets {
+      padding: 2rem;
+    }
+  }
 `;
 
 export const modalHelpSection = css`
@@ -110,15 +127,58 @@ export const modalHelpSection = css`
     width: 100%;
   }
 
+  .help-header {
+    display: none;
+    margin: 0 0 2rem 0;
+  }
+
+  .help-header__modal-title {
+    font-size: 1.25rem;
+    padding: 0;
+    margin: 0;
+  }
+
   .help__title,
   .help__text {
     text-align: center;
   }
 
+  .help__title {
+    font-weight: 400;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+
   .help__text {
-    max-width: 30rem;
+    max-width: 21rem;
     margin-left: auto;
     margin-right: auto;
+    font-weight: 300;
+    margin-top: 0;
+  }
+
+  .help__whats_stellar {
+    display: none;
+  }
+
+  @media screen and (min-width: 768px) {
+    .help-header {
+      display: block;
+    }
+
+    .help__title,
+    .help__text {
+      text-align: left;
+      margin-left: 0;
+    }
+
+    .help__whats_a_wallet {
+      margin-bottom: 2rem;
+    }
+
+    .help__whats_stellar {
+      display: block;
+    }
   }
 `;
 
@@ -136,6 +196,7 @@ export const modalWalletsSection = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 1.5rem;
   }
 
   .wallets-header__modal-title {
@@ -163,6 +224,7 @@ export const modalWalletsSection = css`
   }
 
   .wallets-body {
+    margin: 0;
     width: 100%;
     list-style: none;
     padding: 0 !important;
@@ -171,16 +233,16 @@ export const modalWalletsSection = css`
   .wallets-body__item {
     display: flex;
     align-items: center;
-    font-size: 1.125rem;
     font-weight: 600;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    margin-bottom: 2rem;
     cursor: pointer;
   }
 
   .wallets-body__item img {
     margin-right: 1rem;
-    width: 35px;
+    width: 2rem;
+    border-radius: 100%;
+    overflow: hidden;
   }
 
   .wallets-body__item.not-available {
@@ -211,82 +273,6 @@ export const modalWalletsSection = css`
   }
 
   @media screen and (min-width: 768px) {
-    .wallets-container {
-      width: 100%;
-      height: 100%;
-      min-height: fit-content;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .wallets-header {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .wallets-header__modal-title {
-      font-size: 1.25rem;
-      padding: 0;
-      margin: 0;
-    }
-
-    .wallets-header__button {
-      background: none;
-      padding: 0.25rem 0.5rem;
-      color: inherit;
-      border-image: none;
-      border-style: solid;
-      border-color: rgba(inherit, 0.5);
-      border-width: 0.1rem;
-      border-radius: 1rem;
-      font-size: 0.75rem;
-      cursor: pointer;
-    }
-
-    .wallets-body {
-      width: 100%;
-      list-style: none;
-      padding: 0 !important;
-    }
-
-    .wallets-body__item {
-      display: flex;
-      align-items: center;
-      font-size: 1.125rem;
-      font-weight: 600;
-      padding-top: 1rem;
-      padding-bottom: 1rem;
-      cursor: pointer;
-    }
-
-    .wallets-body__item.not-available {
-      cursor: not-allowed;
-    }
-
-    .wallets-body__item img {
-      margin-right: 1rem;
-      width: 35px;
-    }
-
-    .wallets-body__item .not-available {
-      margin-left: auto;
-      font-size: 10px;
-      border: solid red 1px;
-      padding: 0.25rem 0.5rem;
-      border-radius: 1rem;
-    }
-
-    .wallets-footer {
-      margin-top: auto;
-      width: 100%;
-      text-align: center;
-      font-size: 0.75rem;
-      opacity: 0.75;
-      padding: 0.75rem 1rem 0;
-      border-top: rgba(255, 255, 255, 0.25) 1px solid;
-    }
   }
 `;
 
@@ -300,7 +286,7 @@ export const backdropStyles = css`
   }
 `;
 
-export const modalOpenAnimation = css`
+export const modalAnimations = css`
   .dialog-modal[open] {
     -webkit-animation: showModal 0.3s ease normal;
   }
@@ -312,6 +298,32 @@ export const modalOpenAnimation = css`
     to {
       transform: translateY(0%);
       opacity: 1;
+    }
+  }
+
+  .dialog-modal.closing {
+    -webkit-animation: hideModal 0.3s ease normal !important;
+  }
+  @-webkit-keyframes hideModal {
+    from {
+      transform: translateY(0%);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(25%);
+      opacity: 0;
+    }
+  }
+
+  .backdrop.closing {
+    -webkit-animation: hideBackdrop 0.3s ease normal !important;
+  }
+  @-webkit-keyframes hideBackdrop {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
     }
   }
 `;

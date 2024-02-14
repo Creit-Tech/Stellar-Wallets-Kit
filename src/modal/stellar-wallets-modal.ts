@@ -9,7 +9,7 @@ import {
   modalDialogBodyStyles,
   modalDialogStyles,
   modalHelpSection,
-  modalOpenAnimation,
+  modalAnimations,
 } from './styles';
 
 @customElement('stellar-wallets-modal')
@@ -19,17 +19,24 @@ export class StellarWalletsModal extends LitElement {
       :host * {
         box-sizing: border-box;
       }
+
+      .mb-0 {
+        margin-bottom: 0 !important;
+      }
     `,
     modalDialogStyles,
     modalDialogBodyStyles,
     modalHelpSection,
     backdropStyles,
-    modalOpenAnimation,
+    modalAnimations,
     modalWalletsSection,
   ];
 
   @property({ type: Boolean, reflect: true })
   showModal: boolean = false;
+
+  @property({ type: Boolean, reflect: true })
+  closingModal: boolean = false;
 
   @property({ type: String, reflect: true })
   modalTitle: string = 'Connect a Wallet';
@@ -55,7 +62,11 @@ export class StellarWalletsModal extends LitElement {
     super.connectedCallback();
   }
 
-  closeModal() {
+  async closeModal(): Promise<void> {
+    this.closingModal = true;
+
+    await new Promise(r => setTimeout(r, 300));
+
     this.showModal = false;
 
     this.dispatchEvent(
@@ -67,10 +78,14 @@ export class StellarWalletsModal extends LitElement {
     );
   }
 
-  pickWalletOption(option: ISupportedWallet): void {
+  async pickWalletOption(option: ISupportedWallet): Promise<void> {
     if (!option.isAvailable) {
       return;
     }
+
+    this.closingModal = true;
+
+    await new Promise(r => setTimeout(r, 300));
 
     this.dispatchEvent(
       new CustomEvent('wallet-selected', {
@@ -84,10 +99,24 @@ export class StellarWalletsModal extends LitElement {
   override render() {
     const helpSection = html`
       <section class="help-container">
-        <h2 class="dialog-text-solid help__title">What is a wallet?</h2>
-        <p class="dialog-text help__text">
-          Wallets are used to send, receive, and store the keys you use to sign blockchain transactions.
-        </p>
+        <header class="help-header">
+          <h2 class="help-header__modal-title dialog-text-solid">Learn more</h2>
+        </header>
+
+        <div class="help__whats_a_wallet">
+          <h2 class="dialog-text-solid help__title">What is a wallet?</h2>
+          <p class="dialog-text help__text">
+            Wallets are used to send, receive, and store the keys you use to sign blockchain transactions.
+          </p>
+        </div>
+
+        <div class="help__whats_stellar">
+          <h2 class="dialog-text-solid help__title">What is Stellar?</h2>
+          <p class="dialog-text help__text">
+            Stellar is a decentralized, public blockchain that gives developers the tools to create experiences that are
+            more like cash than crypto
+          </p>
+        </div>
       </section>
     `;
 
@@ -106,11 +135,14 @@ export class StellarWalletsModal extends LitElement {
 
         <ul class="wallets-body">
           ${this.allowedWallets.map(
-            (item: ISupportedWallet) =>
+            (item: ISupportedWallet, i: number) =>
               html`
                 <li
                   @click=${() => this.pickWalletOption(item)}
-                  class="wallets-body__item ${!item.isAvailable ? 'not-available' : ''}">
+                  class=" wallets-body__item ${!item.isAvailable ? 'not-available' : ''} ${i ===
+                  this.allowedWallets.length - 1
+                    ? 'mb-0'
+                    : ''}">
                   <img src=${item.icon} alt=${item.name} />
                   <span class="dialog-text-solid">${item.name}</span>
                   ${!item.isAvailable ? html`<small class="not-available">${this.notAvailableText}</small>` : ''}
@@ -122,14 +154,20 @@ export class StellarWalletsModal extends LitElement {
     `;
 
     return html`
-      <dialog style=${styleMap(this.modalDialogStyles)} class="dialog-modal" .open=${this.showModal}>
+      <dialog
+        style=${styleMap(this.modalDialogStyles)}
+        class="dialog-modal ${this.closingModal ? 'closing' : ''}"
+        .open=${this.showModal}>
         <section class="dialog-modal-body">
           <div class="dialog-modal-body__help">${helpSection}</div>
           <div class="dialog-modal-body__wallets">${walletsSection}</div>
         </section>
       </dialog>
 
-      <div style="position: fixed; z-index: 950" class="backdrop" @click=${() => this.closeModal()}></div>
+      <div
+        style="position: fixed; z-index: 950"
+        class="backdrop ${this.closingModal ? 'closing' : ''}"
+        @click=${() => this.closeModal()}></div>
     `;
   }
 }
