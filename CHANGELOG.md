@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.2.0...v0.5.0) (2024-01-12)
+### Add
+- A new bundled version of the kit is available at /build/web-bundle.js
+
+### Change
+- The UI has been updated, so it now has a mobile version and show a quick and basic explanation of what a wallet it.
+- Now when clicking on a wallet that is not installed, it will open the official wallet website.
+
 ### [0.5.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.2.0...v0.5.0) (2024-01-12)
 #### Change
 - Wallets/services are now handled as "modules" (a module is basically a driver for a wallet/service) and they all share a common interface. This way wallets' developers can create their own modules and make their products compatible with this kit.

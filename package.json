@@ -1,6 +1,6 @@
 {
   "name": "@creit.tech/stellar-wallets-kit",
-  "version": "0.8.0",
+  "version": "0.6.0",
   "description": "A kit to handle all Stellar Wallets at once",
   "author": {
     "name": "Creit Technologies LLP",
@@ -39,10 +39,6 @@
     "lit": "^2.2.4"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^1.0.1",
-    "@11ty/eleventy-plugin-syntaxhighlight": "^4.0.0",
-    "@custom-elements-manifest/analyzer": "^0.6.3",
-    "@open-wc/testing": "^3.1.5",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-replace": "^5.0.2",
@@ -50,12 +46,8 @@
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",
     "@web/dev-server": "^0.1.31",
-    "@web/dev-server-legacy": "^1.0.0",
-    "@web/test-runner": "^0.15.0",
-    "@web/test-runner-playwright": "^0.9.0",
     "@webcomponents/webcomponentsjs": "^2.6.0",
     "eslint": "^8.15.0",
-    "lit-analyzer": "^1.2.1",
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.75.7",
