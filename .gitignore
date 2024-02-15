@@ -5,7 +5,7 @@ build
 .nyc_output
 build/docs
 node_modules
-test
+demo
 src/**.js
 coverage
 *.log

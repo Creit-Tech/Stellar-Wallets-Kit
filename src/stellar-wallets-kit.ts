@@ -42,6 +42,7 @@ export class StellarWalletsKit implements KitActions {
         type: mod.moduleType,
         icon: mod.productIcon,
         isAvailable: await mod.isAvailable(),
+        url: mod.productUrl,
       });
     }
 
