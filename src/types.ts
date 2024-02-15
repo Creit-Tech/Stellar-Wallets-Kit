@@ -46,6 +46,7 @@ export interface ISupportedWallet {
   type: string;
   isAvailable: boolean;
   icon: string;
+  url: string;
 }
 
 /**

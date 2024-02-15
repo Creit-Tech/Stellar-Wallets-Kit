@@ -246,7 +246,7 @@ export const modalWalletsSection = css`
   }
 
   .wallets-body__item.not-available {
-    cursor: not-allowed;
+    cursor: alias;
   }
 
   .wallets-body__item .not-available {

@@ -80,6 +80,7 @@ export class StellarWalletsModal extends LitElement {
 
   async pickWalletOption(option: ISupportedWallet): Promise<void> {
     if (!option.isAvailable) {
+      window.open(option.url, '_blank');
       return;
     }
 
