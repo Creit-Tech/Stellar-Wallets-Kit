@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [0.6.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.2.0...v0.5.0) (2024-01-12)
+### [0.6.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.5.0...v0.6.0) (2024-02-15)
 ### Add
 - A new bundled version of the kit is available at /build/web-bundle.js
 
