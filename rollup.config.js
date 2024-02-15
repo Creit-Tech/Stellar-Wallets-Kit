@@ -5,11 +5,17 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 export default [
   {
     input: 'src/index.ts',
-    output: {
-      dir: 'build',
-      format: 'umd',
-      name: 'SWK',
-    },
+    output: [
+      {
+        file: 'build/index.js',
+        format: 'es',
+      },
+      {
+        file: 'build/web-bundle.js',
+        format: 'umd',
+        name: 'SWK',
+      },
+    ],
     plugins: [
       commonjs({ extensions: ['.js', '.ts'] }),
       typescript({
