@@ -1,5 +1,8 @@
 build
 
+.rollup.cache
+tsconfig.tsbuildinfo
+
 .DS_Store
 .idea/*
 .nyc_output

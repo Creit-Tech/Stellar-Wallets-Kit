@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
-    "incremental": true,
     "target": "es2019",
-    "outDir": "build/main",
+    "outDir": "build",
     "rootDir": "src",
     "moduleResolution": "node",
     "module": "es2020",

@@ -1,13 +1,13 @@
 {
   "name": "@creit.tech/stellar-wallets-kit",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "A kit to handle all Stellar Wallets at once",
   "author": {
     "name": "Creit Technologies LLP",
     "url": "https://creit.tech"
   },
   "main": "build/index.js",
-  "typings": "build/main/index.d.ts",
+  "typings": "build/index.d.ts",
   "type": "module",
   "repository": {
     "type": "git",
@@ -24,8 +24,10 @@
     "Freighter"
   ],
   "scripts": {
-    "build": "rollup -c ./rollup.config.js",
-    "build:watch": "rollup -c ./rollup.config.js --watch",
+    "build": "rimraf ./build && npm run build:tsc && npm run build:web-bundle",
+    "build:tsc": "tsc",
+    "build:web-bundle": "rollup -c ./rollup.config.js",
+    "build:web-bundle:watch": "rollup -c ./rollup.config.js --watch",
     "serve": "wds --open ./demo.html"
   },
   "engines": {
