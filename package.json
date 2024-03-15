@@ -1,6 +1,6 @@
 {
   "name": "@creit.tech/stellar-wallets-kit",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "A kit to handle all Stellar Wallets at once",
   "author": {
     "name": "Creit Technologies LLP",
@@ -24,11 +24,8 @@
     "Freighter"
   ],
   "scripts": {
-    "build": "rimraf ./build && npm run build:tsc && npm run build:web-bundle",
-    "build:tsc": "tsc",
-    "build:web-bundle": "rollup -c ./rollup.config.js",
-    "build:web-bundle:watch": "rollup -c ./rollup.config.js --watch",
-    "serve": "wds --open ./demo.html"
+    "build": "rimraf ./build && npm run build:tsc",
+    "build:tsc": "tsc"
   },
   "engines": {
     "node": ">=16"
@@ -43,10 +40,6 @@
     "lit": "^2.2.4"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^25.0.7",
-    "@rollup/plugin-node-resolve": "^13.3.0",
-    "@rollup/plugin-replace": "^5.0.2",
-    "@rollup/plugin-typescript": "^11.1.6",
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",
     "@web/dev-server": "^0.1.31",
@@ -54,7 +47,6 @@
     "eslint": "^8.15.0",
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
-    "rollup": "^2.75.7",
     "typescript": "~4.7.4"
   },
   "files": [
