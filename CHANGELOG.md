@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.6.1...v0.7.0) (2024-03-15)
+### Add
+- Bring back Wallet Connect module
+
+### Delete
+- Demo page and dependencies for it
+
 ### [0.6.1](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.6.0...v0.6.1) (2024-02-16)
 
 ### Change
