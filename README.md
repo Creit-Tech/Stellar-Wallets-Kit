@@ -32,6 +32,8 @@ const kit: StellarWalletsKit = new StellarWalletsKit({
 });
 ```
 
+> The `allowAllModules()` function doesn't import those modules where you need to provide a configuration (like WalletConnect), you will need to add them manually so check the folder `src/modules` to know all the available modules. 
+
 If you want to specify only the wallets you want to support, you can start the kit with only those by sending the modules to the constructor like this:
 
 ```typescript
