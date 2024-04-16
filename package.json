@@ -1,6 +1,6 @@
 {
   "name": "@creit.tech/stellar-wallets-kit",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "A kit to handle all Stellar Wallets at once",
   "author": {
     "name": "Creit Technologies LLP",
@@ -33,6 +33,7 @@
   "dependencies": {
     "@albedo-link/intent": "^0.12.0",
     "@creit-tech/xbull-wallet-connect": "github:Creit-Tech/xBull-Wallet-Connect#0.2.0",
+    "@lobstrco/signer-extension-api": "^1.0.0-beta.0",
     "@stellar/freighter-api": "1.7.0",
     "@walletconnect/modal": "^2.6.2",
     "@walletconnect/sign-client": "^2.11.2",

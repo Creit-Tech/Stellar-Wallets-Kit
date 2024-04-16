@@ -6,6 +6,8 @@ A kit to handle all Stellar Wallets at once with a simple API and without caring
 - Albedo
 - Freighter
 - Rabet (extension version)
+- WalletConnect
+- Lobstr
 
 ## Installation
 
