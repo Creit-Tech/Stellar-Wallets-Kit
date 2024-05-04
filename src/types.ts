@@ -145,6 +145,11 @@ export interface ModuleInterface extends KitActions {
    * This function should return true is the wallet is installed and/or available.
    * If for example this wallet/service doesn't need to be installed to be used,
    * return `true`.
+   *
+   * Important:
+   * Your wallet/library needs to be able to answer this function in less than 200ms.
+   * Otherwise, the kit will show it as unavailable
+   *
    */
   isAvailable(): Promise<boolean>;
 }

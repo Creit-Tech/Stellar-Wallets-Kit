@@ -33,20 +33,19 @@ export class StellarWalletsKit implements KitActions {
    * There are wallets that are by default available since they either don't need to be installed or have a fallback
    */
   async getSupportedWallets(): Promise<ISupportedWallet[]> {
-    const response: ISupportedWallet[] = [];
-
-    for (const mod of this.modules) {
-      response.push({
-        id: mod.productId,
-        name: mod.productName,
-        type: mod.moduleType,
-        icon: mod.productIcon,
-        isAvailable: await mod.isAvailable(),
-        url: mod.productUrl,
-      });
-    }
-
-    return response;
+    return Promise.all(
+      this.modules.map(async (mod: ModuleInterface): Promise<ISupportedWallet> => {
+        const timer: Promise<false> = new Promise(r => setTimeout(() => r(false), 200));
+        return {
+          id: mod.productId,
+          name: mod.productName,
+          type: mod.moduleType,
+          icon: mod.productIcon,
+          isAvailable: await Promise.race([timer, mod.isAvailable()]),
+          url: mod.productUrl,
+        };
+      })
+    );
   }
 
   public setNetwork(network: WalletNetwork): void {
