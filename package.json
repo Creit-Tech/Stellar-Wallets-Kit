@@ -31,12 +31,12 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@albedo-link/intent": "^0.12.0",
+    "@albedo-link/intent": "0.12.0",
     "@creit-tech/xbull-wallet-connect": "github:Creit-Tech/xBull-Wallet-Connect#0.2.0",
-    "@lobstrco/signer-extension-api": "^1.0.0-beta.0",
-    "@stellar/freighter-api": "1.7.0",
-    "@walletconnect/modal": "^2.6.2",
-    "@walletconnect/sign-client": "^2.11.2",
+    "@lobstrco/signer-extension-api": "1.0.0-beta.0",
+    "@stellar/freighter-api": "2.0.0",
+    "@walletconnect/modal": "2.6.2",
+    "@walletconnect/sign-client": "2.11.2",
     "events": "^3.3.0",
     "lit": "^2.2.4"
   },
