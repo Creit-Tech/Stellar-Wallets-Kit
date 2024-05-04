@@ -7,7 +7,7 @@ export class LobstrModule implements ModuleInterface {
   moduleType: ModuleType = ModuleType.HOT_WALLET;
 
   productId: string = LOBSTR_ID;
-  productName: string = 'Lobstr';
+  productName: string = 'LOBSTR';
   productUrl: string = 'https://lobstr.co';
   productIcon: string = 'https://stellar.creit.tech/wallet-icons/lobstr.svg';
 
