@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.1](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.8.0...v0.8.1) (2024-05-03)
+### Add
+- Introduce a timer to function `isAvailable` so `getSupportedWallets` doesn't take too much
+
+### Change
+- Update Lobstr name to LOBSTR
+- Lock and update dependencies versions
+
 ### [0.8.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.7.0...v0.8.0) (2024-04-16)
 ### Add
 - Add Lobstr extension support
