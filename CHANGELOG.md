@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.2](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.8.1...v0.8.2) (2024-05-28)
+### Change
+- Change the way we request the public key from Freighter (instead of using `getPublicKey` we now use `requestAccess` because otherwise we could receive an empty string)
+
 ### [0.8.1](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.8.0...v0.8.1) (2024-05-03)
 ### Add
 - Introduce a timer to function `isAvailable` so `getSupportedWallets` doesn't take too much
