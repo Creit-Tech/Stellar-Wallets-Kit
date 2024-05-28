@@ -35,7 +35,7 @@ export class StellarWalletsKit implements KitActions {
   async getSupportedWallets(): Promise<ISupportedWallet[]> {
     return Promise.all(
       this.modules.map(async (mod: ModuleInterface): Promise<ISupportedWallet> => {
-        const timer: Promise<false> = new Promise(r => setTimeout(() => r(false), 200));
+        const timer: Promise<false> = new Promise(r => setTimeout(() => r(false), 500));
         return {
           id: mod.productId,
           name: mod.productName,
