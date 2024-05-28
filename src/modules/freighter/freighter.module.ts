@@ -1,4 +1,4 @@
-import { getPublicKey, isConnected, signTransaction, signBlob, signAuthEntry } from '@stellar/freighter-api';
+import { isConnected, signTransaction, signBlob, signAuthEntry, requestAccess } from '@stellar/freighter-api';
 import { ModuleInterface, ModuleType, WalletNetwork } from '../../types';
 
 export const FREIGHTER_ID = 'freighter';
@@ -20,7 +20,7 @@ export class FreighterModule implements ModuleInterface {
       throw new Error(`Freighter is not connected`);
     }
 
-    return getPublicKey();
+    return requestAccess();
   }
 
   async signTx(params: { xdr: string; publicKeys: string[]; network: WalletNetwork }): Promise<{ result: string }> {
