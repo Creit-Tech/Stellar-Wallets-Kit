@@ -16,7 +16,7 @@ interface SignAuthEntryProps {
   accountToSign: string;
 }
 
-declare const hanaWindow: Window & {
+declare const window: Window & {
   hanaWallet?: {
     stellar?: {
       getPublicKey(): Promise<string>;
@@ -38,25 +38,25 @@ export class HanaModule implements ModuleInterface {
   productIcon: string = 'https://stellar.creit.tech/wallet-icons/hana.svg';
 
   async isAvailable(): Promise<boolean> {
-    return !!hanaWindow.hanaWallet?.stellar;
+    return !!window.hanaWallet?.stellar;
   }
 
   async getPublicKey(): Promise<string> {
-    if (!hanaWindow.hanaWallet?.stellar) {
+    if (!window.hanaWallet?.stellar) {
       throw new Error('Hana Wallet is not installed');
     }
 
-    return hanaWindow.hanaWallet.stellar.getPublicKey();
+    return window.hanaWallet.stellar.getPublicKey();
   }
 
   async signTx(params: { xdr: string; publicKeys: string[]; network: string }): Promise<{ result: string }> {
-    if (!hanaWindow.hanaWallet?.stellar) {
+    if (!window.hanaWallet?.stellar) {
       throw new Error('Hana Wallet is not installed');
     }
 
     let updatedXdr: string = params.xdr;
     for (const publicKey of params.publicKeys) {
-      updatedXdr = await hanaWindow.hanaWallet.stellar.signTransaction({
+      updatedXdr = await window.hanaWallet.stellar.signTransaction({
         xdr: updatedXdr,
         accountToSign: publicKey,
         networkPassphrase: params.network,
@@ -67,22 +67,22 @@ export class HanaModule implements ModuleInterface {
   }
 
   async signBlob(params: { blob: string; publicKey: string }): Promise<{ result: string }> {
-    if (!hanaWindow.hanaWallet?.stellar) {
+    if (!window.hanaWallet?.stellar) {
       throw new Error('Hana Wallet is not installed');
     }
 
     return {
-      result: await hanaWindow.hanaWallet.stellar.signBlob({ blob: params.blob, accountToSign: params.publicKey }),
+      result: await window.hanaWallet.stellar.signBlob({ blob: params.blob, accountToSign: params.publicKey }),
     };
   }
 
   async signAuthEntry(params: { entryPreimageXDR: string; publicKey: string }): Promise<{ result: string }> {
-    if (!hanaWindow.hanaWallet?.stellar) {
+    if (!window.hanaWallet?.stellar) {
       throw new Error('Hana Wallet is not installed');
     }
 
     return {
-      result: await hanaWindow.hanaWallet.stellar.signAuthEntry({
+      result: await window.hanaWallet.stellar.signAuthEntry({
         xdr: params.entryPreimageXDR,
         accountToSign: params.publicKey,
       }),
