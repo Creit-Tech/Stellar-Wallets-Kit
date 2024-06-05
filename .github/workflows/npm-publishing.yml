@@ -12,12 +12,12 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '18.16.0'
+          node-version: '20.11.0'
           registry-url: 'https://registry.npmjs.org'
 
-      - run: npm i
+      - run: npm -g i pnpm && pnpm i
 
-      - run: npm run build
+      - run: pnpm run build
 
       - run: npm publish
         env:
