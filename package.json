@@ -1,6 +1,6 @@
 {
   "name": "@creit.tech/stellar-wallets-kit",
-  "version": "0.8.3",
+  "version": "0.8.4-beta1",
   "description": "A kit to handle all Stellar Wallets at once",
   "author": {
     "name": "Creit Technologies LLP",
@@ -37,8 +37,8 @@
     "@stellar/freighter-api": "2.0.0",
     "@walletconnect/modal": "2.6.2",
     "@walletconnect/sign-client": "2.11.2",
-    "events": "^3.3.0",
-    "lit": "^2.2.4"
+    "events": "3.3.0",
+    "lit": "2.8.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.25.0",

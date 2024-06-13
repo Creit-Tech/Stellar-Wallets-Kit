@@ -27,11 +27,11 @@ importers:
         specifier: 2.11.2
         version: 2.11.2
       events:
-        specifier: ^3.3.0
+        specifier: 3.3.0
         version: 3.3.0
       lit:
-        specifier: ^2.2.4
-        version: 2.7.5
+        specifier: 2.8.0
+        version: 2.8.0
     devDependencies:
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.25.0
@@ -1238,14 +1238,8 @@ packages:
   lit-element@3.3.2:
     resolution: {integrity: sha512-xXAeVWKGr4/njq0rGC9dethMnYCq5hpKYrgQZYTzawt9YQhMiXfD+T1RgrdY3NamOxwq2aXlb0vOI6e29CKgVQ==}
 
-  lit-html@2.7.4:
-    resolution: {integrity: sha512-/Jw+FBpeEN+z8X6PJva5n7+0MzCVAH2yypN99qHYYkq8bI+j7I39GH+68Z/MZD6rGKDK9RpzBw7CocfmHfq6+g==}
-
   lit-html@2.8.0:
     resolution: {integrity: sha512-o9t+MQM3P4y7M7yNzqAyjp7z+mQGa4NS4CxiyLqFPyFWyc4O+nodLrkrxSaCTrla6M5YOLaT3RpbbqjszB5g3Q==}
-
-  lit@2.7.5:
-    resolution: {integrity: sha512-i/cH7Ye6nBDUASMnfwcictBnsTN91+aBjXoTHF2xARghXScKxpD4F4WYI+VLXg9lqbMinDfvoI7VnZXjyHgdfQ==}
 
   lit@2.8.0:
     resolution: {integrity: sha512-4Sc3OFX9QHOJaHbmTMk28SYgVxLN3ePDjg7hofEft2zWlehFL3LiAuapWc4U/kYwMYJSh2hTCPZ6/LIC7ii0MA==}
@@ -3466,19 +3460,9 @@ snapshots:
       '@lit/reactive-element': 1.6.2
       lit-html: 2.8.0
 
-  lit-html@2.7.4:
-    dependencies:
-      '@types/trusted-types': 2.0.3
-
   lit-html@2.8.0:
     dependencies:
       '@types/trusted-types': 2.0.3
-
-  lit@2.7.5:
-    dependencies:
-      '@lit/reactive-element': 1.6.2
-      lit-element: 3.3.2
-      lit-html: 2.7.4
 
   lit@2.8.0:
     dependencies:

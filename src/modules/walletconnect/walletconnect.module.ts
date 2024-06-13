@@ -58,21 +58,26 @@ export class WalletConnectModule implements ModuleInterface {
       this.setSession(wcParams.sessionId);
     }
 
-    SignClient.init({
-      projectId: wcParams.projectId,
-      metadata: {
-        name: wcParams.name,
-        url: wcParams.url,
-        description: wcParams.description,
-        icons: wcParams.icons,
-      },
-    })
-      .then(client => {
-        console.log('WalletConnect is ready.');
-        this.client = client as never;
-        this.qrModal = new WalletConnectModal({ projectId: wcParams.projectId });
+    if (wcParams.client && wcParams.modal) {
+      this.client = wcParams.client as any;
+      this.qrModal = wcParams.modal;
+    } else {
+      SignClient.init({
+        projectId: wcParams.projectId,
+        metadata: {
+          name: wcParams.name,
+          url: wcParams.url,
+          description: wcParams.description,
+          icons: wcParams.icons,
+        },
       })
-      .catch(console.error);
+        .then(client => {
+          console.log('WalletConnect is ready.');
+          this.client = client as never;
+          this.qrModal = new WalletConnectModal({ projectId: wcParams.projectId });
+        })
+        .catch(console.error);
+    }
   }
 
   async getPublicKey(): Promise<string> {
@@ -233,6 +238,8 @@ export interface IWalletConnectConstructorParams {
   method: WalletConnectAllowedMethods;
   network: WalletNetwork;
   sessionId?: string;
+  client?: typeof SignClient;
+  modal?: WalletConnectModal;
 }
 
 export enum WalletConnectTargetChain {

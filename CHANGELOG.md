@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.4](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.8.3...v0.8.4) (Not deployed)
+### Change
+- Allow passing a wallet connect client and modal to the 
+- Update Lit to 2.8.0
+
 ### [0.8.3](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.8.2...v0.8.3) (2024-06-05)
 ### Add
 - Merge pull #22 and add Hana Wallet to the Kit
