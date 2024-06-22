@@ -1,5 +1,5 @@
 import { isConnected, signTransaction, signBlob, signAuthEntry, requestAccess } from '@stellar/freighter-api';
-import { ModuleInterface, ModuleType, WalletNetwork } from '../../types';
+import { ModuleInterface, ModuleType, WalletNetwork } from '../types';
 
 export const FREIGHTER_ID = 'freighter';
 

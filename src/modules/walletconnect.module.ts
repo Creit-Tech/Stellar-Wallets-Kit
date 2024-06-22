@@ -2,7 +2,7 @@ import { WalletConnectModal } from '@walletconnect/modal';
 import { SignClient } from '@walletconnect/sign-client';
 import { ISignClient } from '@walletconnect/types/dist/types/sign-client/client';
 import { SessionTypes } from '@walletconnect/types/dist/types/sign-client/session';
-import { ModuleInterface, ModuleType, WalletNetwork } from '../../types';
+import { ModuleInterface, ModuleType, WalletNetwork } from '../types';
 
 const parseWalletConnectSession = (session: SessionTypes.Struct): IParsedWalletConnectSession => {
   const accounts = session.namespaces.stellar.accounts.map((account: string) => ({

@@ -1,4 +1,4 @@
-import { ModuleInterface, ModuleType } from '../../types';
+import { ModuleInterface, ModuleType } from '../types';
 
 interface SignTransactionProps {
   xdr: string;
