@@ -153,3 +153,10 @@ export interface ModuleInterface extends KitActions {
    */
   isAvailable(): Promise<boolean>;
 }
+
+export interface StylesConfig {
+  primaryColor: string;
+  secondaryColor: string;
+  backgroundColor: string;
+  textColor: string;
+}
