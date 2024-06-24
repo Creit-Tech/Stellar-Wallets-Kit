@@ -7,12 +7,14 @@ import {
   KitActions,
   ModuleInterface,
   WalletNetwork,
+  StylesConfig,
 } from './types';
 
 export interface StellarWalletsKitParams {
   selectedWalletId: string;
   network: WalletNetwork;
   modules: ModuleInterface[];
+  styles?: StylesConfig;
 }
 
 export class StellarWalletsKit implements KitActions {
@@ -21,11 +23,22 @@ export class StellarWalletsKit implements KitActions {
   private network!: WalletNetwork;
   private modalElement?: StellarWalletsModal;
   private readonly modules: ModuleInterface[];
+  private styles?: StylesConfig;
 
   constructor(params: StellarWalletsKitParams) {
     this.modules = params.modules;
     this.setWallet(params.selectedWalletId);
     this.setNetwork(params.network);
+    this.styles = params.styles || {
+      primaryColor: '',
+      secondaryColor: '',
+      backgroundColor: '',
+      textColor: '',
+    };
+  }
+
+  updateStyles(styles: StylesConfig) {
+    this.styles = {...this.styles,...styles };
   }
 
   /**
