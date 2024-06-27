@@ -40,7 +40,8 @@
     "@walletconnect/modal": "2.6.2",
     "@walletconnect/sign-client": "2.11.2",
     "events": "3.3.0",
-    "lit": "2.8.0"
+    "lit": "2.8.0",
+    "stellar-sdk": "^12.1.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.25.0",
