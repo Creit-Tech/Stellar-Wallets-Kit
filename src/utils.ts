@@ -5,6 +5,7 @@ import { RabetModule } from './modules/rabet.module';
 import { xBullModule } from './modules/xbull.module';
 import { HanaModule } from './modules/hana.module';
 import { ModuleInterface } from './types';
+import { TrezorModule } from './modules/trezorconnect.module';
 
 export function allowAllModules(): ModuleInterface[] {
   return [
@@ -14,5 +15,6 @@ export function allowAllModules(): ModuleInterface[] {
     new xBullModule(),
     new LobstrModule(),
     new HanaModule(),
+    new TrezorModule(),
   ];
 }

@@ -9,3 +9,4 @@ export * from './modules/albedo.module';
 export * from './modules/rabet.module';
 export * from './modules/lobstr.module';
 export * from './modules/hana.module';
+export * from './modules/trezorconnect.module';
