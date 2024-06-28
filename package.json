@@ -1,13 +1,14 @@
 {
   "name": "@creit.tech/stellar-wallets-kit",
-  "version": "0.8.4-beta1",
+  "version": "0.9.0",
   "description": "A kit to handle all Stellar Wallets at once",
   "author": {
     "name": "Creit Technologies LLP",
     "url": "https://creit.tech"
   },
-  "main": "build/index.js",
-  "typings": "build/index.d.ts",
+  "main": "index.cjs",
+  "module": "index.js",
+  "types": "index.d.ts",
   "type": "module",
   "repository": {
     "type": "git",
@@ -24,8 +25,9 @@
     "Freighter"
   ],
   "scripts": {
-    "build": "rimraf ./build && npm run build:tsc",
-    "build:tsc": "tsc"
+    "build": "rimraf ./build && rollup -c && tsc --emitDeclarationOnly true --outDir ./build -p ./tsconfig.json",
+    "copyfiles": "cp ./package.json ./build && cp ./LICENSE ./build && cp ./README.md ./build && cp ./CHANGELOG.md ./build",
+    "all": "pnpm run build && pnpm run copyfiles"
   },
   "engines": {
     "node": ">=16"
@@ -49,16 +51,12 @@
     "@walletconnect/types": "^2.13.1",
     "@web/dev-server": "^0.1.31",
     "@webcomponents/webcomponentsjs": "^2.6.0",
+    "esbuild": "^0.21.5",
     "eslint": "^8.15.0",
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
+    "rollup": "^4.18.0",
+    "rollup-plugin-esbuild": "^6.1.1",
     "typescript": "~4.7.4"
-  },
-  "files": [
-    "build",
-    "CHANGELOG.md",
-    "LICENSE",
-    "README.md",
-    "package.json"
-  ]
+  }
 }

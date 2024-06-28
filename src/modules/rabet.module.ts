@@ -1,4 +1,4 @@
-import { ModuleInterface, ModuleType, WalletNetwork } from '../../types';
+import { ModuleInterface, ModuleType, WalletNetwork } from '../types';
 
 declare const window: Window &
   typeof globalThis & {

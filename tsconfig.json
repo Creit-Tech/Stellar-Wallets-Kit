@@ -1,15 +1,12 @@
 {
   "compilerOptions": {
     "skipLibCheck": true,
-    "target": "es2019",
+    "target": "ESNext",
     "outDir": "build",
     "rootDir": "src",
-    "moduleResolution": "node",
-    "module": "es2020",
+    "moduleResolution": "Node",
     "declaration": true,
     "declarationMap": true,
-    "inlineSources": true,
-    "inlineSourceMap": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,

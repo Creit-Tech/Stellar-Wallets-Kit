@@ -1,6 +1,6 @@
 import albedo from '@albedo-link/intent';
 
-import { ModuleInterface, ModuleType, WalletNetwork } from '../../types';
+import { ModuleInterface, ModuleType, WalletNetwork } from '../types';
 
 export const ALBEDO_ID = 'albedo';
 

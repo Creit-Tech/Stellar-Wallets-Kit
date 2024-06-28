@@ -2,10 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [0.8.4](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.8.3...v0.8.4) (Not deployed)
+### [0.9.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.8.3...v0.9.0) (2024-06-22)
 ### Change
-- Allow passing a wallet connect client and modal to the 
+- Allow passing a wallet connect client and modal to the kit
 - Update Lit to 2.8.0
+- Move to a Rollup bundle strategy so the kit is compatible with both Commonjs and ES Module projects
+- BREAKING: Moved from "build" distribution folder to a root style distribution
+- BREAKING: Wallet connect packages are no longer exported from the root file, import from `modules/walletconnect.module.ts` instead.
 
 ### [0.8.3](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.8.2...v0.8.3) (2024-06-05)
 ### Add

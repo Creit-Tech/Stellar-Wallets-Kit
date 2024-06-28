@@ -1,5 +1,5 @@
 import { xBullWalletConnect } from '@creit-tech/xbull-wallet-connect';
-import { ModuleInterface, ModuleType, WalletNetwork } from '../../types';
+import { ModuleInterface, ModuleType, WalletNetwork } from '../types';
 
 export const XBULL_ID = 'xbull';
 

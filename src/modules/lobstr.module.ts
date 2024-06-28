@@ -1,5 +1,5 @@
 import { isConnected, getPublicKey, signTransaction } from '@lobstrco/signer-extension-api';
-import { ModuleInterface, ModuleType, WalletNetwork } from '../../types';
+import { ModuleInterface, ModuleType, WalletNetwork } from '../types';
 
 export const LOBSTR_ID = 'lobstr';
 

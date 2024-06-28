@@ -17,8 +17,8 @@ jobs:
 
       - run: npm -g i pnpm && pnpm i
 
-      - run: pnpm run build
+      - run: pnpm run all
 
-      - run: npm publish
+      - run: cd build && npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
