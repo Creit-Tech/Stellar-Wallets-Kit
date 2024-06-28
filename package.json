@@ -33,8 +33,8 @@
   "dependencies": {
     "@albedo-link/intent": "0.12.0",
     "@creit-tech/xbull-wallet-connect": "github:Creit-Tech/xBull-Wallet-Connect#0.2.0",
-    "@ledgerhq/hw-app-btc": "^10.3.0",
-    "@ledgerhq/hw-transport-webusb": "^6.29.0",
+    "@ledgerhq/hw-app-str": "^7.0.0",
+    "@ledgerhq/hw-transport-node-hid": "^6.29.1",
     "@lobstrco/signer-extension-api": "1.0.0-beta.0",
     "@stellar/freighter-api": "2.0.0",
     "@walletconnect/modal": "2.6.2",

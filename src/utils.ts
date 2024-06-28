@@ -5,6 +5,7 @@ import { RabetModule } from './modules/rabet/rabet.module';
 import { xBullModule } from './modules/xbull/xbull.module';
 import { HanaModule } from './modules/hana/hana.module';
 import { ModuleInterface } from './types';
+import { LedgerModule } from './modules/ledger/ledger.module';
 
 export function allowAllModules(): ModuleInterface[] {
   return [
@@ -14,5 +15,6 @@ export function allowAllModules(): ModuleInterface[] {
     new xBullModule(),
     new LobstrModule(),
     new HanaModule(),
+    new LedgerModule()
   ];
 }
