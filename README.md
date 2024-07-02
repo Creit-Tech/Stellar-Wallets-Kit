@@ -8,6 +8,7 @@ A kit to handle all Stellar Wallets at once with a simple API and without caring
 - Rabet (extension version)
 - WalletConnect
 - Lobstr
+- Hana
 
 ## Installation
 
