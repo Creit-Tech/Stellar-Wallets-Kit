@@ -35,6 +35,7 @@
   "dependencies": {
     "@albedo-link/intent": "0.12.0",
     "@creit-tech/xbull-wallet-connect": "github:Creit-Tech/xBull-Wallet-Connect#0.2.0",
+    "@creit.tech/stellar-wallets-kit": "^0.9.0",
     "@lobstrco/signer-extension-api": "1.0.0-beta.0",
     "@stellar/freighter-api": "2.0.0",
     "@walletconnect/modal": "2.6.2",

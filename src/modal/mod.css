@@ -1,0 +1,20 @@
+:root {
+    --primaryColor: #000000;
+    --secondaryColor: #FFFFFF;
+  }
+  
+  .light-mode {
+    --primaryColor: #000000;
+    --secondaryColor: #FFFFFF;
+  }
+  
+  .dark-mode {
+    --primaryColor: #FFFFFF;
+    --secondaryColor: #000000;
+  }
+  
+  body {
+    background-color: var(--primaryColor);
+    color: var(--secondaryColor);
+  }
+  
