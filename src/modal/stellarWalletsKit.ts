@@ -1,6 +1,6 @@
-import { WalletNetwork } from '@creit.tech/stellar-wallets-kit';
-import './mod.css'
 import { ThemeConfig, defaultThemeConfig } from './themeConfig';
+import { applyModalStyles } from './modalStyles';
+import { WalletNetwork }  from '@creit.tech/stellar-wallets-kit';
 
 interface StellarWalletsKitParams {
   network: WalletNetwork;
@@ -14,19 +14,17 @@ export class StellarWalletsKit {
 
   constructor(options: StellarWalletsKitParams) {
     this.themeConfig = options.themeConfig || defaultThemeConfig;
-    this.applyThemeConfig();
   }
 
-  private applyThemeConfig() {
+  public applyThemeConfigToModal(modalElement: HTMLElement) {
     if (!this.themeConfig.autoModeSwitch) {
-      for (const [key, value] of Object.entries(this.themeConfig.colors)) {
-        document.documentElement.style.setProperty(`--${key}`, value);
-      }
+      applyModalStyles(modalElement, this.themeConfig.colors);
     } else {
       const mode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark-mode' : 'light-mode';
-      document.documentElement.classList.add(mode);
+      modalElement.classList.add(mode);
     }
   }
 
   // Other methods...
 }
+
