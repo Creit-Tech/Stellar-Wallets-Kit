@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.1](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.9.0...v0.9.1) (2024-07-02)
+### Change
+- The list of wallets on the modal will now dynamically change its order based on the criteria here: https://github.com/Creit-Tech/Stellar-Wallets-Kit/issues/28 
+
 ### [0.9.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.8.3...v0.9.0) (2024-06-22)
 ### Change
 - Allow passing a wallet connect client and modal to the kit

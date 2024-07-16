@@ -88,6 +88,15 @@ export class StellarWalletsModal extends LitElement {
 
     await new Promise(r => setTimeout(r, 300));
 
+    try {
+      const record: string | null = window.localStorage.getItem('@StellarWalletsKit/usedWalletsIds');
+      let usedWalletsIds: Array<ISupportedWallet['id']> = record ? JSON.parse(record) : [];
+      usedWalletsIds = [option.id, ...usedWalletsIds.filter((id: string): boolean => id !== option.id)];
+      window.localStorage.setItem('@StellarWalletsKit/usedWalletsIds', JSON.stringify(usedWalletsIds));
+    } catch (e) {
+      console.error(e);
+    }
+
     this.dispatchEvent(
       new CustomEvent('wallet-selected', {
         detail: option,
@@ -95,6 +104,58 @@ export class StellarWalletsModal extends LitElement {
         composed: true,
       })
     );
+  }
+
+  /**
+   * This function gets the list of the wallets following the logic from this task https://github.com/Creit-Tech/Stellar-Wallets-Kit/issues/28
+   * It follows this order:
+   * 1- Wallet last used by wallet selector
+   * 2- If not wallet last use, wallets detected in the browser
+   * 3- Wallet ordering as defined by the developer
+   *
+   */
+  private getSortedList(): ISupportedWallet[] {
+    const sortedWallets: { available: ISupportedWallet[]; unavailable: ISupportedWallet[] } =
+      this.allowedWallets.reduce(
+        (all: { available: ISupportedWallet[]; unavailable: ISupportedWallet[] }, current: ISupportedWallet) => {
+          return {
+            available: current.isAvailable ? [...all.available, current] : all.available,
+            unavailable: !current.isAvailable ? [...all.unavailable, current] : all.unavailable,
+          };
+        },
+        { available: [], unavailable: [] }
+      );
+
+    let usedWalletsIds: Array<ISupportedWallet['id']>;
+    try {
+      const record: string | null = window.localStorage.getItem('@StellarWalletsKit/usedWalletsIds');
+      usedWalletsIds = record ? JSON.parse(record) : [];
+    } catch (e) {
+      console.error(e);
+      usedWalletsIds = [];
+    }
+
+    if (usedWalletsIds.length === 0) {
+      return [...sortedWallets.available, ...sortedWallets.unavailable];
+    }
+
+    const usedWallets: ISupportedWallet[] = [];
+    const nonUsedWallets: ISupportedWallet[] = [];
+    for (const availableWallet of sortedWallets.available) {
+      if (usedWalletsIds.find((id: string): boolean => id === availableWallet.id)) {
+        usedWallets.push(availableWallet);
+      } else {
+        nonUsedWallets.push(availableWallet);
+      }
+    }
+
+    return [
+      ...usedWallets.sort((a: ISupportedWallet, b: ISupportedWallet) => {
+        return usedWalletsIds.indexOf(a.id) - usedWalletsIds.indexOf(b.id);
+      }),
+      ...nonUsedWallets,
+      ...sortedWallets.unavailable,
+    ];
   }
 
   override render() {
@@ -135,7 +196,7 @@ export class StellarWalletsModal extends LitElement {
         </header>
 
         <ul class="wallets-body">
-          ${this.allowedWallets.map(
+          ${this.getSortedList().map(
             (item: ISupportedWallet, i: number) =>
               html`
                 <li
