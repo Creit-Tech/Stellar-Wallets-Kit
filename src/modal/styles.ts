@@ -58,55 +58,55 @@ export const modalDialogBodyStyles = css`
 
   @media (prefers-color-scheme: light) {
     .dialog-modal-body__help {
-      background-color: #f8f8f8;
-      border-top: 1px solid rgba(0, 0, 0, 0.15);
+      background-color: var(--modal-accent-color, #f8f8f8);
+      border-top: 1px solid var(--modal-accent-color-foreground, rgba(0, 0, 0, 0.15));
     }
 
     @media screen and (min-width: 768px) {
       .dialog-modal-body__help {
         border-top: none;
-        border-right: 1px solid rgba(0, 0, 0, 0.15);
+        border-right: 1px solid var(--modal-accent-color-foreground, rgba(0, 0, 0, 0.15));
       }
     }
 
     .dialog-modal-body__wallets,
     .dialog-modal-body {
-      background-color: #fcfcfc;
+      background-color: var(--modal-bg-color, #fcfcfc);
     }
 
     .dialog-text-solid {
-      color: #000000;
+      color: var(--modal-text-color, #000000);
     }
 
     .dialog-text {
-      color: #181818;
+      color: var(--modal-accent-color-foreground, #181818);
     }
   }
 
   @media (prefers-color-scheme: dark) {
     .dialog-modal-body__help {
-      background-color: #1c1c1c;
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      background-color: var(--modal-accent-color, #1c1c1c);
+      border-top: 1px solid var(--modal-accent-color-foreground, rgba(255, 255, 255, 0.15));
     }
 
     @media screen and (min-width: 768px) {
       .dialog-modal-body__help {
         border-top: none;
-        border-right: 1px solid rgba(255, 255, 255, 0.15);
+        border-right: 1px solid var(--modal-accent-color-foreground, rgba(255, 255, 255, 0.15));
       }
     }
 
     .dialog-modal-body__wallets,
     .dialog-modal-body {
-      background-color: #161616;
+      background-color: var(--modal-bg-color, #161616);
     }
 
     .dialog-text-solid {
-      color: #ededed;
+      color: var(--modal-text-color, #ededed);
     }
 
     .dialog-text {
-      color: #a0a0a0;
+      color: var(--modal-accent-color-foreground, #a0a0a0);
     }
   }
 
@@ -213,13 +213,13 @@ export const modalWalletsSection = css`
 
   @media (prefers-color-scheme: light) {
     .wallets-header__button svg {
-      fill: #8f8f8f;
+      fill: var(--modal-accent-color-foreground, #8f8f8f);
     }
   }
 
   @media (prefers-color-scheme: dark) {
     .wallets-header__button svg {
-      fill: #707070;
+      fill: var(--modal-accent-color-foreground, #707070);
     }
   }
 
@@ -258,17 +258,17 @@ export const modalWalletsSection = css`
 
   @media (prefers-color-scheme: light) {
     .wallets-body__item .not-available {
-      border: solid #e2e2e2 1px;
-      background-color: #f3f3f3;
-      color: #6f6f6f;
+      border: solid var(--modal-accent-color-foreground, #e2e2e2) 1px;
+      background-color: var(--modal-accent-color, #f3f3f3);
+      color: var(--modal-accent-color-foreground, #6f6f6f);
     }
   }
 
   @media (prefers-color-scheme: dark) {
     .wallets-body__item .not-available {
-      border: solid #343434 1px;
-      background-color: #232323;
-      color: #a0a0a0;
+      border: solid var(--modal-accent-color-foreground, #343434) 1px;
+      background-color: var(--modal-accent-color, #232323);
+      color: var(--modal-accent-color-foreground, #a0a0a0);
     }
   }
 

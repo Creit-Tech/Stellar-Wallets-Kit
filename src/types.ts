@@ -40,6 +40,14 @@ export enum ModuleType {
   AIR_GAPED_WALLET = 'AIR_GAPED_WALLET',
 }
 
+//new: Theme interface
+export interface ITheme {
+  bgColor: string;
+  textColor: string;
+  accentColor: string;
+  accentColorForeground: string;
+}
+
 export interface ISupportedWallet {
   id: string;
   name: string;
