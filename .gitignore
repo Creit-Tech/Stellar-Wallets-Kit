@@ -13,6 +13,7 @@ src/**.js
 coverage
 *.log
 yarn.lock
+bun.lockb
 
 custom-elements.json
 
