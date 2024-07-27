@@ -2,7 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 import { customElement, property } from 'lit/decorators.js';
 
-import { ISupportedWallet } from '../types';
+import { ISupportedWallet, ITheme } from '../types';
 import {
   backdropStyles,
   modalWalletsSection,
@@ -57,6 +57,14 @@ export class StellarWalletsModal extends LitElement {
     },
   })
   modalDialogStyles = { zIndex: 990 };
+  
+  //new: theme property
+  @property({
+    converter: {
+      fromAttribute: (v: string) => v && { ...JSON.parse(v) },
+    },
+  })
+  theme?: ITheme;
 
   override connectedCallback() {
     super.connectedCallback();
@@ -157,6 +165,18 @@ export class StellarWalletsModal extends LitElement {
       ...sortedWallets.unavailable,
     ];
   }
+  
+  //new: theme helper
+  private getThemeStyles() {
+    if (!this.theme) return {};
+
+    return {
+      '--modal-bg-color': this.theme.bgColor,
+      '--modal-text-color': this.theme.textColor,
+      '--modal-accent-color': this.theme.accentColor,
+      '--modal-accent-color-foreground': this.theme.accentColorForeground,
+    };
+  }
 
   override render() {
     const helpSection = html`
@@ -217,7 +237,7 @@ export class StellarWalletsModal extends LitElement {
 
     return html`
       <dialog
-        style=${styleMap(this.modalDialogStyles)}
+        style=${styleMap({ ...this.getThemeStyles(), ...this.modalDialogStyles })}
         class="dialog-modal ${this.closingModal ? 'closing' : ''}"
         .open=${this.showModal}>
         <section class="dialog-modal-body">

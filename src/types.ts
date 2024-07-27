@@ -25,6 +25,15 @@ export interface IStellarWalletsSignTx {
   network?: WalletNetwork;
 }
 
+
+//new: Theme interface
+export interface ITheme {
+  bgColor: string;
+  textColor: string;
+  accentColor: string;
+  accentColorForeground: string;
+}
+
 export enum WalletNetwork {
   PUBLIC = 'Public Global Stellar Network ; September 2015',
   TESTNET = 'Test SDF Network ; September 2015',
