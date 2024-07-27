@@ -12,6 +12,36 @@ import {
   modalAnimations,
 } from './styles';
 
+export enum ModalThemeType {
+  DARK = 'DARK',
+  LIGHT = 'LIGHT',
+}
+
+export const ModalThemes: { [key in ModalThemeType]: ITheme } = {
+  DARK: {
+    bgColor: '#161616',
+    textColor: '#a0a0a0',
+    solidTextColor: '#ededed',
+    headerButtonColor: '#707070',
+    dividerColor: 'rgba(255, 255, 255, 0.15)',
+    helpBgColor: '#1c1c1c',
+    notAvailableTextColor: '#a0a0a0',
+    notAvailableBgColor: '#232323',
+    notAvailableBorderColor: '#343434',
+  },
+  LIGHT: {
+    bgColor: '#fcfcfc',
+    textColor: '#181818',
+    solidTextColor: '#000000',
+    headerButtonColor: '#8f8f8f',
+    dividerColor: 'rgba(0, 0, 0, 0.15)',
+    helpBgColor: '#f8f8f8',
+    notAvailableTextColor: '#6f6f6f',
+    notAvailableBgColor: '#f3f3f3',
+    notAvailableBorderColor: '#e2e2e2',
+  },
+};
+
 @customElement('stellar-wallets-modal')
 export class StellarWalletsModal extends LitElement {
   static override styles = [
@@ -57,8 +87,7 @@ export class StellarWalletsModal extends LitElement {
     },
   })
   modalDialogStyles = { zIndex: 990 };
-  
-  //new: theme property
+
   @property({
     converter: {
       fromAttribute: (v: string) => v && { ...JSON.parse(v) },
@@ -165,16 +194,20 @@ export class StellarWalletsModal extends LitElement {
       ...sortedWallets.unavailable,
     ];
   }
-  
-  //new: theme helper
+
   private getThemeStyles() {
     if (!this.theme) return {};
 
     return {
       '--modal-bg-color': this.theme.bgColor,
       '--modal-text-color': this.theme.textColor,
-      '--modal-accent-color': this.theme.accentColor,
-      '--modal-accent-color-foreground': this.theme.accentColorForeground,
+      '--modal-solid-text-color': this.theme.solidTextColor,
+      '--modal-header-button-color': this.theme.headerButtonColor,
+      '--modal-divider-color': this.theme.dividerColor,
+      '--modal-help-bg-color': this.theme.helpBgColor,
+      '--modal-not-available-text-color': this.theme.notAvailableTextColor,
+      '--modal-not-available-bg-color': this.theme.notAvailableBgColor,
+      '--modal-not-available-border-color': this.theme.notAvailableBorderColor,
     };
   }
 

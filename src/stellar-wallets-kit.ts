@@ -14,7 +14,7 @@ export interface StellarWalletsKitParams {
   selectedWalletId: string;
   network: WalletNetwork;
   modules: ModuleInterface[];
-  theme?: ITheme; //new: Optional theme in params
+  theme?: ITheme;
 }
 
 export class StellarWalletsKit implements KitActions {
@@ -23,13 +23,13 @@ export class StellarWalletsKit implements KitActions {
   private network!: WalletNetwork;
   private modalElement?: StellarWalletsModal;
   private readonly modules: ModuleInterface[];
-  private theme?: ITheme; //new: theme optional
+  private theme?: ITheme;
 
   constructor(params: StellarWalletsKitParams) {
     this.modules = params.modules;
     this.setWallet(params.selectedWalletId);
     this.setNetwork(params.network);
-    //new: optional accept theme params
+
     if (params.theme) {
       this.setTheme(params.theme);
     }
@@ -62,8 +62,7 @@ export class StellarWalletsKit implements KitActions {
 
     this.network = network;
   }
-  
-  //new: set theme property
+
   public setTheme(theme: ITheme): void {
     this.theme = theme;
   }
@@ -169,8 +168,7 @@ export class StellarWalletsKit implements KitActions {
     if (params.modalDialogStyles) {
       this.modalElement.setAttribute('modalDialogStyles', JSON.stringify(params.modalDialogStyles));
     }
-    
-    //new: Apply theme if any
+
     if (this.theme) {
       this.modalElement.setAttribute('theme', JSON.stringify(this.theme));
     }

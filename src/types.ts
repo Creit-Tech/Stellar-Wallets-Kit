@@ -25,13 +25,16 @@ export interface IStellarWalletsSignTx {
   network?: WalletNetwork;
 }
 
-
-//new: Theme interface
 export interface ITheme {
   bgColor: string;
   textColor: string;
-  accentColor: string;
-  accentColorForeground: string;
+  solidTextColor: string;
+  headerButtonColor: string;
+  dividerColor: string;
+  helpBgColor: string;
+  notAvailableTextColor: string;
+  notAvailableBgColor: string;
+  notAvailableBorderColor: string;
 }
 
 export enum WalletNetwork {
