@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.2](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.9.1...v0.9.2) (2024-07-27)
+### Change
+- Merge of PR [#33](https://github.com/Creit-Tech/Stellar-Wallets-Kit/pull/33) which allows defining a custom theme to the kit's modal
+- Improve the custom theme feature so it allows more customization, also include default themes so users can use them directly if they want to 
+
 ### [0.9.1](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.9.0...v0.9.1) (2024-07-02)
 ### Change
 - The list of wallets on the modal will now dynamically change its order based on the criteria here: https://github.com/Creit-Tech/Stellar-Wallets-Kit/issues/28 
