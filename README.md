@@ -67,7 +67,7 @@ The library integrates a UI modal you can show your users after you have started
 await kit.openModal({
   onWalletSelected: async (option: ISupportedWallet) => {
     kit.setWallet(option.id);
-    const publicKey = await kit.getPublicKey();
+    const { address } = await kit.getAddress();
     // Do something else
   }
 });
@@ -81,7 +81,6 @@ The `openModal` method also lets you update multiple things about the model like
 function openModal(params: {
     onWalletSelected: (option: ISupportedWallet) => void;
     onClosed?: (err: Error) => void;
-    modalDialogStyles?: { [name: string]: string | number | undefined | null; }
     modalTitle?: string;
     notAvailableText?: string;
 }) {}
@@ -92,14 +91,11 @@ function openModal(params: {
 
 Each wallet has its own way when it comes to both requesting the public key and signing a transaction. Using this kit you can do both actions with a unified API:
 ```typescript
-const publicKey = await kit.getPublicKey();
-
-// AND
-
-const { result } = await kit.signTx({
-  xdr: '....',
-  publicKeys: [publicKey], // You could send multiple public keys in case the wallet needs to handle multi signatures
-  network: WalletNetwork.PUBLIC
+const { address } = await kit.getAddress();
+// AND THEN
+const { signedTxXdr } = await kit.signTransaction('XDR_HERE', {
+  address,
+  networkPassphrase: WalletNetwork.PUBLIC
 });
 ```
 

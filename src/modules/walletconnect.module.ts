@@ -3,6 +3,7 @@ import { SignClient } from '@walletconnect/sign-client';
 import { ISignClient } from '@walletconnect/types/dist/types/sign-client/client';
 import { SessionTypes } from '@walletconnect/types/dist/types/sign-client/session';
 import { ModuleInterface, ModuleType, WalletNetwork } from '../types';
+import { parseError } from '../utils';
 
 const parseWalletConnectSession = (session: SessionTypes.Struct): IParsedWalletConnectSession => {
   const accounts = session.namespaces.stellar.accounts.map((account: string) => ({
@@ -41,7 +42,7 @@ export class WalletConnectModule implements ModuleInterface {
   productId: string = WALLET_CONNECT_ID;
   productName: string = 'Wallet Connect';
   productUrl: string = 'https://walletconnect.com/';
-  productIcon: string = 'https://stellar.creit.tech/wallet-icons/walletconnect.svg';
+  productIcon: string = 'https://stellar.creit.tech/wallet-icons/walletconnect.png';
 
   private client?: ISignClient & {
     on: (event: string, cb: (data: { topic: string }) => void) => void;
@@ -80,51 +81,80 @@ export class WalletConnectModule implements ModuleInterface {
     }
   }
 
-  async getPublicKey(): Promise<string> {
-    if (!this.client) {
-      throw new Error('WalletConnect is not running yet');
-    }
+  async getAddress(): Promise<{ address: string }> {
+    const runChecks = async () => {
+      if (!this.client) {
+        throw new Error('WalletConnect is not running yet');
+      }
+    };
 
-    const targetSession: IParsedWalletConnectSession = await this.getTargetSession();
-    return targetSession.accounts[0].publicKey;
+    return runChecks()
+      .then(async (): Promise<{ address: string }> => {
+        const targetSession: IParsedWalletConnectSession = await this.getTargetSession();
+        return { address: targetSession.accounts[0].publicKey };
+      })
+      .catch(e => {
+        throw parseError(e);
+      });
   }
 
-  async signTx(params: { xdr: string; publicKeys: string[]; network: WalletNetwork }): Promise<{ result: string }> {
-    if (!this.client) {
-      throw new Error('WalletConnect is not running yet');
+  async signTransaction(
+    xdr: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+      submit?: boolean;
+      submitUrl?: string;
     }
+  ): Promise<{ signedTxXdr: string; signerAddress?: string }> {
+    const runChecks = async () => {
+      if (!this.client) {
+        throw new Error('WalletConnect is not running yet');
+      }
+    };
 
-    let updatedXdr: string = params.xdr;
-    for (const publicKey of params.publicKeys) {
-      const targetSession: IParsedWalletConnectSession = await this.getTargetSession({ publicKey });
-      updatedXdr = await this.client
-        .request({
+    return runChecks()
+      .then(async () => {
+        const targetSession: IParsedWalletConnectSession = await this.getTargetSession({ publicKey: opts?.address });
+        const signedTxXdr = await this.client!.request({
           topic: targetSession.id,
           chainId:
-            params.network === WalletNetwork.PUBLIC
+            opts?.networkPassphrase === WalletNetwork.PUBLIC
               ? WalletConnectTargetChain.PUBLIC
               : WalletConnectTargetChain.TESTNET,
           request: {
             method: this.wcParams.method,
-            params: { xdr: params.xdr },
+            params: { xdr },
           },
-        })
-        .then((v: any) => v.signedXDR);
-    }
+        }).then((v: any) => v.signedXDR);
 
-    return { result: updatedXdr };
+        return { signedTxXdr };
+      })
+      .catch(e => {
+        throw parseError(e);
+      });
   }
 
-  // @ts-expect-error - This is not a supported operation so we don't use the params
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async signBlob(params: { blob: string; publicKey?: string }): Promise<{ result: string }> {
-    throw new Error('xBull does not support signing random blobs');
+  async signAuthEntry(): Promise<{ signedAuthEntry: string; signerAddress?: string }> {
+    throw {
+      code: -3,
+      message: 'WalletConnect does not support the "signAuthEntry" function',
+    };
   }
 
-  // @ts-expect-error - This is not a supported operation so we don't use the params
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async signAuthEntry(params: { entryPreimageXDR: string; publicKey?: string }): Promise<{ result: string }> {
-    throw new Error('xBull does not support signing authorization entries');
+  async signMessage(): Promise<{ signedMessage: string; signerAddress?: string }> {
+    throw {
+      code: -3,
+      message: 'WalletConnect does not support the "signMessage" function',
+    };
+  }
+
+  async getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
+    throw {
+      code: -3,
+      message: 'WalletConnect does not support the "getNetwork" function',
+    };
   }
 
   /**

@@ -1,9 +1,10 @@
 import { ModuleInterface, ModuleType } from '../types';
+import { parseError } from '../utils';
 
 interface SignTransactionProps {
   xdr: string;
-  accountToSign: string;
-  networkPassphrase: string;
+  accountToSign?: string;
+  networkPassphrase?: string;
 }
 
 interface SignBlobProps {
@@ -13,7 +14,7 @@ interface SignBlobProps {
 
 interface SignAuthEntryProps {
   xdr: string;
-  accountToSign: string;
+  accountToSign?: string;
 }
 
 declare const window: Window & {
@@ -35,57 +36,97 @@ export class HanaModule implements ModuleInterface {
   productId: string = HANA_ID;
   productName: string = 'Hana Wallet';
   productUrl: string = 'https://hanawallet.io/';
-  productIcon: string = 'https://stellar.creit.tech/wallet-icons/hana.svg';
+  productIcon: string = 'https://stellar.creit.tech/wallet-icons/hana.png';
 
   async isAvailable(): Promise<boolean> {
     return !!window.hanaWallet?.stellar;
   }
 
-  async getPublicKey(): Promise<string> {
-    if (!window.hanaWallet?.stellar) {
-      throw new Error('Hana Wallet is not installed');
-    }
+  async getAddress(): Promise<{ address: string }> {
+    const runChecks = async () => {
+      if (!window.hanaWallet?.stellar) {
+        throw new Error('Hana Wallet is not installed');
+      }
+    };
 
-    return window.hanaWallet.stellar.getPublicKey();
-  }
-
-  async signTx(params: { xdr: string; publicKeys: string[]; network: string }): Promise<{ result: string }> {
-    if (!window.hanaWallet?.stellar) {
-      throw new Error('Hana Wallet is not installed');
-    }
-
-    let updatedXdr: string = params.xdr;
-    for (const publicKey of params.publicKeys) {
-      updatedXdr = await window.hanaWallet.stellar.signTransaction({
-        xdr: updatedXdr,
-        accountToSign: publicKey,
-        networkPassphrase: params.network,
+    return runChecks()
+      .then(() => window.hanaWallet!.stellar!.getPublicKey())
+      .then(address => ({ address }))
+      .catch(e => {
+        throw parseError(e);
       });
-    }
-
-    return { result: updatedXdr };
   }
 
-  async signBlob(params: { blob: string; publicKey: string }): Promise<{ result: string }> {
-    if (!window.hanaWallet?.stellar) {
-      throw new Error('Hana Wallet is not installed');
+  async signTransaction(
+    xdr: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+      submit?: boolean;
+      submitUrl?: string;
     }
+  ): Promise<{ signedTxXdr: string; signerAddress?: string }> {
+    const runChecks = async () => {
+      if (!window.hanaWallet?.stellar) {
+        throw new Error('Hana Wallet is not installed');
+      }
+    };
 
-    return {
-      result: await window.hanaWallet.stellar.signBlob({ blob: params.blob, accountToSign: params.publicKey }),
+    const sign = async () =>
+      window.hanaWallet!.stellar!.signTransaction({
+        xdr,
+        accountToSign: opts?.address,
+        networkPassphrase: opts?.networkPassphrase,
+      });
+
+    return runChecks()
+      .then(sign)
+      .then(signedTxXdr => ({ signedTxXdr, signerAddress: opts?.address }))
+      .catch(e => {
+        throw parseError(e);
+      });
+  }
+
+  async signAuthEntry(
+    authEntry: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+    }
+  ): Promise<{ signedAuthEntry: string; signerAddress?: string }> {
+    const runChecks = async () => {
+      if (!window.hanaWallet?.stellar) {
+        throw new Error('Hana Wallet is not installed');
+      }
+    };
+
+    const sign = async () =>
+      window.hanaWallet!.stellar!.signAuthEntry({
+        xdr: authEntry,
+        accountToSign: opts?.address,
+      });
+
+    return runChecks()
+      .then(sign)
+      .then(signedAuthEntry => ({ signedAuthEntry, signerAddress: opts?.address }))
+      .catch(e => {
+        throw parseError(e);
+      });
+  }
+
+  async signMessage(): Promise<{ signedMessage: string; signerAddress?: string }> {
+    throw {
+      code: -3,
+      message: 'Hana does not support the "signMessage" function',
     };
   }
 
-  async signAuthEntry(params: { entryPreimageXDR: string; publicKey: string }): Promise<{ result: string }> {
-    if (!window.hanaWallet?.stellar) {
-      throw new Error('Hana Wallet is not installed');
-    }
-
-    return {
-      result: await window.hanaWallet.stellar.signAuthEntry({
-        xdr: params.entryPreimageXDR,
-        accountToSign: params.publicKey,
-      }),
+  async getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
+    throw {
+      code: -3,
+      message: 'Hana does not support the "getNetwork" function',
     };
   }
 }

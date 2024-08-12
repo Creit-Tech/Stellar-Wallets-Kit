@@ -1,14 +1,5 @@
 import { StellarWalletsModal } from './modal/stellar-wallets-modal';
-import {
-  IStellarWalletsSignAuthEntry,
-  IStellarWalletsSignBlob,
-  IStellarWalletsSignTx,
-  ISupportedWallet,
-  ITheme,
-  KitActions,
-  ModuleInterface,
-  WalletNetwork,
-} from './types';
+import { ISupportedWallet, ITheme, KitActions, ModuleInterface, WalletNetwork } from './types';
 
 export interface StellarWalletsKitParams {
   selectedWalletId: string;
@@ -39,7 +30,7 @@ export class StellarWalletsKit implements KitActions {
    * This method will return an array with all wallets supported by this kit but will let you know those the user have already installed/has access to
    * There are wallets that are by default available since they either don't need to be installed or have a fallback
    */
-  async getSupportedWallets(): Promise<ISupportedWallet[]> {
+  public async getSupportedWallets(): Promise<ISupportedWallet[]> {
     return Promise.all(
       this.modules.map(async (mod: ModuleInterface): Promise<ISupportedWallet> => {
         const timer: Promise<false> = new Promise(r => setTimeout(() => r(false), 500));
@@ -80,81 +71,73 @@ export class StellarWalletsKit implements KitActions {
     this.selectedModule = target;
   }
 
-  public async getPublicKey(params?: { path?: string }): Promise<string> {
+  public async getAddress(params?: { path?: string }): Promise<{ address: string }> {
     if (!this.selectedWallet) {
-      throw new Error('Please set the wallet type first');
+      throw { code: -3, message: 'Please set the wallet type first' };
     }
 
-    return this.selectedModule.getPublicKey(params);
+    return this.selectedModule.getAddress(params);
   }
 
-  async signTx(params: { xdr: string; publicKeys: string[]; network: WalletNetwork }): Promise<{ result: string }> {
+  public async signTransaction(
+    xdr: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+      submit?: boolean;
+      submitUrl?: string;
+    }
+  ): Promise<{ signedTxXdr: string; signerAddress?: string }> {
     if (!this.selectedWallet) {
-      throw new Error('Please set the wallet type first');
+      throw { code: -3, message: 'Please set the wallet type first' };
     }
 
-    return this.selectedModule.signTx(params);
+    return this.selectedModule.signTransaction(xdr, { ...opts, networkPassphrase: this.network });
   }
 
-  async signBlob(params: { blob: string; publicKey?: string }): Promise<{ result: string }> {
+  public async signAuthEntry(
+    authEntry: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+    }
+  ): Promise<{ signedAuthEntry: string; signerAddress?: string }> {
     if (!this.selectedWallet) {
-      throw new Error('Please set the wallet type first');
+      throw { code: -3, message: 'Please set the wallet type first' };
     }
 
-    return this.selectedModule.signBlob(params);
+    return this.selectedModule.signAuthEntry(authEntry, { ...opts, networkPassphrase: this.network });
   }
 
-  async signAuthEntry(params: { entryPreimageXDR: string; publicKey?: string }): Promise<{ result: string }> {
+  public async signMessage(
+    message: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+    }
+  ): Promise<{ signedMessage: string; signerAddress?: string }> {
     if (!this.selectedWallet) {
-      throw new Error('Please set the wallet type first');
+      throw { code: -3, message: 'Please set the wallet type first' };
     }
 
-    return this.selectedModule.signAuthEntry(params);
+    return this.selectedModule.signMessage(message, { ...opts, networkPassphrase: this.network });
   }
 
-  /**
-   * @deprecated - This method will be removed in future releases.
-   * Use specific methods instead like signTx, signBlob, etc
-   */
-  public async sign(
-    params: IStellarWalletsSignBlob | IStellarWalletsSignTx | IStellarWalletsSignAuthEntry
-  ): Promise<{ signedXDR: string }> {
+  async getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
     if (!this.selectedWallet) {
-      throw new Error('Please set the wallet type first');
+      throw { code: -3, message: 'Please set the wallet type first' };
     }
 
-    let signedXDR: string;
-    if ((params as IStellarWalletsSignTx).xdr) {
-      const { result } = await this.selectedModule.signTx({
-        xdr: (params as IStellarWalletsSignTx).xdr,
-        network: params.network || this.network,
-        publicKeys: params.publicKey ? [params.publicKey] : [],
-      });
-      signedXDR = result;
-    } else if ((params as IStellarWalletsSignBlob).blob) {
-      const { result } = await this.selectedModule.signBlob({
-        blob: (params as IStellarWalletsSignBlob).blob,
-        publicKey: params.publicKey,
-      });
-      signedXDR = result;
-    } else if ((params as IStellarWalletsSignAuthEntry).entryPreimageXDR) {
-      const { result } = await this.selectedModule.signBlob({
-        blob: (params as IStellarWalletsSignAuthEntry).entryPreimageXDR,
-        publicKey: params.publicKey,
-      });
-      signedXDR = result;
-    } else {
-      throw new Error(`Something went wrong, make sure the parameters are correct`);
-    }
-
-    return { signedXDR };
+    return this.selectedModule.getNetwork();
   }
 
   // ---- Modal methods
   public async openModal(params: {
     onWalletSelected: (option: ISupportedWallet) => void;
     onClosed?: (err: Error) => void;
-    modalDialogStyles?: { [name: string]: string | number | undefined | null };
     modalTitle?: string;
     notAvailableText?: string;
   }): Promise<void> {
@@ -164,10 +147,6 @@ export class StellarWalletsKit implements KitActions {
 
     this.modalElement = document.createElement('stellar-wallets-modal') as StellarWalletsModal;
     this.modalElement.setAttribute('showModal', '');
-
-    if (params.modalDialogStyles) {
-      this.modalElement.setAttribute('modalDialogStyles', JSON.stringify(params.modalDialogStyles));
-    }
 
     if (this.theme) {
       this.modalElement.setAttribute('theme', JSON.stringify(this.theme));

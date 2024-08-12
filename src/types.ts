@@ -1,30 +1,3 @@
-/**
- * @deprecated - This will be removed in future releases
- */
-export interface IStellarWalletsSignBlob {
-  blob: string;
-  publicKey?: string;
-  network?: WalletNetwork;
-}
-
-/**
- * @deprecated - This will be removed in future releases
- */
-export interface IStellarWalletsSignAuthEntry {
-  entryPreimageXDR: string;
-  publicKey?: string;
-  network?: WalletNetwork;
-}
-
-/**
- * @deprecated - This will be removed in future releases
- */
-export interface IStellarWalletsSignTx {
-  xdr: string;
-  publicKey?: string;
-  network?: WalletNetwork;
-}
-
 export interface ITheme {
   bgColor: string;
   textColor: string;
@@ -70,53 +43,81 @@ export interface KitActions {
    * specific path on a wallet.
    *
    * @param params
-   * @param params.path - The path to tell the wallet which position to ask.
-   * This is commonly used in both hardware wallets and air gaped wallets.
+   * @param params.path - The path to tell the wallet which position to ask. This is commonly used in hardware wallets.
+   *
+   * @return Promise<{ address: string }>
    */
-  getPublicKey(params?: { path?: string }): Promise<string>;
+  getAddress(params?: { path?: string }): Promise<{ address: string }>;
 
   /**
-   * A function to request a wallet to sign a built transaction in its XDR mode.
+   * A function to request a wallet to sign a built transaction in its XDR mode
    *
-   * @param params
-   * @param params.xdr - The transaction to sign, this transaction must be valid
-   * and into a base64 xdr format
-   * @param params.publicKeys - An array with all the public keys the wallet
-   * should use to sign the transaction. If the wallet doesn't allow multiple
-   * signatures at once, the module should take care of it.
-   * @param params.network - The network to use when signing the transaction
+   * @param xdr - A Transaction or a FeeBumpTransaction
+   * @param opts - Options compatible with https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0043.md#signtransaction
+   * @param opts.networkPassphrase - The Stellar network to use when signing
+   * @param opts.address - The public key of the account that should be used to sign
+   * @param opts.path - This options is added for special cases like Hardware wallets
    *
-   * @return response - Promise
-   * @return response.result - Signed xdr in base64 format
+   * @return Promise<{ signedTxXdr: string; signerAddress: string }>
    */
-  signTx(params: { xdr: string; publicKeys: string[]; network: WalletNetwork }): Promise<{ result: string }>;
+  signTransaction(
+    xdr: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+      submit?: boolean;
+      submitUrl?: string;
+    }
+  ): Promise<{ signedTxXdr: string; signerAddress?: string }>;
 
   /**
-   * A function to request a wallet to sign a random blob.
+   * A function to request a wallet to sign an AuthEntry XDR.
    *
-   * @param params
-   * @param params.blob - The blob to sign, this blob needs to be in base64
-   * @param params.publicKey - Public key the wallet should use to sign, if
-   * no public key is provided, the wallet should the one being used by the user.
+   * @param authEntry - An XDR string version of `HashIdPreimageSorobanAuthorization`
+   * @param opts - Options compatible with https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0043.md#signauthentry
+   * @param opts.networkPassphrase - The Stellar network to use when signing
+   * @param opts.address - The public key of the account that should be used to sign
+   * @param opts.path - This options is added for special cases like Hardware wallets
    *
-   * @return response - Promise
-   * @return response.result - Signature Buffer in a string format
+   * @return - Promise<{ signedAuthEntry: string; signerAddress: string }>
    */
-  signBlob(params: { blob: string; publicKey?: string }): Promise<{ result: string }>;
+  signAuthEntry(
+    authEntry: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+    }
+  ): Promise<{ signedAuthEntry: string; signerAddress?: string }>;
 
   /**
-   * A function to request a wallet to sign a random blob.
+   * A function to request a wallet to sign an AuthEntry XDR.
    *
-   * @param params
-   * @param params.entryPreimageXDR - Authorization entry image in its
-   * xdr base64 format
-   * @param params.publicKey - Public key the wallet should use to sign, if
-   * no public key is provided, the wallet should the one being used by the user.
+   * @param message - An arbitrary string rather than a transaction or auth entry
+   * @param opts - Options compatible with https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0043.md#signmessage
+   * @param opts.networkPassphrase - The Stellar network to use when signing
+   * @param opts.address - The public key of the account that should be used to sign
+   * @param opts.path - This options is added for special cases like Hardware wallets
    *
-   * @return response - Promise
-   * @return response.result - Signature hash
+   * @return - Promise<{ signedMessage: string; signerAddress: string }>
    */
-  signAuthEntry(params: { entryPreimageXDR: string; publicKey?: string }): Promise<{ result: string }>;
+  signMessage(
+    message: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+    }
+  ): Promise<{ signedMessage: string; signerAddress?: string }>;
+
+  /**
+   * A function to request the current selected network in the wallet. This comes
+   * handy when you are dealing with a wallet that doesn't allow you to specify which network to use (For example Lobstr and Rabet)
+   *
+   * @return - Promise<{ network: string; networkPassphrase: string }>
+   */
+  getNetwork(): Promise<{ network: string; networkPassphrase: string }>;
 }
 
 /**

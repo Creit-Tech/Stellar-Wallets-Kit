@@ -1,5 +1,6 @@
-import { isConnected, signTransaction, signBlob, signAuthEntry, requestAccess } from '@stellar/freighter-api';
-import { ModuleInterface, ModuleType, WalletNetwork } from '../types';
+import { isConnected, signTransaction, signAuthEntry, requestAccess } from '@stellar/freighter-api';
+import { ModuleInterface, ModuleType } from '../types';
+import { parseError } from '../utils';
 
 export const FREIGHTER_ID = 'freighter';
 
@@ -9,55 +10,98 @@ export class FreighterModule implements ModuleInterface {
   productId: string = FREIGHTER_ID;
   productName: string = 'Freighter';
   productUrl: string = 'https://freighter.app';
-  productIcon: string = 'https://stellar.creit.tech/wallet-icons/freighter.svg';
+  productIcon: string = 'https://stellar.creit.tech/wallet-icons/freighter.png';
 
   async isAvailable(): Promise<boolean> {
-    return isConnected();
+    return isConnected().catch((): boolean => false);
   }
 
-  async getPublicKey(): Promise<string> {
-    if (!(await isConnected())) {
-      throw new Error(`Freighter is not connected`);
-    }
+  async getAddress(): Promise<{ address: string }> {
+    const runChecks = async () => {
+      if (!(await this.isAvailable())) {
+        throw new Error('Freighter is not connected');
+      }
+    };
 
-    return requestAccess();
-  }
-
-  async signTx(params: { xdr: string; publicKeys: string[]; network: WalletNetwork }): Promise<{ result: string }> {
-    if (!(await isConnected())) {
-      throw new Error(`Freighter is not connected`);
-    }
-
-    let updatedXdr: string = params.xdr;
-    for (const publicKey of params.publicKeys) {
-      updatedXdr = await signTransaction(updatedXdr, {
-        accountToSign: publicKey,
-        networkPassphrase: params.network,
+    return runChecks()
+      .then(() => requestAccess())
+      .then(address => ({ address }))
+      .catch(e => {
+        throw parseError(e);
       });
-    }
-
-    return { result: updatedXdr };
   }
 
-  async signBlob(params: { blob: string; publicKey: string }): Promise<{ result: string }> {
-    if (!(await isConnected())) {
-      throw new Error(`Freighter is not connected`);
+  async signTransaction(
+    xdr: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+      submit?: boolean;
+      submitUrl?: string;
     }
+  ): Promise<{ signedTxXdr: string; signerAddress?: string }> {
+    const runChecks = async () => {
+      if (!(await this.isAvailable())) {
+        throw new Error('Freighter is not connected');
+      }
+    };
 
-    const result: string = await signBlob(params.blob, { accountToSign: params.publicKey });
+    return runChecks()
+      .then(async () => {
+        const signedTxXdr: string = await signTransaction(xdr, {
+          accountToSign: opts?.address,
+          networkPassphrase: opts?.networkPassphrase,
+        });
 
-    return { result };
+        return { signedTxXdr, signerAddress: opts?.address };
+      })
+      .catch(e => {
+        throw parseError(e);
+      });
   }
 
-  async signAuthEntry(params: { entryPreimageXDR: string; publicKey: string }): Promise<{ result: string }> {
-    if (!(await isConnected())) {
-      throw new Error(`Freighter is not connected`);
+  async signAuthEntry(
+    authEntry: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
     }
+  ): Promise<{ signedAuthEntry: string; signerAddress?: string }> {
+    const runChecks = async () => {
+      if (!(await this.isAvailable())) {
+        throw new Error('Freighter is not connected');
+      }
+    };
 
-    const result: string = await signAuthEntry(params.entryPreimageXDR, {
-      accountToSign: params.publicKey,
-    });
+    return runChecks()
+      .then(async () => {
+        const signedAuthEntry: string = await signAuthEntry(authEntry, {
+          accountToSign: opts?.address,
+        });
 
-    return { result };
+        return { signedAuthEntry, signerAddress: opts?.address };
+      })
+      .catch(e => {
+        throw parseError(e);
+      });
+  }
+
+  async signMessage(): Promise<{ signedMessage: string; signerAddress?: string }> {
+    throw {
+      code: -3,
+      message: 'Freighter does not support the "signMessage" function',
+    };
+  }
+
+  /**
+   * NOTE: We know that Freighter API has a `getNetwork` function but this function doesn't comply with SEP-0043
+   */
+  async getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
+    throw {
+      code: -3,
+      message: 'Freighter does not support the "getNetwork" function',
+    };
   }
 }

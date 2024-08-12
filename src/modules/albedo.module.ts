@@ -1,6 +1,7 @@
 import albedo from '@albedo-link/intent';
 
 import { ModuleInterface, ModuleType, WalletNetwork } from '../types';
+import { parseError } from '../utils';
 
 export const ALBEDO_ID = 'albedo';
 
@@ -10,45 +11,72 @@ export class AlbedoModule implements ModuleInterface {
   productId: string = ALBEDO_ID;
   productName: string = 'Albedo';
   productUrl: string = 'https://albedo.link/';
-  productIcon: string = 'https://stellar.creit.tech/wallet-icons/albedo.svg';
+  productIcon: string = 'https://stellar.creit.tech/wallet-icons/albedo.png';
 
   async isAvailable(): Promise<boolean> {
     return true;
   }
 
-  async getPublicKey(): Promise<string> {
-    return albedo.publicKey({}).then(({ pubkey }) => pubkey);
+  async getAddress(): Promise<{ address: string }> {
+    return albedo
+      .publicKey({})
+      .then(result => ({ address: result.pubkey }))
+      .catch(e => {
+        throw parseError(e);
+      });
   }
 
-  async signTx(params: { xdr: string; publicKeys: string[]; network: WalletNetwork }): Promise<{ result: string }> {
-    if (params.network !== WalletNetwork.PUBLIC && params.network !== WalletNetwork.TESTNET) {
-      throw new Error(`Albedo doesn't support the network: ${params.network}`);
+  async signTransaction(
+    xdr: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+      submit?: boolean;
+      submitUrl?: string;
     }
-
-    let updatedXdr: string = params.xdr;
-    for (const publicKey of params.publicKeys) {
-      updatedXdr = await albedo
-        .tx({
-          xdr: updatedXdr,
-          pubkey: publicKey,
-          network: params.network === WalletNetwork.PUBLIC ? AlbedoNetwork.PUBLIC : AlbedoNetwork.TESTNET,
-        })
-        .then(({ signed_envelope_xdr }) => signed_envelope_xdr);
-    }
-
-    return { result: updatedXdr };
+  ): Promise<{ signedTxXdr: string; signerAddress?: string }> {
+    return albedo
+      .tx({
+        xdr,
+        pubkey: opts?.address,
+        network: opts?.networkPassphrase
+          ? opts.networkPassphrase === WalletNetwork.PUBLIC
+            ? AlbedoNetwork.PUBLIC
+            : AlbedoNetwork.TESTNET
+          : undefined,
+      })
+      .then(({ signed_envelope_xdr }) => ({
+        signedTxXdr: signed_envelope_xdr,
+        signerAddress: opts?.address,
+      }))
+      .catch(e => {
+        throw parseError(e);
+      });
   }
 
-  // @ts-expect-error - This is not a supported operation so we don't use the params
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async signBlob(params: { blob: string; publicKey?: string }): Promise<{ result: string }> {
-    throw new Error('Albedo does not support signing random blobs');
+  async signAuthEntry(): Promise<{ signedAuthEntry: string; signerAddress?: string }> {
+    throw {
+      code: -3,
+      message: 'Albedo does not support the "signAuthEntry" function',
+    };
   }
 
-  // @ts-expect-error - This is not a supported operation so we don't use the params
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async signAuthEntry(params: { entryPreimageXDR: string; publicKey?: string }): Promise<{ result: string }> {
-    throw new Error('Albedo does not support signing authorization entries');
+  /**
+   * We understand that Albedo has a method to sign a message, but that method is not compatible with SEP-0043
+   */
+  async signMessage(): Promise<{ signedMessage: string; signerAddress?: string }> {
+    throw {
+      code: -3,
+      message: 'Albedo does not support the "signMessage" function',
+    };
+  }
+
+  async getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
+    throw {
+      code: -3,
+      message: 'Albedo does not support the "getNetwork" function',
+    };
   }
 }
 

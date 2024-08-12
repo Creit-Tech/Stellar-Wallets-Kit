@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.9.2...v1.0.0) (2024-08-11)
+### Change
+- BREAKING: Update all the kit interface to support [SEP-0043](https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0043.md).
+- Transform all images from .svg to .png so sites not allowing that format can load the images.
+
 ### [0.9.2](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.9.1...v0.9.2) (2024-07-27)
 ### Change
 - Merge of PR [#33](https://github.com/Creit-Tech/Stellar-Wallets-Kit/pull/33) which allows defining a custom theme to the kit's modal

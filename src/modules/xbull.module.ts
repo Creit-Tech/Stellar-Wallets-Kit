@@ -1,5 +1,6 @@
 import { xBullWalletConnect } from '@creit-tech/xbull-wallet-connect';
-import { ModuleInterface, ModuleType, WalletNetwork } from '../types';
+import { ModuleInterface, ModuleType } from '../types';
+import { parseError } from '../utils';
 
 export const XBULL_ID = 'xbull';
 
@@ -9,44 +10,67 @@ export class xBullModule implements ModuleInterface {
   productId: string = XBULL_ID;
   productName: string = 'xBull';
   productUrl: string = 'https://xbull.app';
-  productIcon: string = 'https://stellar.creit.tech/wallet-icons/xbull.svg';
+  productIcon: string = 'https://stellar.creit.tech/wallet-icons/xbull.png';
 
   async isAvailable(): Promise<boolean> {
     return true;
   }
 
-  async getPublicKey(): Promise<string> {
-    const bridge: xBullWalletConnect = new xBullWalletConnect();
-    const publicKey: string = await bridge.connect();
-    bridge.closeConnections();
-    return publicKey;
-  }
-
-  async signTx(params: { xdr: string; publicKeys: string[]; network: WalletNetwork }): Promise<{ result: string }> {
-    const bridge: xBullWalletConnect = new xBullWalletConnect();
-
-    let updatedXdr: string = params.xdr;
-    for (const publicKey of params.publicKeys) {
-      updatedXdr = await bridge.sign({
-        xdr: updatedXdr,
-        publicKey: publicKey,
-        network: params.network,
-      });
+  async getAddress(): Promise<{ address: string }> {
+    try {
+      const bridge: xBullWalletConnect = new xBullWalletConnect();
+      const publicKey: string = await bridge.connect();
+      bridge.closeConnections();
+      return { address: publicKey };
+    } catch (e: any) {
+      throw parseError(e);
     }
-
-    bridge.closeConnections();
-    return { result: updatedXdr };
   }
 
-  // @ts-expect-error - This is not a supported operation so we don't use the params
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async signBlob(params: { blob: string; publicKey?: string }): Promise<{ result: string }> {
-    throw new Error('xBull does not support signing random blobs');
+  async signTransaction(
+    xdr: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+      submit?: boolean;
+      submitUrl?: string;
+    }
+  ): Promise<{ signedTxXdr: string; signerAddress?: string }> {
+    try {
+      const bridge: xBullWalletConnect = new xBullWalletConnect();
+
+      const signedXdr: string = await bridge.sign({
+        xdr,
+        publicKey: opts?.address,
+        network: opts?.networkPassphrase,
+      });
+
+      bridge.closeConnections();
+      return { signedTxXdr: signedXdr, signerAddress: opts?.address };
+    } catch (e: any) {
+      throw parseError(e);
+    }
   }
 
-  // @ts-expect-error - This is not a supported operation so we don't use the params
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async signAuthEntry(params: { entryPreimageXDR: string; publicKey?: string }): Promise<{ result: string }> {
-    throw new Error('xBull does not support signing authorization entries');
+  async signAuthEntry(): Promise<{ signedAuthEntry: string; signerAddress?: string }> {
+    throw {
+      code: -3,
+      message: 'xBull does not support the "signAuthEntry" function',
+    };
+  }
+
+  async signMessage(): Promise<{ signedMessage: string; signerAddress?: string }> {
+    throw {
+      code: -3,
+      message: 'xBull does not support the "signMessage" function',
+    };
+  }
+
+  async getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
+    throw {
+      code: -3,
+      message: 'xBull does not support the "getNetwork" function',
+    };
   }
 }

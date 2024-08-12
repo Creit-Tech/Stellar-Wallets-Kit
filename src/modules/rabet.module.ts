@@ -1,4 +1,5 @@
 import { ModuleInterface, ModuleType, WalletNetwork } from '../types';
+import { parseError } from '../utils';
 
 declare const window: Window &
   typeof globalThis & {
@@ -16,53 +17,88 @@ export class RabetModule implements ModuleInterface {
   productId: string = RABET_ID;
   productName: string = 'Rabet';
   productUrl: string = 'https://rabet.io/';
-  productIcon: string = 'https://stellar.creit.tech/wallet-icons/rabet.svg';
+  productIcon: string = 'https://stellar.creit.tech/wallet-icons/rabet.png';
 
   async isAvailable(): Promise<boolean> {
     return !!window.rabet;
   }
 
-  async getPublicKey(): Promise<string> {
-    if (!window.rabet) {
-      throw new Error('Rabet is not installed');
-    }
+  async getAddress(): Promise<{ address: string }> {
+    const runChecks = async () => {
+      if (!window.rabet) {
+        throw new Error('Rabet is not installed');
+      }
+    };
 
-    const { publicKey } = await window.rabet.connect();
-
-    return publicKey;
+    return runChecks()
+      .then(() => window.rabet!.connect())
+      .then(({ publicKey }) => ({ address: publicKey }))
+      .catch(e => {
+        throw parseError(e);
+      });
   }
 
-  async signTx(params: { xdr: string; publicKeys: string[]; network: WalletNetwork }): Promise<{ result: string }> {
-    if (!window.rabet) {
-      throw new Error('Rabet is not installed');
+  async signTransaction(
+    xdr: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+      submit?: boolean;
+      submitUrl?: string;
     }
+  ): Promise<{ signedTxXdr: string; signerAddress?: string }> {
+    const runChecks = async () => {
+      if (!window.rabet) {
+        throw new Error('Rabet is not installed');
+      }
 
-    if (params.network !== WalletNetwork.PUBLIC && params.network !== WalletNetwork.TESTNET) {
-      throw new Error(`Rabet doesn't support the network: ${params.network}`);
-    }
+      if (
+        opts?.address &&
+        opts.networkPassphrase !== WalletNetwork.PUBLIC &&
+        opts.networkPassphrase !== WalletNetwork.TESTNET
+      ) {
+        throw new Error(`Rabet doesn't support the network: ${opts.networkPassphrase}`);
+      }
 
-    if (params.publicKeys.length > 0) {
-      console.warn(`Rabet doesn't allow specifying the public keys to use`);
-    }
+      if (opts?.address) {
+        console.warn(`Rabet doesn't allow specifying the network that should be used, we skip the value`);
+      }
+    };
 
-    const result = await window.rabet.sign(
-      params.xdr,
-      params.network === WalletNetwork.PUBLIC ? RabetNetwork.PUBLIC : RabetNetwork.TESTNET
-    );
+    const sign = async () =>
+      window.rabet!.sign(
+        xdr,
+        opts?.networkPassphrase === WalletNetwork.PUBLIC ? RabetNetwork.PUBLIC : RabetNetwork.TESTNET
+      );
 
-    return { result: result.xdr };
+    return runChecks()
+      .then(sign)
+      .then(result => ({ signedTxXdr: result?.xdr }))
+      .catch(e => {
+        throw parseError(e);
+      });
   }
 
-  // @ts-expect-error - This is not a supported operation so we don't use the params
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async signBlob(params: { blob: string; publicKey?: string }): Promise<{ result: string }> {
-    throw new Error('Rabet does not support signing random blobs');
+  async signAuthEntry(): Promise<{ signedAuthEntry: string; signerAddress?: string }> {
+    throw {
+      code: -3,
+      message: 'Rabet does not support the "signAuthEntry" function',
+    };
   }
 
-  // @ts-expect-error - This is not a supported operation so we don't use the params
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async signAuthEntry(params: { entryPreimageXDR: string; publicKey?: string }): Promise<{ result: string }> {
-    throw new Error('Rabet does not support signing authorization entries');
+  async signMessage(): Promise<{ signedMessage: string; signerAddress?: string }> {
+    throw {
+      code: -3,
+      message: 'Rabet does not support the "signMessage" function',
+    };
+  }
+
+  async getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
+    throw {
+      code: -3,
+      message: 'Rabet does not support the "getNetwork" function',
+    };
   }
 }
 

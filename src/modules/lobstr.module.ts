@@ -1,5 +1,6 @@
 import { isConnected, getPublicKey, signTransaction } from '@lobstrco/signer-extension-api';
-import { ModuleInterface, ModuleType, WalletNetwork } from '../types';
+import { ModuleInterface, ModuleType } from '../types';
+import { parseError } from '../utils';
 
 export const LOBSTR_ID = 'lobstr';
 
@@ -9,45 +10,77 @@ export class LobstrModule implements ModuleInterface {
   productId: string = LOBSTR_ID;
   productName: string = 'LOBSTR';
   productUrl: string = 'https://lobstr.co';
-  productIcon: string = 'https://stellar.creit.tech/wallet-icons/lobstr.svg';
+  productIcon: string = 'https://stellar.creit.tech/wallet-icons/lobstr.png';
 
   async isAvailable(): Promise<boolean> {
     return isConnected();
   }
 
-  async getPublicKey(): Promise<string> {
-    if (!(await isConnected())) {
-      throw new Error(`Lobstr is not connected`);
-    }
+  async getAddress(): Promise<{ address: string }> {
+    const runChecks = async () => {
+      if (!(await isConnected())) {
+        throw new Error(`Lobstr is not connected`);
+      }
+    };
 
-    return getPublicKey();
+    return runChecks()
+      .then(() => getPublicKey())
+      .then(address => ({ address }))
+      .catch(e => {
+        throw parseError(e);
+      });
   }
 
-  async signTx(params: { xdr: string; publicKeys: string[]; network: WalletNetwork }): Promise<{ result: string }> {
-    if (!(await isConnected())) {
-      throw new Error(`Lobstr is not connected`);
+  async signTransaction(
+    xdr: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+      submit?: boolean;
+      submitUrl?: string;
     }
+  ): Promise<{ signedTxXdr: string; signerAddress?: string }> {
+    const runChecks = async () => {
+      if (!(await isConnected())) {
+        throw new Error(`Lobstr is not connected`);
+      }
 
-    if (params.publicKeys.length > 0) {
-      console.warn(`Lobstr doesn't allow specifying what public key should sign the transaction, we skip the value`);
-    }
+      if (opts?.address) {
+        console.warn(`Lobstr doesn't allow specifying what public key should sign the transaction, we skip the value`);
+      }
 
-    if (params.network) {
-      console.warn(`Lobstr doesn't allow specifying the network that should be used, we skip the value`);
-    }
+      if (opts?.networkPassphrase) {
+        console.warn(`Lobstr doesn't allow specifying the network that should be used, we skip the value`);
+      }
+    };
 
-    return { result: await signTransaction(params.xdr) };
+    return runChecks()
+      .then(() => signTransaction(xdr))
+      .then(signedTxXdr => ({ signedTxXdr }))
+      .catch(e => {
+        throw parseError(e);
+      });
   }
 
-  // @ts-expect-error - This is not a supported operation so we don't use the params
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async signBlob(params: { blob: string; publicKey?: string }): Promise<{ result: string }> {
-    throw new Error('Lobstr does not support signing random blobs');
+  async signAuthEntry(): Promise<{ signedAuthEntry: string; signerAddress?: string }> {
+    throw {
+      code: -3,
+      message: 'Lobstr does not support the "signAuthEntry" function',
+    };
   }
 
-  // @ts-expect-error - This is not a supported operation so we don't use the params
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async signAuthEntry(params: { entryPreimageXDR: string; publicKey?: string }): Promise<{ result: string }> {
-    throw new Error('Lobstr does not support signing authorization entries');
+  async signMessage(): Promise<{ signedMessage: string; signerAddress?: string }> {
+    throw {
+      code: -3,
+      message: 'Lobstr does not support the "signMessage" function',
+    };
+  }
+
+  async getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
+    throw {
+      code: -3,
+      message: 'Lobstr does not support the "getNetwork" function',
+    };
   }
 }
