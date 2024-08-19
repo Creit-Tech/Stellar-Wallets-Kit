@@ -11,7 +11,7 @@ export class AlbedoModule implements ModuleInterface {
   productId: string = ALBEDO_ID;
   productName: string = 'Albedo';
   productUrl: string = 'https://albedo.link/';
-  productIcon: string = 'https://stellar.creit.tech/wallet-icons/albedo.png';
+  productIcon: string = 'https://albedo.link/img/logo-square.svg';
 
   async isAvailable(): Promise<boolean> {
     return true;
@@ -46,9 +46,9 @@ export class AlbedoModule implements ModuleInterface {
             : AlbedoNetwork.TESTNET
           : undefined,
       })
-      .then(({ signed_envelope_xdr }) => ({
+      .then(({ signed_envelope_xdr, pubkey }) => ({
         signedTxXdr: signed_envelope_xdr,
-        signerAddress: opts?.address,
+        signerAddress: pubkey,
       }))
       .catch(e => {
         throw parseError(e);
