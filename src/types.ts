@@ -160,7 +160,7 @@ export interface ModuleInterface extends KitActions {
    * return `true`.
    *
    * Important:
-   * Your wallet/library needs to be able to answer this function in less than 200ms.
+   * Your wallet/library needs to be able to answer this function in less than 500ms.
    * Otherwise, the kit will show it as unavailable
    *
    */
