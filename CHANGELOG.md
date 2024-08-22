@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.0.0...v1.1.0) (2024-08-22)
+### Add
+- Add the latest version of the Freighter API and update the calls to the API.
+- Add a new `Button` component. This new component can show the selected address, and the current XLM balance allows copying the chosen address and allows the user to "disconnect".
+- Allow listening to both "connect" and "disconnect" Button events
+- Add a new state to the kit, so we can keep the current balance and picked address to show in the Button component.
+- Add a new plugin to the build process, so it minimizes the distribution build.
+- Add a new development server to make the development of the kit easier.
+
 ### [1.0.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v0.9.2...v1.0.0) (2024-08-11)
 ### Change
 - BREAKING: Update all the kit interface to support [SEP-0043](https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0043.md).
