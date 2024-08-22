@@ -1,4 +1,5 @@
 import esbuild from 'rollup-plugin-esbuild';
+import terser from '@rollup/plugin-terser';
 
 const bundle = config => ({
   ...config,
@@ -8,7 +9,7 @@ const bundle = config => ({
 
 export default [
   bundle({
-    plugins: [esbuild()],
+    plugins: [esbuild(), terser()],
     output: [
       {
         dir: 'build',

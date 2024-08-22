@@ -1,5 +1,6 @@
 export * from './stellar-wallets-kit';
-export { StellarWalletsModal, ModalThemes } from './modal/stellar-wallets-modal';
+export { StellarWalletsModal, ModalThemes } from './components/modal/stellar-wallets-modal';
+export { StellarWalletsButton, ButtonThemes } from './components/button/stellar-wallets-button';
 export * from './types';
 export * from './utils';
 

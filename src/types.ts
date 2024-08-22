@@ -1,4 +1,4 @@
-export interface ITheme {
+export interface IModalTheme {
   bgColor: string;
   textColor: string;
   solidTextColor: string;
@@ -8,6 +8,20 @@ export interface ITheme {
   notAvailableTextColor: string;
   notAvailableBgColor: string;
   notAvailableBorderColor: string;
+}
+
+/**
+ * @deprecated - This type is deprecated, use `IModalTheme` instead
+ */
+export type ITheme = IModalTheme;
+
+export interface IButtonTheme {
+  bgColor: string;
+  textColor: string;
+  solidTextColor: string;
+  dividerColor: string;
+  buttonPadding: string;
+  buttonBorderRadius: string;
 }
 
 export enum WalletNetwork {

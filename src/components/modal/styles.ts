@@ -3,7 +3,7 @@ import { css } from 'lit';
 export const modalDialogStyles = css`
   .dialog-modal {
     position: fixed;
-    z-index: 99;
+    z-index: 990;
     font-family: 'Open Sans', arial, sans-serif;
     margin: 0 auto;
     padding: 0;

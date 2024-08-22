@@ -1,8 +1,10 @@
 import { LitElement, html, css } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
+import { ReactiveState } from '../../state/reactive-state';
+import { allowedWallets$, modalTheme$ } from '../../state/store';
 
-import { ISupportedWallet, ITheme } from '../types';
+import { ISupportedWallet, IModalTheme } from '../../types';
 import {
   backdropStyles,
   modalWalletsSection,
@@ -17,7 +19,7 @@ export enum ModalThemeType {
   LIGHT = 'LIGHT',
 }
 
-export const ModalThemes: { [key in ModalThemeType]: ITheme } = {
+export const ModalThemes: { [key in ModalThemeType]: IModalTheme } = {
   DARK: {
     bgColor: '#161616',
     textColor: '#a0a0a0',
@@ -62,10 +64,17 @@ export class StellarWalletsModal extends LitElement {
     modalWalletsSection,
   ];
 
+  /**
+   * This value is used to tell the modal that it should not update the value
+   * `showModal` at any moment, this comes handy when the state wants to be handled by another source
+   */
+  @property({ type: Boolean, reflect: true })
+  ignoreShowStatus: boolean = false;
+
   @property({ type: Boolean, reflect: true })
   showModal: boolean = false;
 
-  @property({ type: Boolean, reflect: true })
+  @state()
   closingModal: boolean = false;
 
   @property({ type: String, reflect: true })
@@ -74,26 +83,9 @@ export class StellarWalletsModal extends LitElement {
   @property({ type: String, reflect: true })
   notAvailableText: string = 'Not available';
 
-  @property({
-    type: Array,
-    reflect: true,
-    converter: { fromAttribute: (v: string) => JSON.parse(v) },
-  })
-  allowedWallets: ISupportedWallet[] = [];
+  allowedWallets: ReactiveState<ISupportedWallet[]> = new ReactiveState(this, allowedWallets$);
 
-  @property({
-    converter: {
-      fromAttribute: (v: string) => v && { ...JSON.parse(v), zIndex: 990 },
-    },
-  })
-  modalDialogStyles = { zIndex: 990 };
-
-  @property({
-    converter: {
-      fromAttribute: (v: string) => v && { ...JSON.parse(v) },
-    },
-  })
-  theme?: ITheme;
+  theme: ReactiveState<IModalTheme | undefined> = new ReactiveState(this, modalTheme$);
 
   override connectedCallback() {
     super.connectedCallback();
@@ -102,9 +94,11 @@ export class StellarWalletsModal extends LitElement {
   async closeModal(): Promise<void> {
     this.closingModal = true;
 
-    await new Promise(r => setTimeout(r, 300));
+    await new Promise(r => setTimeout(r, 280));
 
-    this.showModal = false;
+    if (!this.ignoreShowStatus) {
+      this.showModal = false;
+    }
 
     this.dispatchEvent(
       new CustomEvent('modal-closed', {
@@ -113,6 +107,8 @@ export class StellarWalletsModal extends LitElement {
         composed: true,
       })
     );
+
+    this.closingModal = false;
   }
 
   async pickWalletOption(option: ISupportedWallet): Promise<void> {
@@ -123,7 +119,7 @@ export class StellarWalletsModal extends LitElement {
 
     this.closingModal = true;
 
-    await new Promise(r => setTimeout(r, 300));
+    await new Promise(r => setTimeout(r, 280));
 
     try {
       const record: string | null = window.localStorage.getItem('@StellarWalletsKit/usedWalletsIds');
@@ -141,6 +137,8 @@ export class StellarWalletsModal extends LitElement {
         composed: true,
       })
     );
+
+    this.closingModal = false;
   }
 
   /**
@@ -153,7 +151,7 @@ export class StellarWalletsModal extends LitElement {
    */
   private getSortedList(): ISupportedWallet[] {
     const sortedWallets: { available: ISupportedWallet[]; unavailable: ISupportedWallet[] } =
-      this.allowedWallets.reduce(
+      this.allowedWallets.value!.reduce(
         (all: { available: ISupportedWallet[]; unavailable: ISupportedWallet[] }, current: ISupportedWallet) => {
           return {
             available: current.isAvailable ? [...all.available, current] : all.available,
@@ -196,18 +194,18 @@ export class StellarWalletsModal extends LitElement {
   }
 
   private getThemeStyles() {
-    if (!this.theme) return {};
+    if (!this.theme.value) return {};
 
     return {
-      '--modal-bg-color': this.theme.bgColor,
-      '--modal-text-color': this.theme.textColor,
-      '--modal-solid-text-color': this.theme.solidTextColor,
-      '--modal-header-button-color': this.theme.headerButtonColor,
-      '--modal-divider-color': this.theme.dividerColor,
-      '--modal-help-bg-color': this.theme.helpBgColor,
-      '--modal-not-available-text-color': this.theme.notAvailableTextColor,
-      '--modal-not-available-bg-color': this.theme.notAvailableBgColor,
-      '--modal-not-available-border-color': this.theme.notAvailableBorderColor,
+      '--modal-bg-color': this.theme.value.bgColor,
+      '--modal-text-color': this.theme.value.textColor,
+      '--modal-solid-text-color': this.theme.value.solidTextColor,
+      '--modal-header-button-color': this.theme.value.headerButtonColor,
+      '--modal-divider-color': this.theme.value.dividerColor,
+      '--modal-help-bg-color': this.theme.value.helpBgColor,
+      '--modal-not-available-text-color': this.theme.value.notAvailableTextColor,
+      '--modal-not-available-bg-color': this.theme.value.notAvailableBgColor,
+      '--modal-not-available-border-color': this.theme.value.notAvailableBorderColor,
     };
   }
 
@@ -255,7 +253,7 @@ export class StellarWalletsModal extends LitElement {
                 <li
                   @click=${() => this.pickWalletOption(item)}
                   class=" wallets-body__item ${!item.isAvailable ? 'not-available' : ''} ${i ===
-                  this.allowedWallets.length - 1
+                  this.allowedWallets.value!.length - 1
                     ? 'mb-0'
                     : ''}">
                   <img src=${item.icon} alt=${item.name} />
@@ -270,7 +268,7 @@ export class StellarWalletsModal extends LitElement {
 
     return html`
       <dialog
-        style=${styleMap({ ...this.getThemeStyles(), ...this.modalDialogStyles })}
+        style=${styleMap(this.getThemeStyles())}
         class="dialog-modal ${this.closingModal ? 'closing' : ''}"
         .open=${this.showModal}>
         <section class="dialog-modal-body">
@@ -284,11 +282,5 @@ export class StellarWalletsModal extends LitElement {
         class="backdrop ${this.closingModal ? 'closing' : ''}"
         @click=${() => this.closeModal()}></div>
     `;
-  }
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'stellar-wallets-modal': StellarWalletsModal;
   }
 }

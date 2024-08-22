@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Stellar Wallets Kit dev testing</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #fafafa;
+    }
+
+    header {
+      background-color: #fff;
+      width: 100%;
+      display: flex;
+      border-bottom: solid 1px #ccc;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+<!--    <h3 style='margin: 0; line-height: 100%;'>Dev site</h3>-->
+  </div>
+  <div id='buttonWrapper'></div>
+</header>
+
+<!--<br><br>-->
+<!--<button id='externalButton'>Connect with external button</button>-->
+<!--<br><br>-->
+
+<script type='module'>
+  import {
+    StellarWalletsKit,
+    XBULL_ID,
+    WalletNetwork,
+    allowAllModules,
+  } from './build/index.js';
+
+  const kit = new StellarWalletsKit({
+    selectedWalletId: XBULL_ID,
+    network: WalletNetwork.PUBLIC,
+    modules: allowAllModules(),
+  });
+
+  kit.createButton({
+    container: document.querySelector('#buttonWrapper'),
+    onConnect: ({ address }) => {
+      console.log('Address requested: ', address)
+    },
+    buttonText: 'Connect',
+    horizonUrl: 'https://horizon.stellar.org/'
+  })
+
+  document.querySelector('#externalButton').addEventListener('click', function(e) {
+    kit.openModal({
+      onWalletSelected: onWalletSelected => {
+        console.log({ onWalletSelected });
+      },
+      onClosed: onClosed => {
+        console.error({ onClosed });
+      },
+      modalTitle: 'This is a different tittle',
+      notAvailableText: 'Nope!'
+    });
+  });
+</script>
+</body>
+</html>
