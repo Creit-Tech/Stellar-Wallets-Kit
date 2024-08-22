@@ -58,7 +58,7 @@ const kit: StellarWalletsKit = new StellarWalletsKit({
 });
 ```
 
-## Integrated UI modal
+## Integrated UI Modal
 
 ![](./modal-ui.gif)
 
@@ -86,6 +86,36 @@ function openModal(params: {
 }) {}
 ```
 
+## Integrated UI Button
+
+![](./button-ui.gif)
+
+Just like with the built-in modal component, the kit also includes a `Button` component that helps you to show an easy-to-use interface to your users so they can connect/disconnect their wallet while your site gets updates for when that happens. Here is how you can use it:
+
+```typescript
+await kit.createButton({
+  container: document.querySelector('#containerDiv'),
+  onConnect: ({ address}) => {
+    // Do something when the user "connects" the wallet, like fetching the account data
+  },
+  onDisconnect: () => {
+    // Do something when the user "disconnects" the wallet, like clearing all site data and reload
+  }
+})
+```
+
+With just that you will include an interactive button on your website that will show the built-in modal to the user, fetch the public key, fetch the current XLM balance (if you provide a horizon URL), and give the user a UI to use!.
+
+You can see all the parameters you can include:
+```typescript
+function createButton(params: {
+    container: HTMLElement;
+    onConnect: (response: { address: string }) => void;
+    onDisconnect: () => void;
+    horizonUrl?: string;
+    buttonText?: string;
+}): Promise<void> {}
+```
 
 ## Request the public key and sign transactions
 
