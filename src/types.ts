@@ -132,6 +132,12 @@ export interface KitActions {
    * @return - Promise<{ network: string; networkPassphrase: string }>
    */
   getNetwork(): Promise<{ network: string; networkPassphrase: string }>;
+
+  /**
+   * This method should be included if your wallet have some sort of async connection, for example WalletConnect
+   * Once this method is called, the module should clear all connections
+   */
+  disconnect?(): Promise<void>;
 }
 
 /**

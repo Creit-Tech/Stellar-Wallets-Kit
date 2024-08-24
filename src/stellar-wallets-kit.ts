@@ -1,6 +1,7 @@
 import { StellarWalletsButton } from './components/button/stellar-wallets-button';
 import { StellarWalletsModal } from './components/modal/stellar-wallets-modal';
 import {
+  removeAddress,
   seButtonTheme,
   setAddress,
   setAllowedWallets,
@@ -146,6 +147,10 @@ export class StellarWalletsKit implements KitActions {
     return this.selectedModule.getNetwork();
   }
 
+  async disconnect(): Promise<void> {
+    removeAddress();
+  }
+
   // ---- Button methods
   public async createButton(params: {
     container: HTMLElement;
@@ -174,7 +179,17 @@ export class StellarWalletsKit implements KitActions {
       () => this.getAddress().then((r: { address: string }) => params.onConnect(r)),
       false
     );
-    this.buttonElement.addEventListener('disconnect-wallet', () => params.onDisconnect(), false);
+    this.buttonElement.addEventListener(
+      'disconnect-wallet',
+      () => {
+        params.onDisconnect();
+
+        if (this.selectedModule.disconnect) {
+          this.selectedModule.disconnect();
+        }
+      },
+      false
+    );
   }
   // ---- END Button methods
 

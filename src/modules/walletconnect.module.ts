@@ -76,6 +76,10 @@ export class WalletConnectModule implements ModuleInterface {
           console.log('WalletConnect is ready.');
           this.client = client as never;
           this.qrModal = new WalletConnectModal({ projectId: wcParams.projectId });
+
+          if (wcParams.onSessionDeleted) {
+            this.onSessionDeleted(wcParams.onSessionDeleted);
+          }
         })
         .catch(console.error);
     }
@@ -222,6 +226,17 @@ export class WalletConnectModule implements ModuleInterface {
     }
   }
 
+  async disconnect(): Promise<void> {
+    if (!this.client) {
+      throw new Error('WalletConnect is not running yet');
+    }
+
+    const sessions: IParsedWalletConnectSession[] = await this.getSessions();
+    for (const session of sessions) {
+      await this.closeSession(session.id);
+    }
+  }
+
   public async closeSession(sessionId: string, reason?: string): Promise<void> {
     if (!this.client) {
       throw new Error('WalletConnect is not running yet');
@@ -270,6 +285,7 @@ export interface IWalletConnectConstructorParams {
   sessionId?: string;
   client?: typeof SignClient;
   modal?: WalletConnectModal;
+  onSessionDeleted?: (sessionId: string) => void;
 }
 
 export enum WalletConnectTargetChain {
