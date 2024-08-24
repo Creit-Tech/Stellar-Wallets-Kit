@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.1.0...v1.2.0) (2024-08-22)
+### Add
+- Add a `disconnect` method to the `KitActions` interface.
+- Update `WalletConnect` module so it accepts a `onSessionDeleted` parameter.
+
+### Change
+- Upgrade all dependencies, lock them and remove those that are not used anymore.
+
 ### [1.1.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.0.0...v1.1.0) (2024-08-22)
 ### Add
 - Add the latest version of the Freighter API and update the calls to the API.
