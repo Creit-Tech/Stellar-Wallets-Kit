@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.2.0...v1.2.1) (2024-09-15)
+### Change
+- Use xBull Wallet Connect npm package instead of the github version, this way some lints don't trigger an error.
+
 ### [1.2.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.1.0...v1.2.0) (2024-08-22)
 ### Add
 - Add a `disconnect` method to the `KitActions` interface.
