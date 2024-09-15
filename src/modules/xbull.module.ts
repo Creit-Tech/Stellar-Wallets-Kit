@@ -1,4 +1,4 @@
-import { xBullWalletConnect } from '@creit-tech/xbull-wallet-connect';
+import { xBullWalletConnect } from '@creit.tech/xbull-wallet-connect';
 import { ModuleInterface, ModuleType } from '../types';
 import { parseError } from '../utils';
 

@@ -11,9 +11,9 @@ importers:
       '@albedo-link/intent':
         specifier: 0.12.0
         version: 0.12.0
-      '@creit-tech/xbull-wallet-connect':
-        specifier: github:Creit-Tech/xBull-Wallet-Connect#0.2.0
-        version: https://codeload.github.com/Creit-Tech/xBull-Wallet-Connect/tar.gz/a93e2e0d97c61bbd83fedcca0c71feef9f28b2d3
+      '@creit.tech/xbull-wallet-connect':
+        specifier: ^0.3.0
+        version: 0.3.0
       '@lobstrco/signer-extension-api':
         specifier: 1.0.0-beta.0
         version: 1.0.0-beta.0
@@ -111,9 +111,9 @@ packages:
     resolution: {integrity: sha512-u7stbOuYjaPezCuLj29hNW1v64M2Md2qupEKP1fHc7WdOA3DgLh37suiSrZYY7haUB7iBeQZ9P1uiRF359do3g==}
     engines: {node: '>=6.9.0'}
 
-  '@creit-tech/xbull-wallet-connect@https://codeload.github.com/Creit-Tech/xBull-Wallet-Connect/tar.gz/a93e2e0d97c61bbd83fedcca0c71feef9f28b2d3':
-    resolution: {tarball: https://codeload.github.com/Creit-Tech/xBull-Wallet-Connect/tar.gz/a93e2e0d97c61bbd83fedcca0c71feef9f28b2d3}
-    version: 0.2.0
+  '@creit.tech/xbull-wallet-connect@0.3.0':
+    resolution: {integrity: sha512-pByi0bTAWd2ZdolVtkXcAU1DYTtz/cJc/IkRUz9x9/1NsFVyrM4UxE8tHgVZ3mwrJ4josoDwYP957ynQw195YQ==}
+    engines: {node: '>=16'}
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -3090,7 +3090,7 @@ snapshots:
       chalk: 2.4.2
       js-tokens: 4.0.0
 
-  '@creit-tech/xbull-wallet-connect@https://codeload.github.com/Creit-Tech/xBull-Wallet-Connect/tar.gz/a93e2e0d97c61bbd83fedcca0c71feef9f28b2d3':
+  '@creit.tech/xbull-wallet-connect@0.3.0':
     dependencies:
       rxjs: 7.8.1
       tweetnacl: 1.0.3

@@ -26,9 +26,18 @@
       display: flex;
       border-bottom: solid 1px #ccc;
       padding: 0.5rem 1rem;
-      display: flex;
       align-items: center;
       justify-content: space-between;
+    }
+
+    main {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    input, textarea, button {
+      padding: 0.5rem 1rem;
     }
   </style>
 </head>
@@ -40,6 +49,20 @@
   </div>
   <div id='buttonWrapper'></div>
 </header>
+
+<main>
+  <label for='publicKey'>Public key</label>
+  <br>
+  <input placeholder='Use the connect button to fetch the public key' id='publicKey' type='text'>
+  <br>
+  <label for='xdrTextArea'>XDR to sign</label>
+  <br>
+  <textarea rows='10' id='xdrTextArea'></textarea>
+  <br>
+  <button id='signButton'>Sign</button>
+  <br>
+  <pre id='signedXdr'></pre>
+</main>
 
 <!--<br><br>-->
 <!--<button id='externalButton'>Connect with external button</button>-->
@@ -55,17 +78,30 @@
 
   const kit = new StellarWalletsKit({
     selectedWalletId: XBULL_ID,
-    network: WalletNetwork.PUBLIC,
+    network: WalletNetwork.TESTNET,
     modules: allowAllModules(),
   });
 
   kit.createButton({
     container: document.querySelector('#buttonWrapper'),
     onConnect: ({ address }) => {
-      console.log('Address requested: ', address)
+      console.log('Address requested: ', address);
+      document.querySelector('#publicKey').setAttribute('value', address);
     },
     buttonText: 'Connect',
     horizonUrl: 'https://horizon.stellar.org/'
+  })
+
+  document.querySelector('#signButton').addEventListener('click', async function(e) {
+    const inputElement = document.querySelector('#xdrTextArea');
+    console.log('XDR to sign:', inputElement.value);
+
+    const data = await kit.signTransaction(inputElement.value, {
+      networkPassphrase: WalletNetwork.TESTNET,
+      address: document.querySelector('#publicKey').value,
+    });
+
+    document.querySelector('#signedXdr').textContent = JSON.stringify(data, null, 2);
   })
 
   document.querySelector('#externalButton').addEventListener('click', function(e) {

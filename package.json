@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@albedo-link/intent": "0.12.0",
-    "@creit-tech/xbull-wallet-connect": "github:Creit-Tech/xBull-Wallet-Connect#0.2.0",
+    "@creit.tech/xbull-wallet-connect": "0.3.0",
     "@lobstrco/signer-extension-api": "1.0.0-beta.0",
     "@ngneat/elf": "2.5.1",
     "@ngneat/elf-devtools": "1.3.0",
