@@ -64,9 +64,14 @@
   <pre id='signedXdr'></pre>
 </main>
 
-<!--<br><br>-->
-<!--<button id='externalButton'>Connect with external button</button>-->
-<!--<br><br>-->
+<br><br>
+<button id='externalButton'>Connect with external button</button>
+<br><br>
+<div>
+  <button id='createButton'>Create a button on the header</button>
+  <button id='removeButton'>Remove the button from the header</button>
+</div>
+<br><br>
 
 <script type='module'>
   import {
@@ -82,15 +87,20 @@
     modules: allowAllModules(),
   });
 
-  kit.createButton({
-    container: document.querySelector('#buttonWrapper'),
-    onConnect: ({ address }) => {
-      console.log('Address requested: ', address);
-      document.querySelector('#publicKey').setAttribute('value', address);
-    },
-    buttonText: 'Connect',
-    horizonUrl: 'https://horizon.stellar.org/'
-  })
+  function createDefaultButton() {
+    kit.createButton({
+      container: document.querySelector('#buttonWrapper'),
+      onConnect: ({ address }) => {
+        console.log('Address requested: ', address);
+        document.querySelector('#publicKey').setAttribute('value', address);
+      },
+      onDisconnect: () => console.log('Disconnected from the button'),
+      buttonText: 'Connect',
+      horizonUrl: 'https://horizon.stellar.org/'
+    })
+  }
+
+  createDefaultButton();
 
   document.querySelector('#signButton').addEventListener('click', async function(e) {
     const inputElement = document.querySelector('#xdrTextArea');
@@ -115,6 +125,14 @@
       modalTitle: 'This is a different tittle',
       notAvailableText: 'Nope!'
     });
+  });
+
+  document.querySelector('#createButton').addEventListener('click', function(e) {
+    createDefaultButton();
+  });
+
+  document.querySelector('#removeButton').addEventListener('click', function(e) {
+    kit.removeButton();
   });
 </script>
 </body>

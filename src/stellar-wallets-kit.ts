@@ -152,6 +152,10 @@ export class StellarWalletsKit implements KitActions {
   }
 
   // ---- Button methods
+  public isButtonCreated(): boolean {
+    return !!this.buttonElement;
+  }
+
   public async createButton(params: {
     container: HTMLElement;
     onConnect: (response: { address: string }) => void;
@@ -190,6 +194,24 @@ export class StellarWalletsKit implements KitActions {
       },
       false
     );
+  }
+
+  /**
+   * Removes the button elements from the HTML and from the kit's instance.
+   *
+   * @param params.skipDisconnect - Set this to `true` if you want to prevent that we disconnect (for example, disconnecting WalletConnect or removing the address)
+   */
+  public async removeButton(params?: { skipDisconnect?: boolean }): Promise<void> {
+    if (!this.buttonElement) {
+      throw new Error(`Stellar Wallets Kit button hasn't been created yet`);
+    }
+
+    if (params?.skipDisconnect !== true) {
+      this.buttonElement.disconnect();
+    }
+
+    this.buttonElement.remove();
+    delete this.buttonElement;
   }
   // ---- END Button methods
 
