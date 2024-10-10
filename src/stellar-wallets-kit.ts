@@ -178,11 +178,20 @@ export class StellarWalletsKit implements KitActions {
     }
 
     params.container.appendChild(this.buttonElement);
+
     this.buttonElement.addEventListener(
-      'connect-wallet',
-      () => this.getAddress().then((r: { address: string }) => params.onConnect(r)),
+      'button-clicked',
+      () => {
+        this.openModal({
+          onWalletSelected: option => {
+            setSelectedModuleId(option.id);
+            this.getAddress().then((r: { address: string }) => params.onConnect(r));
+          },
+        });
+      },
       false
     );
+
     this.buttonElement.addEventListener(
       'disconnect-wallet',
       () => {
@@ -222,11 +231,12 @@ export class StellarWalletsKit implements KitActions {
     modalTitle?: string;
     notAvailableText?: string;
   }): Promise<void> {
-    if (this.modalElement) {
+    if (this.modalElement && !this.buttonElement) {
       throw new Error(`Stellar Wallets Kit modal is already open`);
+    } else {
+      this.modalElement = document.createElement('stellar-wallets-modal') as StellarWalletsModal;
     }
 
-    this.modalElement = document.createElement('stellar-wallets-modal') as StellarWalletsModal;
     this.modalElement.setAttribute('showModal', '');
 
     if (params.modalTitle) {

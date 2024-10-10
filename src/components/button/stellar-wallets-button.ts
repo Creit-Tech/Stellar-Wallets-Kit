@@ -5,8 +5,8 @@ import { firstValueFrom, Subscription, switchMap } from 'rxjs';
 import { fetchAccountBalance } from '../../services/account.service';
 import { copyToClipboard } from '../../services/clipboard.service';
 import { ReactiveState } from '../../state/reactive-state';
-import { activeAddress$, buttonTheme$, horizonUrl$, removeAddress, setSelectedModuleId } from '../../state/store';
-import { IButtonTheme, ISupportedWallet } from '../../types';
+import { activeAddress$, buttonTheme$, horizonUrl$, removeAddress } from '../../state/store';
+import { IButtonTheme } from '../../types';
 import { dropdownWrapper, buttonContainer, buttonStyles } from './styles';
 
 export enum ButtonThemeType {
@@ -50,9 +50,6 @@ export class StellarWalletsButton extends LitElement {
   buttonText: string = 'Connect';
 
   @state()
-  showModal: boolean = false;
-
-  @state()
   showDropdown: boolean = false;
 
   @state()
@@ -82,25 +79,13 @@ export class StellarWalletsButton extends LitElement {
     if (this.activeAddress.value) {
       this.showDropdown = !this.showDropdown;
     } else {
-      this.showModal = true;
+      this.dispatchEvent(
+        new CustomEvent('button-clicked', {
+          bubbles: true,
+          composed: true,
+        })
+      );
     }
-  }
-
-  onWalletSelected(e: CustomEvent<ISupportedWallet>) {
-    setSelectedModuleId(e.detail.id);
-    this.showModal = false;
-
-    this.dispatchEvent(
-      new CustomEvent('connect-wallet', {
-        detail: e.detail,
-        bubbles: true,
-        composed: true,
-      })
-    );
-  }
-
-  onModalClosed() {
-    this.showModal = false;
   }
 
   closeDropdown(): void {
@@ -245,13 +230,6 @@ export class StellarWalletsButton extends LitElement {
 
     return html`
       <section style=${styleMap(this.getThemeStyles)} class="btn-container">${button} ${dropdown}</section>
-
-      <stellar-wallets-modal
-        .ignoreShowStatus=${true}
-        .showModal=${this.showModal}
-        @wallet-selected=${this.onWalletSelected}
-        @modal-closed=${this.onModalClosed}>
-      </stellar-wallets-modal>
     `;
   }
 }
