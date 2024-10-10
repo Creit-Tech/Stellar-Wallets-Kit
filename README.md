@@ -141,12 +141,6 @@ There will be moments where you would like to change certain parameters from the
 await kit.setWallet(XBULL_ID)
 ```
 
-### Set the target network
-
-```typescript
-await kit.setNetwork(WalletNetwork.TESTNET);
-```
-
 And more methods, check the documentation to see all the methods available.
 
 ## License
