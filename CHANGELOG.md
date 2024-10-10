@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.3](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.2.2...v1.2.3) (2024-10-09)
+### Fix
+- Move the Modal component out from the Button component, we do this so the shadow DOM styles don't affect the modal component in those cases where there is a container that could prevent the modal from taking the whole screen
+
 ### [1.2.2](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.2.1...v1.2.2) (2024-10-07)
 ### Add
 - Add `removeButton` and `isButtonCreated` methods to the kit. These methods can be used in cases where we need to re-organize the layout of our frontend
