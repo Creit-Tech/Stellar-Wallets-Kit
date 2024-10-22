@@ -58,6 +58,18 @@ const kit: StellarWalletsKit = new StellarWalletsKit({
 });
 ```
 
+The available modules and their identifier are : 
+| Wallet | Module class | identifier |
+| - | - | - |
+| Albedo | AlbedoModule | ALBEDO_ID |
+| Freigther | AlbedoModule | FREIGHTER_ID |
+| Hana | HanaModule | HANA_ID |
+| Lobstr | LobstrModule | LOBSTR_ID |
+| Rabet | RabetModule | RABET_ID |
+| Wallet connect | WalletConnectModule | WALLET_CONNECT_ID |
+| xBull | xBullModule | XBULL_ID |
+
+
 ## Integrated UI Modal
 
 ![](./modal-ui.gif)
