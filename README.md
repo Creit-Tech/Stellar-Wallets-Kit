@@ -62,7 +62,7 @@ The available modules and their identifier are :
 | Wallet | Module class | identifier |
 | - | - | - |
 | Albedo | AlbedoModule | ALBEDO_ID |
-| Freigther | AlbedoModule | FREIGHTER_ID |
+| Freigther | FreighterModule | FREIGHTER_ID |
 | Hana | HanaModule | HANA_ID |
 | Lobstr | LobstrModule | LOBSTR_ID |
 | Rabet | RabetModule | RABET_ID |
