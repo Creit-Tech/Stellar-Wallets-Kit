@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.5](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.2.3...v1.2.5) (2024-11-07)
+### Fix
+- Add `Buffer` package to correctly convert the response from a signed message/auth entry with Freighter ([Ticket created](https://github.com/stellar/freighter/issues/1626))
+- Check if `window` is `undefined` before using it with Rabet and Hana so it works on server side flows.
+
 ### [1.2.3](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.2.2...v1.2.3) (2024-10-09)
 ### Fix
 - Move the Modal component out from the Button component, we do this so the shadow DOM styles don't affect the modal component in those cases where there is a container that could prevent the modal from taking the whole screen

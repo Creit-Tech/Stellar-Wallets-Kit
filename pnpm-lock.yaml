@@ -41,6 +41,9 @@ importers:
       buffer:
         specifier: 6.0.3
         version: 6.0.3
+      events:
+        specifier: 3.3.0
+        version: 3.3.0
       lit:
         specifier: 3.2.0
         version: 3.2.0
