@@ -45,7 +45,7 @@
     "@stellar/freighter-api": "3.0.0",
     "@walletconnect/modal": "2.6.2",
     "@walletconnect/sign-client": "2.11.2",
-    "events": "3.3.0",
+    "buffer": "6.0.3",
     "lit": "3.2.0",
     "rxjs": "7.8.1"
   },

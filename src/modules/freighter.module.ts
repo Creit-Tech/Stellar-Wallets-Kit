@@ -8,6 +8,7 @@ import {
 } from '@stellar/freighter-api';
 import { ModuleInterface, ModuleType } from '../types';
 import { parseError } from '../utils';
+import { Buffer } from 'buffer';
 
 export const FREIGHTER_ID = 'freighter';
 
@@ -87,7 +88,7 @@ export class FreighterModule implements ModuleInterface {
 
         if (error || !signedAuthEntry) throw error;
 
-        return { signedAuthEntry: signedAuthEntry.toString('base64'), signerAddress: signerAddress };
+        return { signedAuthEntry: Buffer.from(signedAuthEntry).toString('base64'), signerAddress: signerAddress };
       })
       .catch(e => {
         throw parseError(e);
@@ -111,7 +112,7 @@ export class FreighterModule implements ModuleInterface {
 
         if (error || !signedMessage) throw error;
 
-        return { signedMessage: signedMessage.toString('base64'), signerAddress: signerAddress };
+        return { signedMessage: Buffer.from(signedMessage).toString('base64'), signerAddress: signerAddress };
       })
       .catch(e => {
         throw parseError(e);
