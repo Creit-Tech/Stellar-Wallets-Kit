@@ -20,12 +20,12 @@ export class RabetModule implements ModuleInterface {
   productIcon: string = 'https://stellar.creit.tech/wallet-icons/rabet.png';
 
   async isAvailable(): Promise<boolean> {
-    return !!window.rabet;
+    return typeof window !== 'undefined' && !!window.rabet;
   }
 
   async getAddress(): Promise<{ address: string }> {
     const runChecks = async () => {
-      if (!window.rabet) {
+      if (!(await this.isAvailable())) {
         throw new Error('Rabet is not installed');
       }
     };
@@ -49,7 +49,7 @@ export class RabetModule implements ModuleInterface {
     }
   ): Promise<{ signedTxXdr: string; signerAddress?: string }> {
     const runChecks = async () => {
-      if (!window.rabet) {
+      if (!(await this.isAvailable())) {
         throw new Error('Rabet is not installed');
       }
 
