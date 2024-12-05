@@ -74,6 +74,11 @@
 <br><br>
 
 <script type='module'>
+  import { Buffer } from 'buffer';
+  window.Buffer = Buffer;
+</script>
+
+<script type='module'>
   import {
     StellarWalletsKit,
     XBULL_ID,
@@ -81,12 +86,14 @@
     allowAllModules,
   } from './build/index.js';
   import { WalletConnectModule, WalletConnectAllowedMethods } from './build/modules/walletconnect.module.js'
+  import { LedgerModule } from './build/modules/ledger.module.js'
 
   const kit = new StellarWalletsKit({
     selectedWalletId: XBULL_ID,
     network: WalletNetwork.TESTNET,
     modules: [
       ...allowAllModules(),
+      new LedgerModule(),
       new WalletConnectModule({
         url: 'https://stellarwalletskit.dev/',
         projectId: '4e0b84f6ba6bedf7c7f041d919a9f039',
