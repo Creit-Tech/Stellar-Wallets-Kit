@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.2.5...v1.3.0) (2024-12-05)
+### Add 
+- Add Ledger wallets support
+- Add new "account selector" component which can be used by wallets based on mnemonic phrases or similar (for example hardware wallets)
+- Merge PR #48 - Add signMessage support for Hana wallet
+
 ### [1.2.5](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.2.3...v1.2.5) (2024-11-07)
 ### Fix
 - Add `Buffer` package to correctly convert the response from a signed message/auth entry with Freighter ([Ticket created](https://github.com/stellar/freighter/issues/1626))
