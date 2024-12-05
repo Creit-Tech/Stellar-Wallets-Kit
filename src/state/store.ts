@@ -14,17 +14,24 @@ export interface StateProps {
   buttonTheme?: IButtonTheme;
 
   activeAddress?: string;
+  mnemonicPath?: string;
+  hardwareWalletPaths: { publicKey: string; index: number }[];
 }
 
 export const store = createStore(
   { name: 'state' },
   withProps<StateProps>({
     allowedWallets: [],
+    hardwareWalletPaths: [],
   })
 );
 
 export const allowedWallets$: Observable<ISupportedWallet[]> = store.pipe(
   select((state: StateProps) => state.allowedWallets)
+);
+
+export const selectedNetwork$: Observable<StateProps['selectedNetwork']> = store.pipe(
+  select((state: StateProps) => state.selectedNetwork)
 );
 
 export const modalTheme$: Observable<IModalTheme | undefined> = store.pipe(
@@ -40,6 +47,14 @@ export const activeAddress$: Observable<string | undefined> = store.pipe(
 );
 
 export const horizonUrl$: Observable<string | undefined> = store.pipe(select((state: StateProps) => state.horizonUrl));
+
+export const mnemonicPath$: Observable<string | undefined> = store.pipe(
+  select((state: StateProps) => state.mnemonicPath)
+);
+
+export const hardwareWalletPaths$: Observable<{ publicKey: string; index: number }[]> = store.pipe(
+  select((state: StateProps) => state.hardwareWalletPaths)
+);
 
 export function setSelectedModuleId(moduleId: Required<StateProps['selectedModuleId']>): void {
   store.update(setProp('selectedModuleId', moduleId));
@@ -75,4 +90,20 @@ export function removeAddress(): void {
 
 export function setHorizonUrl(url: string): void {
   store.update(setProp('horizonUrl', url));
+}
+
+export function setMnemonicPath(path: string): void {
+  store.update(setProp('mnemonicPath', path));
+}
+
+export function removeMnemonicPath(): void {
+  store.update(setProp('mnemonicPath', undefined));
+}
+
+export function setHardwareWalletPaths(accounts: { publicKey: string; index: number }[]): void {
+  store.update(setProp('hardwareWalletPaths', accounts));
+}
+
+export function removeHardwareWalletPaths(): void {
+  store.update(setProp('hardwareWalletPaths', []));
 }

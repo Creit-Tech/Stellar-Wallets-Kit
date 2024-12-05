@@ -3,7 +3,7 @@ import terser from '@rollup/plugin-terser';
 
 const bundle = config => ({
   ...config,
-  input: ['src/index.ts', 'src/modules/walletconnect.module.ts'],
+  input: ['src/index.ts', 'src/modules/walletconnect.module.ts', 'src/modules/ledger.module.ts'],
   external: id => !/^[./]/.test(id),
 });
 
