@@ -17,6 +17,11 @@ interface SignAuthEntryProps {
   accountToSign?: string;
 }
 
+interface SignMessageProps {
+  message: string;
+  accountToSign?: string;
+}
+
 declare const window: Window & {
   hanaWallet?: {
     stellar?: {
@@ -24,6 +29,7 @@ declare const window: Window & {
       signTransaction({ xdr, accountToSign, networkPassphrase }: SignTransactionProps): Promise<string>;
       signBlob({ blob, accountToSign }: SignBlobProps): Promise<string>;
       signAuthEntry({ xdr, accountToSign }: SignAuthEntryProps): Promise<string>;
+      signMessage({ message, accountToSign }: SignMessageProps): Promise<string>;
     };
   };
 };
@@ -102,11 +108,23 @@ export class HanaModule implements ModuleInterface {
       });
   }
 
-  async signMessage(): Promise<{ signedMessage: string; signerAddress?: string }> {
-    throw {
-      code: -3,
-      message: 'Hana does not support the "signMessage" function',
-    };
+  async signMessage(
+    message: string,
+    opts?: {
+      address?: string;
+    }
+  ): Promise<{ signedMessage: string; signerAddress?: string }> {
+    return this.runChecks()
+      .then(() =>
+        window.hanaWallet!.stellar!.signMessage({
+          message,
+          accountToSign: opts?.address,
+        })
+      )
+      .then(signedMessage => ({ signedMessage, signerAddress: opts?.address }))
+      .catch(e => {
+        throw parseError(e);
+      });
   }
 
   async getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
