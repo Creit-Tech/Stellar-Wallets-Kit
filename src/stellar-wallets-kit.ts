@@ -65,7 +65,7 @@ export class StellarWalletsKit implements KitActions {
    * This method will return an array with all wallets supported by this kit but will let you know those the user have already installed/has access to
    * There are wallets that are by default available since they either don't need to be installed or have a fallback
    */
-  public async getSupportedWallets(): Promise<ISupportedWallet[]> {
+  public getSupportedWallets = async (): Promise<ISupportedWallet[]> => {
     return Promise.all(
       this.modules.map(async (mod: ModuleInterface): Promise<ISupportedWallet> => {
         const timer: Promise<false> = new Promise(r => setTimeout(() => r(false), 500));
@@ -79,9 +79,9 @@ export class StellarWalletsKit implements KitActions {
         };
       })
     );
-  }
+  };
 
-  public setWallet(id: string): void {
+  public setWallet = (id: string): void => {
     const target: ModuleInterface | undefined = this.modules.find(
       (mod: ModuleInterface): boolean => mod.productId === id
     );
@@ -91,15 +91,15 @@ export class StellarWalletsKit implements KitActions {
     }
 
     setSelectedModuleId(target.productId);
-  }
+  };
 
-  public async getAddress(params?: { path?: string }): Promise<{ address: string }> {
+  public getAddress = async (params?: { path?: string }): Promise<{ address: string }> => {
     const { address } = await this.selectedModule.getAddress(params);
     setAddress(address);
     return { address };
-  }
+  };
 
-  public async signTransaction(
+  public signTransaction = (
     xdr: string,
     opts?: {
       networkPassphrase?: string;
@@ -108,61 +108,61 @@ export class StellarWalletsKit implements KitActions {
       submit?: boolean;
       submitUrl?: string;
     }
-  ): Promise<{ signedTxXdr: string; signerAddress?: string }> {
+  ): Promise<{ signedTxXdr: string; signerAddress?: string }> => {
     return this.selectedModule.signTransaction(xdr, {
       ...opts,
       networkPassphrase: opts?.networkPassphrase || store.getValue().selectedNetwork,
     });
-  }
+  };
 
-  public async signAuthEntry(
+  public signAuthEntry = (
     authEntry: string,
     opts?: {
       networkPassphrase?: string;
       address?: string;
       path?: string;
     }
-  ): Promise<{ signedAuthEntry: string; signerAddress?: string }> {
+  ): Promise<{ signedAuthEntry: string; signerAddress?: string }> => {
     return this.selectedModule.signAuthEntry(authEntry, {
       ...opts,
       networkPassphrase: opts?.networkPassphrase || store.getValue().selectedNetwork,
     });
-  }
+  };
 
-  public async signMessage(
+  public signMessage = (
     message: string,
     opts?: {
       networkPassphrase?: string;
       address?: string;
       path?: string;
     }
-  ): Promise<{ signedMessage: string; signerAddress?: string }> {
+  ): Promise<{ signedMessage: string; signerAddress?: string }> => {
     return this.selectedModule.signMessage(message, {
       ...opts,
       networkPassphrase: opts?.networkPassphrase || store.getValue().selectedNetwork,
     });
-  }
+  };
 
-  async getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
+  public getNetwork = (): Promise<{ network: string; networkPassphrase: string }> => {
     return this.selectedModule.getNetwork();
-  }
+  };
 
-  async disconnect(): Promise<void> {
+  public disconnect = async (): Promise<void> => {
     removeAddress();
-  }
+  };
 
   // ---- Button methods
-  public isButtonCreated(): boolean {
+  public isButtonCreated = (): boolean => {
     return !!this.buttonElement;
-  }
+  };
 
-  public async createButton(params: {
+  public createButton = async (params: {
     container: HTMLElement;
     onConnect: (response: { address: string }) => void;
     onDisconnect: () => void;
     horizonUrl?: string;
     buttonText?: string;
-  }): Promise<void> {
+  }): Promise<void> => {
     if (this.buttonElement) {
       throw new Error(`Stellar Wallets Kit button is already created`);
     }
@@ -203,14 +203,14 @@ export class StellarWalletsKit implements KitActions {
       },
       false
     );
-  }
+  };
 
   /**
    * Removes the button elements from the HTML and from the kit's instance.
    *
    * @param params.skipDisconnect - Set this to `true` if you want to prevent that we disconnect (for example, disconnecting WalletConnect or removing the address)
    */
-  public async removeButton(params?: { skipDisconnect?: boolean }): Promise<void> {
+  public removeButton = async (params?: { skipDisconnect?: boolean }): Promise<void> => {
     if (!this.buttonElement) {
       throw new Error(`Stellar Wallets Kit button hasn't been created yet`);
     }
@@ -221,16 +221,16 @@ export class StellarWalletsKit implements KitActions {
 
     this.buttonElement.remove();
     delete this.buttonElement;
-  }
+  };
   // ---- END Button methods
 
   // ---- Modal methods
-  public async openModal(params: {
+  public openModal = async (params: {
     onWalletSelected: (option: ISupportedWallet) => void;
     onClosed?: (err: Error) => void;
     modalTitle?: string;
     notAvailableText?: string;
-  }): Promise<void> {
+  }): Promise<void> => {
     if (this.modalElement && !this.buttonElement) {
       throw new Error(`Stellar Wallets Kit modal is already open`);
     } else {
@@ -281,6 +281,6 @@ export class StellarWalletsKit implements KitActions {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     this.modalElement.addEventListener('modal-closed', errorListener, false);
-  }
+  };
   // ---- END Modal methods
 }
