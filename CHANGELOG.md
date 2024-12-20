@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.3.0...v1.4.0) (2024-12-20)
+### Add
+- Add Trezor wallets support
+- Update the returned value from the `openAccountSelector` method in the Ledger module.
+
 ### [1.3.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.2.5...v1.3.0) (2024-12-05)
 ### Add 
 - Add Ledger wallets support
