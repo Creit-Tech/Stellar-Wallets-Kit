@@ -87,6 +87,7 @@
   } from './build/index.js';
   import { WalletConnectModule, WalletConnectAllowedMethods } from './build/modules/walletconnect.module.js'
   import { LedgerModule } from './build/modules/ledger.module.js'
+  import { TrezorModule } from './build/modules/trezor.module.js';
 
   const kit = new StellarWalletsKit({
     selectedWalletId: XBULL_ID,
@@ -94,6 +95,10 @@
     modules: [
       ...allowAllModules(),
       new LedgerModule(),
+      new TrezorModule({
+        appUrl: 'http://localhost:5173',
+        email: 'test@localhost.com'
+      }),
       new WalletConnectModule({
         url: 'https://stellarwalletskit.dev/',
         projectId: '4e0b84f6ba6bedf7c7f041d919a9f039',

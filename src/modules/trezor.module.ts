@@ -1,9 +1,8 @@
-import Str from '@ledgerhq/hw-app-str';
-import Transport from '@ledgerhq/hw-transport';
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
-import { Buffer } from 'buffer';
+import TrezorConnect from '@trezor/connect-web';
+import { transformTransaction } from '@trezor/connect-plugin-stellar';
+import { Transaction } from '@stellar/stellar-base';
 import { firstValueFrom } from 'rxjs';
-import { StellarSelectorModal } from '../components/selector-modal/stellar-selector-modal';
+
 import {
   hardwareWalletPaths$,
   mnemonicPath$,
@@ -14,67 +13,74 @@ import {
   setMnemonicPath,
 } from '../state/store';
 import { ModuleInterface, ModuleType } from '../types';
-import { StrKey } from '@stellar/stellar-base';
 import { parseError } from '../utils';
-import { Transaction } from '@stellar/stellar-base';
+import { StellarSelectorModal } from '../components/selector-modal/stellar-selector-modal';
 
-export const LEDGER_ID = 'LEDGER';
+export const TREZOR_ID = 'TREZOR';
 
-export class LedgerModule implements ModuleInterface {
+export class TrezorModule implements ModuleInterface {
+  private _isAvailable: boolean = false;
+
   moduleType: ModuleType = ModuleType.HW_WALLET;
 
-  productId: string = LEDGER_ID;
-  productName: string = 'Ledger';
-  productUrl: string = 'https://www.ledger.com/';
-  productIcon: string = 'https://stellar.creit.tech/wallet-icons/ledger.png';
+  productId: string = TREZOR_ID;
+  productName: string = 'Trezor';
+  productUrl: string = 'https://www.trezor.com/';
+  productIcon: string = 'https://stellar.creit.tech/wallet-icons/trezor.png';
 
-  private _transport?: Transport;
-  async transport() {
-    if (!(await TransportWebUSB.isSupported())) throw new Error('Ledger can not be used with this device.');
-
-    if (!this._transport) {
-      this._transport = await TransportWebUSB.create();
-    }
-
-    return this._transport;
+  constructor(params: ITrezorModuleParams) {
+    TrezorConnect.init({
+      manifest: {
+        appUrl: params.appUrl,
+        email: params.email,
+      },
+      // More advanced options
+      debug: params.debug || false,
+      lazyLoad: params.lazyLoad || false,
+      coreMode: params.coreMode || 'auto',
+    }).then(() => {
+      console.log('Trezor is ready');
+      this._isAvailable = true;
+    });
   }
 
   async disconnect(): Promise<void> {
     removeMnemonicPath();
     removeHardwareWalletPaths();
-    this._transport?.close();
-    this._transport = undefined;
   }
 
   /**
-   * This always return true because in theory ledgers aren't supposed
-   * to be connected at all time
+   * `TrezorConnect` needs to be started before we can use it but because users most likely
+   * won't use their devices as soon as the site loads, we return `true` since it should be already started
+   * once the user needs to interact with it.
    */
   async isAvailable(): Promise<boolean> {
-    return TransportWebUSB.isSupported();
+    return true;
   }
 
   async runChecks(): Promise<void> {
-    if (!(await this.isAvailable())) {
-      throw new Error('Ledger wallets can not be used');
+    if (!this._isAvailable) {
+      throw parseError(new Error('Trezor connection has not been started yet.'));
     }
   }
 
-  async getAddress(params?: { path?: string }): Promise<{ address: string }> {
-    await this.runChecks();
-
-    let mnemonicPath: string | undefined = await firstValueFrom(mnemonicPath$);
-    const finalTransport: Transport = await this.transport();
-    const str = new Str(finalTransport);
-
-    if (!mnemonicPath) {
-      await this.openAccountSelector();
-      mnemonicPath = await firstValueFrom(mnemonicPath$);
-    }
-
+  async getAddress(opts?: { path?: string }): Promise<{ address: string }> {
     try {
-      const result: { rawPublicKey: Buffer } = await str.getPublicKey(params?.path || mnemonicPath!);
-      return { address: StrKey.encodeEd25519PublicKey(result.rawPublicKey) };
+      await this.runChecks();
+
+      const mnemonicPath: string | undefined = opts?.path || (await firstValueFrom(mnemonicPath$));
+
+      if (!mnemonicPath) {
+        const result = await this.openAccountSelector();
+        return { address: result.publicKey };
+      } else {
+        const result = await TrezorConnect.stellarGetAddress({ path: mnemonicPath, showOnTrezor: false });
+        if (!result.success) {
+          throw parseError(new Error(result.payload.error));
+        }
+
+        return { address: result.payload.address };
+      }
     } catch (e) {
       throw parseError(e);
     }
@@ -85,18 +91,23 @@ export class LedgerModule implements ModuleInterface {
    * @param page - {Number}
    */
   async getAddresses(page: number = 0): Promise<{ publicKey: string; index: number }[]> {
-    const finalTransport: Transport = await this.transport();
-    const str = new Str(finalTransport);
     const startIndex: number = page * 10;
-    const results: { publicKey: string; index: number }[] = [];
+    const bundle: { path: string; showOnTrezor: boolean }[] = new Array(10)
+      .fill(undefined)
+      .map((_, i): { path: string; showOnTrezor: boolean } => ({
+        path: `m/44'/148'/${i + startIndex}'`,
+        showOnTrezor: false,
+      }));
 
-    for (let i = 0; i < 10; i++) {
-      const result: { rawPublicKey: Buffer } = await str.getPublicKey(`44'/148'/${i + startIndex}'`);
-      results.push({
-        publicKey: StrKey.encodeEd25519PublicKey(result.rawPublicKey),
-        index: i + startIndex,
-      });
+    const result = await TrezorConnect.stellarGetAddress({ bundle });
+    if (!result.success) {
+      throw parseError(new Error(result.payload.error));
     }
+
+    const results = result.payload.map((item, i) => ({
+      publicKey: item.address,
+      index: i + startIndex,
+    }));
 
     setHardwareWalletPaths(results);
 
@@ -158,42 +169,48 @@ export class LedgerModule implements ModuleInterface {
       networkPassphrase?: string;
       address?: string;
       path?: string;
-      nonBlindTx?: boolean;
     }
   ): Promise<{ signedTxXdr: string; signerAddress?: string }> {
     await this.runChecks();
-    const finalTransport: Transport = await this.transport();
-    const str = new Str(finalTransport);
 
     let mnemonicPath: string | undefined;
     let account: string;
     if (opts?.path) {
       mnemonicPath = opts.path;
-      const result: { rawPublicKey: Buffer } = await str.getPublicKey(mnemonicPath);
-      account = StrKey.encodeEd25519PublicKey(result.rawPublicKey);
+      const result = await TrezorConnect.stellarGetAddress({ path: mnemonicPath, showOnTrezor: false });
+      if (!result.success) {
+        throw new Error(result.payload.error);
+      }
+      account = result.payload.address;
     } else if (opts?.address) {
       const paths = await firstValueFrom(hardwareWalletPaths$);
       const target = paths.find(p => p.publicKey === opts.address);
-      if (!target) throw new Error('This address has not been loaded from this ledger');
-      mnemonicPath = `44'/148'/${target.index}'`;
+      if (!target) throw parseError(new Error('This address has not been loaded from this device'));
+      mnemonicPath = `m/44'/148'/${target.index}'`;
       account = target.publicKey;
     } else {
       mnemonicPath = await firstValueFrom(mnemonicPath$);
-      if (!mnemonicPath) throw new Error('There is no path available, please call the `getAddress` method first.');
-      const result: { rawPublicKey: Buffer } = await str.getPublicKey(mnemonicPath);
-      account = StrKey.encodeEd25519PublicKey(result.rawPublicKey);
+      if (!mnemonicPath)
+        throw parseError(new Error('There is no path available, please call the `getAddress` method first.'));
+      const result = await TrezorConnect.stellarGetAddress({ path: mnemonicPath, showOnTrezor: false });
+      if (!result.success) {
+        throw new Error(result.payload.error);
+      }
+      account = result.payload.address;
     }
 
     const network: string | undefined = opts?.networkPassphrase || (await firstValueFrom(selectedNetwork$));
-    if (!network) throw new Error('You need to provide or set a network passphrase');
+    if (!network) throw parseError(new Error('You need to provide or set a network passphrase'));
 
     const tx: Transaction = new Transaction(xdr, network);
+    const parsedTx = transformTransaction(mnemonicPath, tx);
+    const result = await TrezorConnect.stellarSignTransaction(parsedTx);
 
-    const result: { signature: Buffer } = opts?.nonBlindTx
-      ? await str.signTransaction(mnemonicPath, tx.signatureBase())
-      : await str.signHash(mnemonicPath, tx.hash());
+    if (!result.success) {
+      throw parseError(new Error(result.payload.error));
+    }
 
-    tx.addSignature(account, result.signature.toString('base64'));
+    tx.addSignature(account, Buffer.from(result.payload.signature, 'hex').toString('base64'));
 
     return {
       signedTxXdr: tx.toXDR(),
@@ -204,21 +221,32 @@ export class LedgerModule implements ModuleInterface {
   async signAuthEntry(): Promise<{ signedAuthEntry: string; signerAddress?: string }> {
     throw {
       code: -3,
-      message: 'Ledger Wallets do not support the "signAuthEntry" function',
+      message: 'Trezor Wallets do not support the "signAuthEntry" method',
     };
   }
 
   async signMessage(): Promise<{ signedMessage: string; signerAddress?: string }> {
     throw {
       code: -3,
-      message: 'Ledger Wallets do not support the "signMessage" function',
+      message: 'Trezor Wallets do not support the "signMessage" method',
     };
   }
 
   async getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
     throw {
       code: -3,
-      message: 'Ledger Wallets do not support the "getNetwork" function',
+      message: 'Trezor Wallets do not support the "getNetwork" method',
     };
   }
+}
+
+/**
+ * These values are used to start the TrezorConnect library
+ */
+export interface ITrezorModuleParams {
+  appUrl: string;
+  email: string;
+  debug?: boolean;
+  lazyLoad?: boolean;
+  coreMode?: 'auto' | 'iframe' | 'popup';
 }

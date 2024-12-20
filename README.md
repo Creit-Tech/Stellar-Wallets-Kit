@@ -64,6 +64,8 @@ The available modules and their identifier are :
 | Albedo | AlbedoModule | ALBEDO_ID |
 | Freigther | FreighterModule | FREIGHTER_ID |
 | Hana | HanaModule | HANA_ID |
+| Ledger Wallet | LedgerModule | LEDGER_ID |
+| Trezor Wallet | TrezorModule | TREZOR_ID |
 | Lobstr | LobstrModule | LOBSTR_ID |
 | Rabet | RabetModule | RABET_ID |
 | Wallet connect | WalletConnectModule | WALLET_CONNECT_ID |
