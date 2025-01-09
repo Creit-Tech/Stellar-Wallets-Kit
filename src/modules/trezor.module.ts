@@ -19,6 +19,9 @@ import { StellarSelectorModal } from '../components/selector-modal/stellar-selec
 export const TREZOR_ID = 'TREZOR';
 
 export class TrezorModule implements ModuleInterface {
+  TrezorConnect: typeof TrezorConnect =
+    'default' in TrezorConnect ? (TrezorConnect.default as typeof TrezorConnect) : TrezorConnect;
+
   private _isAvailable: boolean = false;
 
   moduleType: ModuleType = ModuleType.HW_WALLET;
@@ -29,7 +32,7 @@ export class TrezorModule implements ModuleInterface {
   productIcon: string = 'https://stellar.creit.tech/wallet-icons/trezor.png';
 
   constructor(params: ITrezorModuleParams) {
-    TrezorConnect.init({
+    this.TrezorConnect.init({
       manifest: {
         appUrl: params.appUrl,
         email: params.email,
@@ -74,7 +77,7 @@ export class TrezorModule implements ModuleInterface {
         const result = await this.openAccountSelector();
         return { address: result.publicKey };
       } else {
-        const result = await TrezorConnect.stellarGetAddress({ path: mnemonicPath, showOnTrezor: false });
+        const result = await this.TrezorConnect.stellarGetAddress({ path: mnemonicPath, showOnTrezor: false });
         if (!result.success) {
           throw parseError(new Error(result.payload.error));
         }
@@ -99,7 +102,7 @@ export class TrezorModule implements ModuleInterface {
         showOnTrezor: false,
       }));
 
-    const result = await TrezorConnect.stellarGetAddress({ bundle });
+    const result = await this.TrezorConnect.stellarGetAddress({ bundle });
     if (!result.success) {
       throw parseError(new Error(result.payload.error));
     }
@@ -177,7 +180,7 @@ export class TrezorModule implements ModuleInterface {
     let account: string;
     if (opts?.path) {
       mnemonicPath = opts.path;
-      const result = await TrezorConnect.stellarGetAddress({ path: mnemonicPath, showOnTrezor: false });
+      const result = await this.TrezorConnect.stellarGetAddress({ path: mnemonicPath, showOnTrezor: false });
       if (!result.success) {
         throw new Error(result.payload.error);
       }
@@ -192,7 +195,7 @@ export class TrezorModule implements ModuleInterface {
       mnemonicPath = await firstValueFrom(mnemonicPath$);
       if (!mnemonicPath)
         throw parseError(new Error('There is no path available, please call the `getAddress` method first.'));
-      const result = await TrezorConnect.stellarGetAddress({ path: mnemonicPath, showOnTrezor: false });
+      const result = await this.TrezorConnect.stellarGetAddress({ path: mnemonicPath, showOnTrezor: false });
       if (!result.success) {
         throw new Error(result.payload.error);
       }
@@ -204,7 +207,7 @@ export class TrezorModule implements ModuleInterface {
 
     const tx: Transaction = new Transaction(xdr, network);
     const parsedTx = transformTransaction(mnemonicPath, tx);
-    const result = await TrezorConnect.stellarSignTransaction(parsedTx);
+    const result = await this.TrezorConnect.stellarSignTransaction(parsedTx);
 
     if (!result.success) {
       throw parseError(new Error(result.payload.error));
