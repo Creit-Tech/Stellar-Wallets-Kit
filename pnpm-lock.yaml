@@ -15,13 +15,13 @@ importers:
         specifier: 0.3.0
         version: 0.3.0
       '@ledgerhq/hw-app-str':
-        specifier: ^7.0.4
+        specifier: 7.0.4
         version: 7.0.4
       '@ledgerhq/hw-transport':
-        specifier: ^6.31.4
+        specifier: 6.31.4
         version: 6.31.4
       '@ledgerhq/hw-transport-webusb':
-        specifier: ^6.29.4
+        specifier: 6.29.4
         version: 6.29.4
       '@lobstrco/signer-extension-api':
         specifier: 1.0.0-beta.0
@@ -39,16 +39,16 @@ importers:
         specifier: 1.2.1
         version: 1.2.1(rxjs@7.8.1)
       '@stellar/freighter-api':
-        specifier: 3.0.0
-        version: 3.0.0
+        specifier: 4.0.0
+        version: 4.0.0
       '@stellar/stellar-base':
         specifier: ^12.1.1
         version: 12.1.1
       '@trezor/connect-plugin-stellar':
-        specifier: ^9.0.6
+        specifier: 9.0.6
         version: 9.0.6(@stellar/stellar-sdk@12.3.0)(@trezor/connect@9.4.7(@babel/core@7.26.0)(fastestsmallesttextencoderdecoder@1.0.22)(tslib@2.6.3)(typescript@5.5.4)(ws@8.18.0))(tslib@2.6.3)
       '@trezor/connect-web':
-        specifier: ^9.4.7
+        specifier: 9.4.7
         version: 9.4.7(@babel/core@7.26.0)(fastestsmallesttextencoderdecoder@1.0.22)(tslib@2.6.3)(typescript@5.5.4)(ws@8.18.0)
       '@walletconnect/modal':
         specifier: 2.6.2
@@ -1296,8 +1296,8 @@ packages:
   '@stablelib/x25519@1.0.3':
     resolution: {integrity: sha512-KnTbKmUhPhHavzobclVJQG5kuivH+qDLpe84iRqX3CLrKp881cF160JvXJ+hjn1aMyCwYOKeIZefIH/P5cJoRw==}
 
-  '@stellar/freighter-api@3.0.0':
-    resolution: {integrity: sha512-AI1AeHnCPLMcM8d6182FScOJjCFd1tLZcNuu5M10NmtuLfNzavw+f991dWBoz6h41mOKjauIaojR+7VfU2nULg==}
+  '@stellar/freighter-api@4.0.0':
+    resolution: {integrity: sha512-LYuVAUuvmZhzissBoAQPu2InD+R7WW1NUAJZ3iD0mPa/e5pMEhQSQUQoBWLcSpSrsQduRSDqEn5Egu8caUjLgQ==}
 
   '@stellar/js-xdr@3.1.2':
     resolution: {integrity: sha512-VVolPL5goVEIsvuGqDc5uiKxV03lzfWdvYg1KikvwheDmTBO68CKDji3bAZ/kppZrx5iTA8z3Ld5yuytcvhvOQ==}
@@ -5463,7 +5463,10 @@ snapshots:
       '@stablelib/random': 1.0.2
       '@stablelib/wipe': 1.0.1
 
-  '@stellar/freighter-api@3.0.0': {}
+  '@stellar/freighter-api@4.0.0':
+    dependencies:
+      buffer: 6.0.3
+      semver: 7.6.3
 
   '@stellar/js-xdr@3.1.2': {}
 

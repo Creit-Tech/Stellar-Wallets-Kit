@@ -44,10 +44,11 @@
 <body>
 
 <header>
-  <div>
-<!--    <h3 style='margin: 0; line-height: 100%;'>Dev site</h3>-->
-  </div>
   <div id='buttonWrapper'></div>
+  <div>
+    <button id='externalConnect'>Connect</button>
+    <button id='externalDisconnect'>Disconnect</button>
+  </div>
 </header>
 
 <main>
@@ -158,6 +159,16 @@
   document.querySelector('#removeButton').addEventListener('click', function(e) {
     kit.removeButton();
   });
+
+  kit.assignButtons({
+    connectEl: '#externalConnect',
+    disconnectEl: '#externalDisconnect',
+    onConnect: ({ address }) => {
+      console.log('Address requested: ', address);
+      document.querySelector('#publicKey').setAttribute('value', address);
+    },
+    onDisconnect: () => console.log('Disconnected from the button'),
+  })
 </script>
 </body>
 </html>

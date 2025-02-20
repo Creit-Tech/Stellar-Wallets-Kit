@@ -156,6 +156,59 @@ export class StellarWalletsKit implements KitActions {
     return !!this.buttonElement;
   }
 
+  /**
+   * This method allows developers to set their own buttons (for connection and disconnection) on their website
+   * while letting the kit handle the logic behind opening the modal, setting and removing the address from the storage, etc
+   */
+  public assignButtons(params: {
+    connectEl: HTMLElement | string;
+    disconnectEl?: HTMLElement | string;
+    onConnect: (response: { address: string }) => void;
+    onDisconnect: () => void;
+  }): void {
+    const connectEl: HTMLElement =
+      typeof params.connectEl === 'string'
+        ? (document.querySelector(params.connectEl) as HTMLElement)
+        : params.connectEl;
+
+    if (!connectEl) throw new Error('connectEl is not available');
+
+    connectEl.addEventListener(
+      'click',
+      () => {
+        this.openModal({
+          onWalletSelected: option => {
+            setSelectedModuleId(option.id);
+            this.getAddress().then((r: { address: string }) => params.onConnect(r));
+          },
+        }).then();
+      },
+      false
+    );
+
+    if (!params.disconnectEl) return;
+
+    const disconnectEl: HTMLElement =
+      typeof params.disconnectEl === 'string'
+        ? (document.querySelector(params.disconnectEl) as HTMLElement)
+        : params.disconnectEl;
+
+    if (!disconnectEl) throw new Error('disconnectEl is not available');
+
+    disconnectEl.addEventListener(
+      'click',
+      () => {
+        params.onDisconnect();
+        removeAddress();
+
+        if (this.selectedModule.disconnect) {
+          this.selectedModule.disconnect().then();
+        }
+      },
+      false
+    );
+  }
+
   public async createButton(params: {
     container: HTMLElement;
     onConnect: (response: { address: string }) => void;
