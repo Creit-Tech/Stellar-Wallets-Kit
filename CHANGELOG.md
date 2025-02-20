@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.4.1...v1.5.0) (2025-02-20)
+### Add
+- Add method "assignButtons" to the kit
+
 ### [1.4.1](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.4.0...v1.4.1) (2025-01-09)
 ### Fix
 - Make the Trezor module to work with Webpack projects
