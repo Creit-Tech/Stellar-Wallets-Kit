@@ -3,6 +3,7 @@ A kit to handle all Stellar Wallets at once with a simple API and without caring
 ## Compatible Wallets:
 
 - xBull Wallet (Both PWA and extension version)
+- Hot Wallet
 - Albedo
 - Freighter
 - Rabet (extension version)
@@ -70,6 +71,8 @@ The available modules and their identifier are :
 | Rabet | RabetModule | RABET_ID |
 | Wallet connect | WalletConnectModule | WALLET_CONNECT_ID |
 | xBull | xBullModule | XBULL_ID |
+| HOT Wallet | HotWalletModule | HOTWALLET_ID |
+
 
 
 ## Integrated UI Modal
