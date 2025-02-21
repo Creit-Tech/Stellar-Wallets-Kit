@@ -1,6 +1,6 @@
 {
   "name": "@creit.tech/stellar-wallets-kit",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "A kit to handle all Stellar Wallets at once",
   "author": {
     "name": "Creit Technologies LLP",
@@ -37,7 +37,7 @@
   "dependencies": {
     "@albedo-link/intent": "0.12.0",
     "@creit.tech/xbull-wallet-connect": "0.3.0",
-    "@hot-wallet/sdk": "^1.0.11",
+    "@hot-wallet/sdk": "1.0.11",
     "@ledgerhq/hw-app-str": "7.0.4",
     "@ledgerhq/hw-transport": "6.31.4",
     "@ledgerhq/hw-transport-webusb": "6.29.4",

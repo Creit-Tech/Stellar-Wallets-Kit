@@ -3,13 +3,13 @@ A kit to handle all Stellar Wallets at once with a simple API and without caring
 ## Compatible Wallets:
 
 - xBull Wallet (Both PWA and extension version)
-- Hot Wallet
 - Albedo
 - Freighter
 - Rabet (extension version)
 - WalletConnect
 - Lobstr
 - Hana
+- Hot Wallet
 
 ## Installation
 
