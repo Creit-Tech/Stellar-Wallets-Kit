@@ -5,6 +5,7 @@ import {
   requestAccess,
   signMessage,
   getNetwork,
+  getAddress,
 } from '@stellar/freighter-api';
 import { ModuleInterface, ModuleType } from '../types';
 import { parseError } from '../utils';
@@ -35,6 +36,7 @@ export class FreighterModule implements ModuleInterface {
   async getAddress(): Promise<{ address: string }> {
     return this.runChecks()
       .then(() => requestAccess())
+      .then(() => getAddress())
       .then(({ address, error }) => {
         if (error) throw error;
 
