@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.1](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.6.0...v1.6.1) (2025-02-24)
+### Add
+- Fix the `getAddress` method in the Freighter module, the address was being returned as a blank string. It was reported in this [ticket](https://github.com/Creit-Tech/Stellar-Wallets-Kit/issues/57).
+
 ### [1.6.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.5.0...v1.6.0) (2025-02-21)
 ### Add
 - Add module for HOT wallet
