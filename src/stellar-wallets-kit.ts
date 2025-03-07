@@ -209,10 +209,22 @@ export class StellarWalletsKit implements KitActions {
     );
   }
 
+  /**
+   *
+   * @param params {Object}
+   * @param params.container {HTMLElement} - The container where the button should be rendered.
+   * @param params.onConnect {Function} - This callback is called after the user has clicked the button and selected a wallet
+   * @param params.onClosed {Function} - This callback is called if the user closes the modal without selecting any wallet.
+   * @param params.onError {Function} - This callback is called if there is an error while trying to get the address once the user has selected the wallet from the modal.
+   * @param params.onDisconnect {Function} - This callback is called once the user disconnects from the dropdown modal
+   * @param params.horizonUrl {String} - If this url is set, the dropdown modal will show the current XLM balance of the address fetched from the wallet
+   * @param params.buttonText {String} - A custom text to set inside the button.
+   */
   public async createButton(params: {
     container: HTMLElement;
     onConnect: (response: { address: string }) => void;
     onClosed?: (err: Error) => void;
+    onError?: (err: Error) => void;
     onDisconnect: () => void;
     horizonUrl?: string;
     buttonText?: string;
@@ -239,7 +251,11 @@ export class StellarWalletsKit implements KitActions {
         this.openModal({
           onWalletSelected: option => {
             setSelectedModuleId(option.id);
-            this.getAddress().then((r: { address: string }) => params.onConnect(r));
+            this.getAddress()
+              .then((r: { address: string }) => params.onConnect(r))
+              .catch(err => {
+                if (params.onError) params.onError(err);
+              });
           },
           onClosed: (err: Error): void => {
             if (params.onClosed) params.onClosed(err);
