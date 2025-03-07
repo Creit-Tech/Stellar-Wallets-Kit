@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.6.1...v1.7.0) (2025-03-06)
+### add
+- Include a new `onClosed` parameter to the `createButton` method so developers can listen to the closed event the modal triggers.
+
+### Change
+- Upgrade the Trezor library to latest one
+
 ### [1.6.1](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.6.0...v1.6.1) (2025-02-24)
 ### Add
 - Fix the `getAddress` method in the Freighter module, the address was being returned as a blank string. It was reported in this [ticket](https://github.com/Creit-Tech/Stellar-Wallets-Kit/issues/57).
