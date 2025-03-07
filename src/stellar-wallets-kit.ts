@@ -212,6 +212,7 @@ export class StellarWalletsKit implements KitActions {
   public async createButton(params: {
     container: HTMLElement;
     onConnect: (response: { address: string }) => void;
+    onClosed?: (err: Error) => void;
     onDisconnect: () => void;
     horizonUrl?: string;
     buttonText?: string;
@@ -239,6 +240,9 @@ export class StellarWalletsKit implements KitActions {
           onWalletSelected: option => {
             setSelectedModuleId(option.id);
             this.getAddress().then((r: { address: string }) => params.onConnect(r));
+          },
+          onClosed: (err: Error): void => {
+            if (params.onClosed) params.onClosed(err);
           },
         });
       },
