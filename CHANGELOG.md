@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.1](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.7.0...v1.7.1) (2025-03-06)
+### add
+- Include a new `onError` parameter to the `createButton` method so developers can listen to possible errors when getting the public key from the contract.
+
 ### [1.7.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.6.1...v1.7.0) (2025-03-06)
 ### add
 - Include a new `onClosed` parameter to the `createButton` method so developers can listen to the closed event the modal triggers.
