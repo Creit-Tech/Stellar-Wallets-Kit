@@ -17,6 +17,17 @@ A kit to handle all Stellar Wallets at once with a simple API and without caring
 npm i @creit.tech/stellar-wallets-kit
 ```
 
+## Who is using the kit?
+
+If you would like to see the kit in action, check these websites that are already using it:
+
+- https://lab.stellar.org/
+- https://swap.xbull.app/
+- https://mainnet.blend.capital/
+- https://app.fxdao.io/
+- https://app.sorobandomains.org/
+- https://stellar.cables.finance/
+
 ## The StellarWalletsKit class
 
 The first step will be creating a new instance from the main class, you should only create one instance in order to avoid unexpected results.
