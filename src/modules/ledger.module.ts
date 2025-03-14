@@ -61,8 +61,9 @@ export class LedgerModule implements ModuleInterface {
   }
 
   async getAddress(opts?: { path?: string }): Promise<{ address: string }> {
+    await this.runChecks();
+
     try {
-      await this.runChecks();
       const finalTransport: Transport = await this.transport();
       const str = new Str(finalTransport);
 
