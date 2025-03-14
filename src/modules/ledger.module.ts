@@ -60,20 +60,20 @@ export class LedgerModule implements ModuleInterface {
     }
   }
 
-  async getAddress(params?: { path?: string }): Promise<{ address: string }> {
-    await this.runChecks();
-
-    let mnemonicPath: string | undefined = await firstValueFrom(mnemonicPath$);
-    const finalTransport: Transport = await this.transport();
-    const str = new Str(finalTransport);
-
-    if (!mnemonicPath) {
-      await this.openAccountSelector();
-      mnemonicPath = await firstValueFrom(mnemonicPath$);
-    }
-
+  async getAddress(opts?: { path?: string }): Promise<{ address: string }> {
     try {
-      const result: { rawPublicKey: Buffer } = await str.getPublicKey(params?.path || mnemonicPath!);
+      await this.runChecks();
+      const finalTransport: Transport = await this.transport();
+      const str = new Str(finalTransport);
+
+      let mnemonicPath: string | undefined = opts?.path || (await firstValueFrom(mnemonicPath$));
+
+      if (!mnemonicPath) {
+        await this.openAccountSelector();
+        mnemonicPath = await firstValueFrom(mnemonicPath$);
+      }
+
+      const result: { rawPublicKey: Buffer } = await str.getPublicKey(mnemonicPath!);
       return { address: StrKey.encodeEd25519PublicKey(result.rawPublicKey) };
     } catch (e) {
       throw parseError(e);

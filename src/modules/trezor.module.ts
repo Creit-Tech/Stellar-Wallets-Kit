@@ -68,9 +68,9 @@ export class TrezorModule implements ModuleInterface {
   }
 
   async getAddress(opts?: { path?: string }): Promise<{ address: string }> {
-    try {
-      await this.runChecks();
+    await this.runChecks();
 
+    try {
       const mnemonicPath: string | undefined = opts?.path || (await firstValueFrom(mnemonicPath$));
 
       if (!mnemonicPath) {
