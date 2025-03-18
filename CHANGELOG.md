@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.3](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.7.2...v1.7.3) (2025-03-17)
+### Change
+- Change dist files so we use .mjs instead of .js, that way Next understands it needs to use the ESM version instead of the commonjs version.
+
 ### [1.7.2](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.7.1...v1.7.2) (2025-03-14)
 ### Fix
 - Do not show the account selector modal if the dev is passing a path for the Ledger module's method `getAddress`
