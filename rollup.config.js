@@ -1,5 +1,5 @@
+import typescript from '@rollup/plugin-typescript';
 import esbuild from 'rollup-plugin-esbuild';
-import terser from '@rollup/plugin-terser';
 
 const bundle = config => ({
   ...config,
@@ -14,7 +14,20 @@ const bundle = config => ({
 
 export default [
   bundle({
-    plugins: [esbuild(), terser()],
+    plugins: [esbuild()],
+    output: [
+      {
+        dir: 'build',
+        format: 'es',
+        sourcemap: true,
+        preserveModules: true,
+        entryFileNames: '[name].mjs',
+        validate: true,
+      },
+    ],
+  }),
+  bundle({
+    plugins: [typescript()],
     output: [
       {
         dir: 'build',
@@ -22,13 +35,7 @@ export default [
         sourcemap: true,
         preserveModules: true,
         entryFileNames: '[name].cjs',
-      },
-      {
-        dir: 'build',
-        format: 'es',
-        sourcemap: true,
-        preserveModules: true,
-        entryFileNames: '[name].js',
+        validate: true,
       },
     ],
   }),

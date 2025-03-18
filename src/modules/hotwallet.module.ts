@@ -42,5 +42,3 @@ export class HotWalletModule implements ModuleInterface {
     return { network: 'mainnet', networkPassphrase: WalletNetwork.PUBLIC };
   }
 }
-
-export default HotWalletModule;
