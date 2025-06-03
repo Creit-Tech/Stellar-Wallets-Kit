@@ -14,7 +14,7 @@ import {
 import { IButtonTheme, ISupportedWallet, IModalTheme, KitActions, ModuleInterface, WalletNetwork } from './types';
 
 export interface StellarWalletsKitParams {
-  selectedWalletId: string;
+  selectedWalletId?: string;
   network: WalletNetwork;
   modules: ModuleInterface[];
   /**
@@ -31,8 +31,14 @@ export class StellarWalletsKit implements KitActions {
   private readonly modules: ModuleInterface[];
 
   private get selectedModule(): ModuleInterface {
+    const { selectedModuleId } = store.getValue();
+
+    if (!selectedModuleId) {
+      throw { code: -3, message: 'Please set the wallet first' };
+    }
+
     const target: ModuleInterface | undefined = this.modules.find(
-      (mod: ModuleInterface): boolean => mod.productId === store.getValue().selectedModuleId
+      (mod: ModuleInterface): boolean => mod.productId === selectedModuleId
     );
 
     if (!target) {
@@ -44,7 +50,7 @@ export class StellarWalletsKit implements KitActions {
 
   constructor(params: StellarWalletsKitParams) {
     this.modules = params.modules;
-    this.setWallet(params.selectedWalletId);
+    if (params.selectedWalletId) this.setWallet(params.selectedWalletId);
     setNetwork(params.network);
 
     const modalTheme: IModalTheme | undefined = params.theme || params.modalTheme;

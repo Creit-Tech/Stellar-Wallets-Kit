@@ -83,16 +83,14 @@
 <script type='module'>
   import {
     StellarWalletsKit,
-    XBULL_ID,
     WalletNetwork,
     allowAllModules,
-  } from './build/index.js';
-  import { WalletConnectModule, WalletConnectAllowedMethods } from './build/modules/walletconnect.module.js'
-  import { LedgerModule } from './build/modules/ledger.module.js'
-  import { TrezorModule } from './build/modules/trezor.module.js';
+  } from './build/index.mjs';
+  import { WalletConnectModule, WalletConnectAllowedMethods } from './build/modules/walletconnect.module.mjs'
+  import { LedgerModule } from './build/modules/ledger.module.mjs'
+  import { TrezorModule } from './build/modules/trezor.module.mjs';
 
   const kit = new StellarWalletsKit({
-    selectedWalletId: XBULL_ID,
     network: WalletNetwork.TESTNET,
     modules: [
       ...allowAllModules(),
