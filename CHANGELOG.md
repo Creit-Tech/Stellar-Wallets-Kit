@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.5](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.7.3...v1.7.5) (2025-06-03)
+### Add
+- Include a new `sep43Modules` function that returns a list of only wallets that follow all the SEP-0043 methods
+- Add a new `filterBy` parameter for both `allowAllModules` and `sep43Modules`
+
+### Change
+- Make optional providing the default module when starting the kit and instead throw an error if someone tries to use one module before it has been selected.
+
 ### [1.7.3](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.7.2...v1.7.3) (2025-03-17)
 ### Change
 - Change dist files so we use .mjs instead of .js, that way Next understands it needs to use the ESM version instead of the commonjs version.
