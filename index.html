@@ -85,6 +85,7 @@
     StellarWalletsKit,
     WalletNetwork,
     allowAllModules,
+    XBULL_ID
   } from './build/index.mjs';
   import { WalletConnectModule, WalletConnectAllowedMethods } from './build/modules/walletconnect.module.mjs'
   import { LedgerModule } from './build/modules/ledger.module.mjs'
@@ -93,7 +94,7 @@
   const kit = new StellarWalletsKit({
     network: WalletNetwork.TESTNET,
     modules: [
-      ...allowAllModules(),
+      ...allowAllModules({ filterBy: module => module.productId === XBULL_ID }),
       new LedgerModule(),
       new TrezorModule({
         appUrl: 'http://localhost:5173',
