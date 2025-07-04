@@ -1,0 +1,41 @@
+{
+  "name": "@creit-tech/stellar-wallets-kit",
+  "version": "2.0.0",
+  "license": "MIT",
+  "tasks": {
+    "build-npm": "deno run -A build_npm.ts"
+  },
+  "fmt": {
+    "lineWidth": 120
+  },
+  "lint": {
+    "rules": {
+      "tags": ["recommended", "jsr"],
+      "include": [
+        "camelcase",
+        "no-sync-fn-in-async-fn",
+        "single-var-declarator"
+      ],
+      "exclude": [
+        "no-explicit-any"
+      ]
+    }
+  },
+  "exclude": [
+    ".git",
+    ".idea",
+    "dist",
+    "build_npm.ts"
+  ],
+  "imports": {
+    "@albedo-link/intent": "npm:@albedo-link/intent@^0.13.0",
+    "@creit.tech/xbull-wallet-connect": "npm:@creit.tech/xbull-wallet-connect@^0.3.0",
+    "@deno/dnt": "jsr:@deno/dnt@^0.42.1",
+    "@hot-wallet/sdk": "npm:@hot-wallet/sdk@^1.0.11",
+    "@lobstrco/signer-extension-api": "npm:@lobstrco/signer-extension-api@^1.0.0-beta.0",
+    "@std/bytes": "jsr:@std/bytes@^1.0.6",
+    "@std/encoding": "jsr:@std/encoding@^1.0.10",
+    "@stellar/freighter-api": "npm:@stellar/freighter-api@^4.1.0",
+    "@stellar/stellar-sdk": "npm:@stellar/stellar-sdk@^13.3.0"
+  }
+}

@@ -1,0 +1,5 @@
+.idea
+src/view
+
+# This distribution is just for local development so we ignore it
+dist

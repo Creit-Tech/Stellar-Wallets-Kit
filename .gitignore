@@ -1,26 +1,2 @@
-build
+.idea
 
-.rollup.cache
-tsconfig.tsbuildinfo
-
-.DS_Store
-.idea/*
-.nyc_output
-build/docs
-node_modules
-demo
-src/**.js
-coverage
-*.log
-yarn.lock
-bun.lockb
-
-custom-elements.json
-
-# top level source
-my-element.js
-my-element.js.map
-my-element.d.ts
-my-element.d.ts.map
-# only generated for size check
-my-element.bundled.js
