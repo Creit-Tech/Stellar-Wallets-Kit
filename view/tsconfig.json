@@ -13,7 +13,12 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
-    "module": "preserve"
+    "module": "preserve",
+    "paths": {
+      "~theme/*": [
+        "./theme/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -25,10 +30,16 @@
   "files": [],
   "references": [
     {
-      "path": "./tsconfig.app.json"
+      "path": "./projects/playground/tsconfig.app.json"
     },
     {
-      "path": "./tsconfig.spec.json"
+      "path": "./projects/playground/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/kit/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/kit/tsconfig.spec.json"
     }
   ]
 }

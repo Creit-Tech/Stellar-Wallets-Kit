@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "start:playground": "ng serve playground",
+    "build:kit": "ng build kit",
+    "watch:kit": "ng build kit --watch --configuration development",
     "test": "ng test"
   },
   "prettier": {
@@ -20,7 +20,6 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/cdk": "^19.0.0",
     "@angular/common": "^20.0.0",
     "@angular/compiler": "^20.0.0",
     "@angular/core": "^20.0.0",
@@ -28,8 +27,14 @@
     "@angular/forms": "^20.0.0",
     "@angular/platform-browser": "^20.0.0",
     "@angular/router": "^20.0.0",
-    "ng-primitives": "0.57.0",
+    "@creit-tech/stellar-wallets-kit": "link:../sdk/dist",
+    "@ng-icons/core": "^32.0.0",
+    "@ng-icons/lucide": "^32.0.0",
+    "@tailwindcss/postcss": "^4.1.11",
+    "ng-primitives": "^0.58.0",
+    "postcss": "^8.5.6",
     "rxjs": "~7.8.0",
+    "tailwindcss": "^4.1.11",
     "tslib": "^2.3.0"
   },
   "devDependencies": {

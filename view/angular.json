@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "stellar-wallets-kit": {
+    "playground": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -14,32 +14,29 @@
           "inlineStyle": true
         }
       },
-      "root": "",
-      "sourceRoot": "src",
+      "root": "projects/playground",
+      "sourceRoot": "projects/playground/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "index": false,
-            "browser": "src/main.ts",
-            "tsConfig": "tsconfig.app.json",
+            "browser": "projects/playground/src/main.ts",
+            "tsConfig": "projects/playground/tsconfig.app.json",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "projects/playground/public"
               }
             ],
             "styles": [
-              "src/styles.css"
+              "theme/variables.css",
+              "projects/playground/src/styles.css",
+              "node_modules/@creit-tech/stellar-wallets-kit/view/styles.css"
             ],
-            "ssr": false,
-            "prerender": false,
-            "outputPath": {
-              "base": "../sdk/dist/view",
-              "browser": ""
-            },
-            "outputHashing": "none"
+            "scripts": [
+              "node_modules/@creit-tech/stellar-wallets-kit/view/main.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -54,7 +51,8 @@
                   "maximumWarning": "4kB",
                   "maximumError": "8kB"
                 }
-              ]
+              ],
+              "outputHashing": "all"
             },
             "development": {
               "optimization": false,
@@ -68,10 +66,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "stellar-wallets-kit:build:production"
+              "buildTarget": "playground:build:production"
             },
             "development": {
-              "buildTarget": "stellar-wallets-kit:build:development"
+              "buildTarget": "playground:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,15 +80,105 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "tsConfig": "tsconfig.spec.json",
+            "tsConfig": "projects/playground/tsconfig.spec.json",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "projects/playground/public"
               }
             ],
             "styles": [
-              "src/styles.css"
+              "theme/variables.css"
+            ]
+          }
+        }
+      }
+    },
+    "kit": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "inlineTemplate": true,
+          "inlineStyle": true
+        }
+      },
+      "root": "projects/kit",
+      "sourceRoot": "projects/kit/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/kit/src/main.ts",
+            "tsConfig": "projects/kit/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/kit/public"
+              }
+            ],
+            "styles": [
+              "theme/variables.css",
+              "projects/kit/src/styles.css"
+            ],
+            "ssr": false,
+            "prerender": false,
+            "outputPath": {
+              "base": "../sdk/dist/view",
+              "browser": ""
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "none"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "kit:build:production"
+            },
+            "development": {
+              "buildTarget": "kit:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "projects/kit/tsconfig.spec.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/kit/public"
+              }
+            ],
+            "styles": [
+              "projects/kit/src/styles.css"
             ]
           }
         }

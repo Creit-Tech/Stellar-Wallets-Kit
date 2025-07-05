@@ -35,9 +35,9 @@ await build({
     //   url: "https://github.com/username/repo/issues",
     // },
   },
-  postBuild(): void {
-    Deno.mkdirSync('./dist/view')
-    Deno.copyFileSync('./src/view/main.js', './dist/view/main.js');
-    Deno.copyFileSync('./src/view/styles.css', './dist/view/styles.css');
-  },
+  // postBuild(): void {
+  //   Deno.mkdirSync('./dist/view')
+  //   Deno.copyFileSync('./src/view/main.js', './dist/view/main.js');
+  //   Deno.copyFileSync('./src/view/styles.css', './dist/view/styles.css');
+  // },
 });
