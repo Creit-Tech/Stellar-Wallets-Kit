@@ -19,8 +19,13 @@ export class RabetModule implements ModuleInterface {
   productUrl: string = 'https://rabet.io/';
   productIcon: string = 'https://stellar.creit.tech/wallet-icons/rabet.png';
 
-  async isAvailable(): Promise<boolean> {
-    return typeof window !== 'undefined' && !!window.rabet;
+  isAvailable(): Promise<boolean> {
+    return new Promise<boolean>(resolve => {
+      // We wait 100ms before answering the call because Rabet is really slow when it comes to create the rabet window object and so this way we make sure is available
+      setTimeout(() => {
+        resolve(typeof window !== "undefined" && !!window.rabet);
+      }, 100);
+    });
   }
 
   async getAddress(): Promise<{ address: string }> {
