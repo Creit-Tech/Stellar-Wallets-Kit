@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.6](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.7.5...v1.7.6) (2025-07-10)
+### Fix
+- Make the `isAvailable` method for Rabet and Hana so it has a small delay to avoid checking before the extensions have placed the window object
+
 ### [1.7.5](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.7.3...v1.7.5) (2025-06-03)
 ### Add
 - Include a new `sep43Modules` function that returns a list of only wallets that follow all the SEP-0043 methods
