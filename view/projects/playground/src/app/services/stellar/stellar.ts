@@ -6,7 +6,7 @@ import { defaultModules, StellarWalletsKit } from '@creit-tech/stellar-wallets-k
 })
 export class Stellar {
   kit: StellarWalletsKit = new StellarWalletsKit({
-    modules: defaultModules()
+    modules: defaultModules(),
   });
 
   constructor() { }

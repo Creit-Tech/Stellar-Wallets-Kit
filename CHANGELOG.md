@@ -14,10 +14,11 @@ All notable changes to this project will be documented in this file. See [standa
 - The UI now uses a series of CSS variables that can be defined by developers to personalize the complete UI (the SDK makes this process easier)
 - The SDK internal state is now using a simple Signal library instead of RxJS (aiming to reduce the kit's size)
 - The SDK now exports the internal state so developers can update it if they need to (tho, still not recommended)
-- Creation of a "Demo" website
+- Creation of a "Playground" website
   - This website makes it easy for developers to see how the kit looks and how to configure it
   - The website shows all components and modules available (even those that require extra configuration like hardware wallets and Wallet Connect)
-  - The website gives the developer the code to use in order to have the same style shown in the demo
+  - The website gives the developer the code to use in order to have the same style shown in the playground
+- The wallet selection modal now allows developers to choose between showing or hiding the explanation text
 
 ### [1.7.5](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.7.3...v1.7.5) (2025-06-03)
 ### Add

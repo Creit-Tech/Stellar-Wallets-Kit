@@ -1,36 +1,39 @@
-:root {
-  color-scheme: light dark;
-}
+kit-auth-modal {
+  --swk-background: #FCFCFCFF;
+  --swk-background-secondary: #F8F8F8FF;
+  --swk-foreground-strong: #000000;
+  --swk-foreground: #161619FF;
+  --swk-foreground-secondary: #2D2D31FF;
+  --swk-primary: #3B82F6;
+  --swk-primary-foreground: #FFFFFF;
 
-:root {
   --swk-transparent: rgba(0,0,0,0);
   --swk-lighter: #FCFCFC;
   --swk-light: #F8F8F8;
   --swk-light-gray: oklch(0.800 0.006 286.033);
   --swk-gray: oklch(0.600 0.006 286.033);
-  --swk-darkest: oklch(0.0 0.006 286.033);
-  --swk-darker: oklch(0.200 0.006 286.033);
-  --swk-dark: oklch(0.300 0.006 286.033);
 
-  --swk-background: var(--swk-lighter);
-  --swk-background-secondary: var(--swk-light);
+  --swk-text-primary: var(--swk-foreground);
+  --swk-text-secondary: var(--swk-foreground-secondary);
 
   --swk-transition-duration: 200ms;
 
   --swk-border-radius: 0.8rem;
   --swk-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
 
-  --swk-modal-title-color: var(--swk-darkest);
-  --swk-modal-text-color: var(--swk-dark);
+  --swk-modal-title-color: var(--swk-foreground-strong);
+  --swk-modal-text-color: var(--swk-foreground-secondary);
 
   --swk-avatar-background: var(--swk-background);
   --swk-avatar-border: 1px solid var(--swk-background-secondary);
-  --swk-avatar-fallback: var(--swk-darkest);
+  --swk-avatar-fallback: var(--swk-foreground-strong);
 
   --swk-wallet-item-background: var(--swk-background);
   --swk-wallet-item-border: var(--swk-transparent);
   --swk-wallet-item-hover-background: var(--swk-background);
   --swk-wallet-item-hover-border: var(--swk-light-gray);
+  --swk-wallet-item-active-background: var(--swk-background);
+  --swk-wallet-item-active-border: var(--swk-gray);
   --swk-wallet-item-border-radius: var(--swk-border-radius);
   --swk-wallet-item-transition: var(--swk-transition-duration);
 
@@ -38,11 +41,6 @@
 
   --swk-white: oklch(1 0.001 0.001);
   --swk-black: oklch(0 0.001 0.001);
-
-  --swk-gray-50: oklch(0.985 0 0);
-  --swk-gray-100: oklch(0.967 0.001 286.375);
-  --swk-gray-200: oklch(0.92 0.004 286.32);
-  --swk-gray-300: oklch(0.871 0.006 286.286);
   --swk-gray-400: oklch(0.705 0.015 286.067);
   --swk-gray-500: oklch(0.552 0.016 285.938);
   --swk-gray-600: oklch(0.442 0.017 285.786);
@@ -64,8 +62,6 @@
   --swk-border-inverse: var(--swk-black);
 
   --swk-text-emphasis: var(--swk-black);
-  --swk-text-primary: var(--swk-gray-900);
-  --swk-text-secondary: var(--swk-gray-600);
   --swk-text-tertiary: var(--swk-gray-500);
   --swk-text-disabled: var(--swk-gray-400);
   --swk-text-placeholder: var(--swk-gray-400);
@@ -81,37 +77,4 @@
           0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1), 0 0 0 1px rgb(0 0 0 / 0.05);
 
   --swk-input-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.1);
-}
-
-.dark {
-  --swk-background: var(--swk-gray-950);
-  --swk-background-secondary: var(--swk-gray-700);
-  --swk-background-hover: var(--swk-gray-900);
-  --swk-background-active: var(--swk-gray-800);
-  --swk-background-inverse: var(--swk-white);
-  --swk-background-disabled: var(--swk-gray-900);
-  --swk-background-blue: rgba(95, 160, 246, 0.274);
-
-  --swk-border: var(--swk-gray-800);
-  --swk-border-secondary: var(--swk-gray-700);
-  --swk-border-blue: #1980ff;
-  --swk-border-inverse: var(--swk-white);
-
-  --swk-text-emphasis: var(--swk-white);
-  --swk-text-primary: var(--swk-gray-100);
-  --swk-text-secondary: var(--swk-gray-300);
-  --swk-text-tertiary: var(--swk-gray-400);
-  --swk-text-disabled: var(--swk-gray-500);
-  --swk-text-inverse: var(--swk-black);
-  --swk-text-blue: #1980ff;
-  --swk-text-red: #ff4d4d;
-
-  --swk-avatar-background: #18181b;
-  --swk-avatar-border: #3f3f46;
-
-  --swk-input-shadow: 0 1px 2px rgba(255, 255, 255, 0.007), 0 0 0 1px rgba(255, 255, 255, 0.1);
-
-  --swk-button-shadow:
-          0 1px 3px 0 rgb(255, 255, 255, 0.1), 0 1px 2px -1px rgb(255, 255, 255, 0.1),
-          0 0 0 1px rgb(255, 255, 255, 0.05);
 }

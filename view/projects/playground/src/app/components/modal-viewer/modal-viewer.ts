@@ -1,20 +1,32 @@
 import {
-  AfterViewInit,
   Component,
+  ComponentRef,
   CUSTOM_ELEMENTS_SCHEMA,
+  effect,
+  EffectRef,
   inject,
+  inputBinding,
   signal,
+  ViewContainerRef,
   WritableSignal
 } from '@angular/core';
 import { Stellar } from '../../services/stellar/stellar';
 import { ISupportedWallet } from '@creit-tech/stellar-wallets-kit';
+import { Configuration } from '../../services/configuration/configuration';
+import { Toast } from '~theme/components/toast';
 
 @Component({
   selector: 'app-modal-viewer',
-  imports: [],
   template: `
     <section class="w-full flex items-center justify-center">
-      <kit-auth-modal [wallets]="wallets()" explanation="true"></kit-auth-modal>
+      <kit-auth-modal
+          (wallet-selected)="onWalletSelected($any($event))"
+          [title]="configuration.modalTitle()"
+          [wallets]="wallets()"
+          [explanation]="configuration.showExplanation()"
+          [showNotInstalledLabel]="configuration.showNotInstalledLabel()"
+          [notInstalledText]="configuration.notInstalledLabelText()">
+      </kit-auth-modal>
     </section>
   `,
   styles: `
@@ -29,11 +41,33 @@ import { ISupportedWallet } from '@creit-tech/stellar-wallets-kit';
   `,
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class ModalViewer implements AfterViewInit {
+export class ModalViewer {
+  vcr: ViewContainerRef = inject<ViewContainerRef>(ViewContainerRef);
+
+  configuration: Configuration = inject<Configuration>(Configuration);
   stellar: Stellar = inject<Stellar>(Stellar);
   wallets: WritableSignal<ISupportedWallet[]> = signal<ISupportedWallet[]>([]);
 
-  async ngAfterViewInit(): Promise<void> {
-    this.wallets.set(await this.stellar.kit.getSupportedWallets());
+  enabledWalletsEffect: EffectRef = effect(async (): Promise<void> => {
+    const enabledWallets: string[] = this.configuration.wallets();
+    const supportedWallets: ISupportedWallet[] = await this.stellar.kit.getSupportedWallets();
+    this.wallets.set(
+      supportedWallets.filter((supportedWallet: ISupportedWallet): boolean => {
+        return enabledWallets.indexOf(supportedWallet.id) !== -1;
+      })
+    );
+  });
+
+  async onWalletSelected(event: CustomEvent<ISupportedWallet>): Promise<void> {
+    const ref: ComponentRef<Toast> = this.vcr.createComponent(Toast, {
+      bindings: [
+        inputBinding('header', () => 'Wallet selected:'),
+        inputBinding('description', () => {
+          return `Name: ${event.detail.name}, ID: ${event.detail.id}`
+        }),
+      ],
+    });
+
+    ref.instance.show();
   }
 }

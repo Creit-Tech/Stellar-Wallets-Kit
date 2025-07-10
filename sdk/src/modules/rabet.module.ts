@@ -26,7 +26,12 @@ export class RabetModule implements ModuleInterface {
   }
 
   isAvailable(): Promise<boolean> {
-    return Promise.resolve(typeof window !== "undefined" && !!window.rabet);
+    return new Promise<boolean>(resolve => {
+      // We wait 100ms before answering the call because Rabet is really slow when it comes to create the rabet window object and so this way we make sure is available
+      setTimeout(() => {
+        resolve(typeof window !== "undefined" && !!window.rabet);
+      }, 100);
+    });
   }
 
   async getAddress(): Promise<{ address: string }> {

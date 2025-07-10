@@ -201,7 +201,7 @@ export interface ModuleInterface extends KitActions {
    * return `true`.
    *
    * Important:
-   * Your wallet/library needs to be able to answer this function in less than 500ms.
+   * Your wallet/library needs to be able to answer this function in less than 1000ms.
    * Otherwise, the kit will show it as unavailable
    */
   isAvailable(): Promise<boolean>;

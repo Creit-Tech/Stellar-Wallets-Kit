@@ -51,7 +51,7 @@ export class HanaModule implements ModuleInterface {
   }
 
   isAvailable(): Promise<boolean> {
-    return Promise.resolve(typeof window !== "undefined" && !!window.hanaWallet?.stellar);
+    return new Promise(resolve => resolve(typeof window !== "undefined" && !!window.hanaWallet?.stellar));
   }
 
   async getAddress(): Promise<{ address: string }> {
