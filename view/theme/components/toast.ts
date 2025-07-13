@@ -5,7 +5,7 @@ import { NgpToast } from 'ng-primitives/toast';
   selector: 'app-toast',
   imports: [NgpToast],
   template: `
-    <ng-template #toast="ngpToast" ngpToast>
+    <ng-template #toast="ngpToast" ngpToast ngpToastPosition="center">
       <div class="toast">
         <p class="toast-title">{{ header() }}</p>
         <p class="toast-description">{{ description() }}</p>

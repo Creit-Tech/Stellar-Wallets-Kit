@@ -19,6 +19,8 @@ All notable changes to this project will be documented in this file. See [standa
   - The website shows all components and modules available (even those that require extra configuration like hardware wallets and Wallet Connect)
   - The website gives the developer the code to use in order to have the same style shown in the playground
 - The wallet selection modal now allows developers to choose between showing or hiding the explanation text
+- The `openModal` method was removed and we now have `authModal`, this new method works as a regular Promise and it returns the address after the user has picked their selected wallet
+- Include a new logic for events updates from the kit
 
 ### [1.7.5](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.7.3...v1.7.5) (2025-06-03)
 ### Add

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Stellar } from '../../services/stellar/stellar';
 
 @Component({
   selector: 'app-header',
@@ -10,6 +11,7 @@ import { Component } from '@angular/core';
       </div>
 
       <div class="w-auto">
+        <button (click)="onConnect()">Connect Wallet</button>
       </div>
     </header>
   `,
@@ -20,5 +22,15 @@ import { Component } from '@angular/core';
   `
 })
 export class Header {
+  stellar: Stellar = inject(Stellar);
 
+  async onConnect() {
+    try {
+      const { address } = await this.stellar.kit.authModal({});
+
+      console.log({ address });
+    } catch (e) {
+      console.error({ e });
+    }
+  }
 }

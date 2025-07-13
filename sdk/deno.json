@@ -37,5 +37,8 @@
     "@std/encoding": "jsr:@std/encoding@^1.0.10",
     "@stellar/freighter-api": "npm:@stellar/freighter-api@^4.1.0",
     "@stellar/stellar-sdk": "npm:@stellar/stellar-sdk@^13.3.0"
+  },
+  "compilerOptions": {
+    "lib": ["dom"]
   }
 }

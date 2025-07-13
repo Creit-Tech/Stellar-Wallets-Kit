@@ -20,23 +20,23 @@ import { Toast } from '~theme/components/toast';
   template: `
     <section class="w-full flex items-center justify-center">
       <kit-auth-modal
-          (wallet-selected)="onWalletSelected($any($event))"
-          [title]="configuration.modalTitle()"
-          [wallets]="wallets()"
-          [explanation]="configuration.showExplanation()"
-          [showNotInstalledLabel]="configuration.showNotInstalledLabel()"
-          [notInstalledText]="configuration.notInstalledLabelText()">
+        (wallet-selected)="onWalletSelected($any($event))"
+        [title]="configuration.modalTitle()"
+        [wallets]="wallets()"
+        [explanation]="configuration.showExplanation()"
+        [showNotInstalledLabel]="configuration.showNotInstalledLabel()"
+        [notInstalledText]="configuration.notInstalledLabelText()">
       </kit-auth-modal>
     </section>
   `,
   styles: `
     :host {
-        display: flex;
-        align-content: center;
-        justify-content: center;
-        align-items: center;
-        justify-items: center;
-        height: 100%;
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      align-items: center;
+      justify-items: center;
+      height: 100%;
     }
   `,
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

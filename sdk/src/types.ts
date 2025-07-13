@@ -54,8 +54,33 @@ export interface ISupportedWallet {
   url: string;
 }
 
+export enum KitEventType {
+  STATE_UPDATED = "STATE_UPDATE",
+  WALLET_SELECTED = "WALLET_SELECTED",
+}
+
+export type KitEventStateUpdated = {
+  eventType: KitEventType.STATE_UPDATED;
+  payload: {
+    address: string;
+    networkPassphrase: string;
+  };
+};
+export type KitEventWalletSelected = {
+  eventType: KitEventType.WALLET_SELECTED;
+  payload: {
+    id: string;
+  };
+};
+
+export type KitEvent = KitEventStateUpdated | KitEventWalletSelected;
+
 export interface IOnChangeEvent {
   address: string;
+  /**
+   * The network is a human-readable name for the current network.
+   * For example if the wallets lets the user define their own networks, the name of that network should be included here
+   */
   network: string;
   networkPassphrase: string;
   error?: IKitError;
@@ -153,12 +178,6 @@ export interface KitActions {
    * Once this method is called, the module should clear all connections
    */
   disconnect?(): Promise<void>;
-
-  /**
-   * This method is optional and is only used if the wallet can handle changes in its state.
-   * For example if the user changes the current state of the wallet like it switches to another network, this should be triggered
-   */
-  onChange?(callback: (event: IOnChangeEvent) => void): void;
 }
 
 /**
@@ -205,4 +224,17 @@ export interface ModuleInterface extends KitActions {
    * Otherwise, the kit will show it as unavailable
    */
   isAvailable(): Promise<boolean>;
+
+  /**
+   * This method is optional and is only used if the wallet can handle changes in its state.
+   * For example if the user changes the current state of the wallet like it switches to another network, this should be triggered
+   */
+  onChange?(callback: (event: IOnChangeEvent) => void): void;
 }
+
+export type AuthModalParams = {
+  title?: string;
+  explanation?: boolean;
+  showNotInstalledLabel?: boolean;
+  notInstalledText?: string;
+};

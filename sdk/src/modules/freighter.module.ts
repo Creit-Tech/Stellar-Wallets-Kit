@@ -111,8 +111,8 @@ export class FreighterModule implements ModuleInterface {
 
       if (error || !signedMessage) return Promise.reject(error);
       return {
-        signedMessage: typeof signedMessage === 'string' ? signedMessage : encodeBase64(new Uint8Array(signedMessage)),
-        signerAddress: signerAddress
+        signedMessage: typeof signedMessage === "string" ? signedMessage : encodeBase64(new Uint8Array(signedMessage)),
+        signerAddress: signerAddress,
       };
     } catch (e) {
       throw parseError(e);

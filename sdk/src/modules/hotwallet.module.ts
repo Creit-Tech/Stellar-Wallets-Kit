@@ -1,6 +1,6 @@
 import { HOT } from "@hot-wallet/sdk";
 import { type ModuleInterface, ModuleType } from "../types.ts";
-import { Networks } from '@stellar/stellar-sdk';
+import { Networks } from "@stellar/stellar-sdk";
 
 export const HOTWALLET_ID: string = "hot-wallet";
 

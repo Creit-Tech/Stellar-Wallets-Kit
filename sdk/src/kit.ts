@@ -1,6 +1,16 @@
-import type { IOnChangeEvent, ISupportedWallet, KitActions, ModuleInterface, StellarWalletsKitParams } from "./types.ts";
+import {
+  type ISupportedWallet,
+  type KitActions,
+  type KitEvent,
+  KitEventType,
+  type ModuleInterface,
+  type AuthModalParams,
+  type StellarWalletsKitParams,
+} from "./types.ts";
 import { activeAddress, selectedModuleId, selectedNetwork } from "./state.ts";
 import type { Networks } from "@stellar/stellar-sdk";
+import { effect } from "./signals.ts";
+import { parseError } from "./utils.ts";
 
 export class StellarWalletsKit implements KitActions {
   private readonly modules: ModuleInterface[];
@@ -73,7 +83,7 @@ export class StellarWalletsKit implements KitActions {
 
   public async getAddress(params?: { path?: string }): Promise<{ address: string }> {
     const { address } = await this.selectedModule.getAddress(params);
-    selectedModuleId.value = address;
+    activeAddress.value = address;
     return { address };
   }
 
@@ -118,12 +128,96 @@ export class StellarWalletsKit implements KitActions {
     activeAddress.value = undefined;
   }
 
-  public onChange?(callback: (event: IOnChangeEvent) => void): void {
-    throw new Error("Method not implemented.");
+  /**
+   * A signal based event you can listen for different events across the kit
+   */
+  on(type: KitEventType, callback: (event: KitEvent) => void): { (): void; [Symbol.dispose](): void } {
+    switch (type) {
+      case KitEventType.STATE_UPDATED:
+        return effect(() => {
+          console.log(`Running effect: ${KitEventType.STATE_UPDATED}`);
+          if (activeAddress.value && selectedNetwork.value) {
+            callback({
+              eventType: KitEventType.STATE_UPDATED,
+              payload: { address: activeAddress.value, networkPassphrase: selectedNetwork.value },
+            });
+          }
+        });
+
+      case KitEventType.WALLET_SELECTED:
+        return effect(() => {
+          console.log(`Running effect: ${KitEventType.WALLET_SELECTED}`);
+          if (selectedModuleId.value) {
+            callback({
+              eventType: KitEventType.WALLET_SELECTED,
+              payload: { id: selectedModuleId.value },
+            });
+          }
+        });
+
+      default:
+        throw new Error(`${type} event type is not supported`);
+    }
   }
 
   // ---------------------------------------------- Modal methods ----------------------------------------------
-  public async openModal() {
+  /**
+   * This method opens an "authentication" modal where the user can pick the wallet they want to connect,
+   * it sets the selected wallet as the currently active module and then it requests the public key from the wallet.
+   */
+  public authModal(params?: AuthModalParams): Promise<{ address: string }> {
+    return new Promise((resolve, reject) => {
+      const el: HTMLElement = document.createElement("kit-auth-modal");
 
+      el.setAttribute("mode", "fixed");
+      if (params?.title) {
+        const title: string | undefined = params.title;
+        el.setAttribute("title", title!);
+      }
+
+      if (typeof params?.explanation !== "undefined") {
+        el.setAttribute("explanation", params.explanation.toString());
+      }
+
+      if (typeof params?.showNotInstalledLabel !== "undefined") {
+        el.setAttribute("show-not-installed-label", params.showNotInstalledLabel.toString());
+      }
+
+      if (params?.notInstalledText) {
+        const text: string | undefined = params.notInstalledText;
+        el.setAttribute("not-installed-text", text!);
+      }
+
+      this.getSupportedWallets()
+        .then(wallets => {
+          el.setAttribute("wallets", JSON.stringify(wallets));
+
+          const listener = (event: CustomEvent<ISupportedWallet>) => {
+            selectedModuleId.value = event.detail.id;
+            el.removeEventListener<any>("wallet-selected", listener, false);
+            document.body.removeChild(el);
+            this.getAddress()
+              .then((response: { address: string }): void => {
+                resolve(response);
+              })
+              .catch((err): void => {
+                reject(parseError(err));
+              });
+          };
+          el.addEventListener<any>("wallet-selected", listener, false);
+
+          const closeListener = (event: CustomEvent) => {
+            el.removeEventListener<any>("close", closeListener, false);
+            document.body.removeChild(el);
+            reject(parseError(event.detail));
+          };
+          el.addEventListener<any>("close", closeListener, false);
+
+          document.body.appendChild(el);
+        })
+        .catch(err => {
+          reject(parseError(err));
+        });
+    });
   }
 }

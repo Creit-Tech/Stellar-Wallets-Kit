@@ -1,6 +1,6 @@
 import { type ModuleInterface, ModuleType } from "../types.ts";
 import { parseError } from "../utils.ts";
-import { Networks } from '@stellar/stellar-sdk';
+import { Networks } from "@stellar/stellar-sdk";
 
 declare const window: {
   rabet?: {
@@ -26,7 +26,7 @@ export class RabetModule implements ModuleInterface {
   }
 
   isAvailable(): Promise<boolean> {
-    return new Promise<boolean>(resolve => {
+    return new Promise<boolean>((resolve) => {
       // We wait 100ms before answering the call because Rabet is really slow when it comes to create the rabet window object and so this way we make sure is available
       setTimeout(() => {
         resolve(typeof window !== "undefined" && !!window.rabet);
