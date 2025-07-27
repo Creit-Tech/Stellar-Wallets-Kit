@@ -135,7 +135,7 @@ export class StellarWalletsKit implements KitActions {
     switch (type) {
       case KitEventType.STATE_UPDATED:
         return effect(() => {
-          console.log(`Running effect: ${KitEventType.STATE_UPDATED}`);
+          console.log(`Wallets Kit Effect: ${KitEventType.STATE_UPDATED}`);
           if (activeAddress.value && selectedNetwork.value) {
             callback({
               eventType: KitEventType.STATE_UPDATED,
@@ -146,7 +146,7 @@ export class StellarWalletsKit implements KitActions {
 
       case KitEventType.WALLET_SELECTED:
         return effect(() => {
-          console.log(`Running effect: ${KitEventType.WALLET_SELECTED}`);
+          console.log(`Wallets Kit Effect: ${KitEventType.WALLET_SELECTED}`);
           if (selectedModuleId.value) {
             callback({
               eventType: KitEventType.WALLET_SELECTED,
