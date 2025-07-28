@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start:playground": "ng serve playground",
-    "build:kit": "ng build kit",
-    "watch:kit": "ng build kit --watch --configuration development",
+    "build:wallets-kit": "ng build wallets-kit",
+    "watch:wallets-kit": "ng build wallets-kit --watch --configuration development",
     "test": "ng test"
   },
   "prettier": {

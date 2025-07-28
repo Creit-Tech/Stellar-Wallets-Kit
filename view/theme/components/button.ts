@@ -1,10 +1,10 @@
-import { Component, input, InputSignal } from '@angular/core';
+import { Component, input, InputSignal, InputSignalWithTransform } from '@angular/core';
 import { NgpButton } from 'ng-primitives/button';
 
 /**
  * The size of the button.
  */
-export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 @Component({
   selector: 'button[app-button]',
@@ -12,6 +12,7 @@ export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
   template: '<ng-content />',
   host: {
     '[attr.data-size]': 'size()',
+    '[attr.data-ghost]': 'ghost()',
   },
   styles: `
     :host {
@@ -42,6 +43,13 @@ export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
       background-color: var(--swk-background-active);
     }
 
+    :host[data-size='xs'] {
+      height: 1.5rem;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+      font-size: 0.875rem;
+    }
+
     :host[data-size='sm'] {
       height: 2rem;
       padding-left: 0.75rem;
@@ -70,8 +78,19 @@ export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
       padding-right: 1.5rem;
       font-size: 1.125rem;
     }
+    
+    :host[data-ghost='yes'], :host[data-ghost='true'] {
+        border: none;
+        box-shadow: none;
+        height: min-content !important;
+    }
   `,
 })
 export class Button {
   readonly size: InputSignal<ButtonSize> = input<ButtonSize>('md');
+  readonly ghost: InputSignalWithTransform<boolean, boolean | string> = input(false, {
+    transform: (v: boolean | string): boolean => {
+      return typeof v === 'string' ? v.toLowerCase() === 'true' || v.toLowerCase() === 'yes' : v;
+    },
+  });
 }

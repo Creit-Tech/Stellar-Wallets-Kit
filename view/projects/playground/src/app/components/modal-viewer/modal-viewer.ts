@@ -19,14 +19,14 @@ import { Toast } from '~theme/components/toast';
   selector: 'app-modal-viewer',
   template: `
     <section class="w-full flex items-center justify-center">
-      <kit-auth-modal
-        (wallet-selected)="onWalletSelected($any($event))"
-        [title]="configuration.modalTitle()"
-        [wallets]="wallets()"
-        [explanation]="configuration.showExplanation()"
-        [showNotInstalledLabel]="configuration.showNotInstalledLabel()"
-        [notInstalledText]="configuration.notInstalledLabelText()">
-      </kit-auth-modal>
+      <stellar-wallets-kit class="w-full"
+                           [explanation]="configuration.showExplanation()"
+                           (wallet-selected)="onWalletSelected($any($event))"
+                           [showNotInstalledLabel]="configuration.showNotInstalledLabel()"
+                           [title]="configuration.modalTitle()"
+                           [notInstalledText]="configuration.notInstalledLabelText()"
+                           [wallets]="wallets()">
+      </stellar-wallets-kit>
     </section>
   `,
   styles: `

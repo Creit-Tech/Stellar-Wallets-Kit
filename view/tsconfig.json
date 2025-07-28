@@ -40,6 +40,12 @@
     },
     {
       "path": "./projects/kit/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/wallets-kit/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/wallets-kit/tsconfig.spec.json"
     }
   ]
 }

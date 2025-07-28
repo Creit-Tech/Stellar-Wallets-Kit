@@ -186,6 +186,96 @@
           }
         }
       }
+    },
+    "wallets-kit": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "inlineTemplate": true,
+          "inlineStyle": true
+        }
+      },
+      "root": "projects/wallets-kit",
+      "sourceRoot": "projects/wallets-kit/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/wallets-kit/src/main.ts",
+            "tsConfig": "projects/wallets-kit/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/wallets-kit/public"
+              }
+            ],
+            "styles": [
+              "theme/variables.css",
+              "projects/wallets-kit/src/styles.css"
+            ],
+            "ssr": false,
+            "prerender": false,
+            "outputPath": {
+              "base": "../sdk/dist/view",
+              "browser": ""
+            },
+            "outputHashing": "none"
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "wallets-kit:build:production"
+            },
+            "development": {
+              "buildTarget": "wallets-kit:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "projects/wallets-kit/tsconfig.spec.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/wallets-kit/public"
+              }
+            ],
+            "styles": [
+              "projects/wallets-kit/src/styles.css"
+            ]
+          }
+        }
+      }
     }
   }
 }

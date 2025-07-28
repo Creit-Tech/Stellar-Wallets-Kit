@@ -68,9 +68,9 @@ export class Configuration {
   readonly wallets: Signal<string[]> = this.#state.wallets;
 
   updateCssVariables: EffectRef = effect(() => {
-    (document.querySelector('kit-auth-modal') as HTMLElement).style.setProperty('--swk-border-radius', this.borderRadius());
+    (document.querySelector('stellar-wallets-kit') as HTMLElement).style.setProperty('--swk-border-radius', this.borderRadius());
     for (const color of this.colors()) {
-      (document.querySelector('kit-auth-modal') as HTMLElement).style.setProperty(color.variable, color.value);
+      (document.querySelector('stellar-wallets-kit') as HTMLElement).style.setProperty(color.variable, color.value);
     }
   });
 
