@@ -2,7 +2,7 @@ import { css } from 'lit';
 
 export const modalDialogStyles = css`
   .dialog-modal {
-    max-height: 100vh;
+    max-height: 90vh;
     position: fixed;
     z-index: 990;
     font-family: 'Open Sans', arial, sans-serif;
@@ -13,7 +13,8 @@ export const modalDialogStyles = css`
     border-width: 0;
     box-shadow: 0 0.125rem 0.75rem rgba(0, 0, 0, 0.25);
     bottom: 0;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
 
   @media screen and (min-width: 768px) {
