@@ -12,8 +12,8 @@ importers:
         specifier: 0.12.0
         version: 0.12.0
       '@creit.tech/xbull-wallet-connect':
-        specifier: 0.3.0
-        version: 0.3.0
+        specifier: ^0.4.0
+        version: 0.4.0
       '@hot-wallet/sdk':
         specifier: 1.0.11
         version: 1.0.11(bufferutil@4.0.9)(near-api-js@5.0.1)(utf-8-validate@5.0.10)
@@ -142,8 +142,8 @@ packages:
     resolution: {integrity: sha512-aA63XwOkcl4xxQa3HjPMqOP6LiK0ZDv3mUPYEFXkpHbaFjtGggE1A61FjFzJnB+p7/oy2gA8E+rcBNl/zC1tMg==}
     engines: {node: '>=6.9.0'}
 
-  '@creit.tech/xbull-wallet-connect@0.3.0':
-    resolution: {integrity: sha512-pByi0bTAWd2ZdolVtkXcAU1DYTtz/cJc/IkRUz9x9/1NsFVyrM4UxE8tHgVZ3mwrJ4josoDwYP957ynQw195YQ==}
+  '@creit.tech/xbull-wallet-connect@0.4.0':
+    resolution: {integrity: sha512-LrCUIqUz50SkZ4mv2hTqSmwews8CNRYVoZ9+VjLsK/1U8PByzXTxv1vZyenj6avRTG86ifpoeihz7D3D5YIDrQ==}
     engines: {node: '>=16'}
 
   '@emurgo/cardano-serialization-lib-browser@13.2.1':
@@ -4390,7 +4390,7 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.1
 
-  '@creit.tech/xbull-wallet-connect@0.3.0':
+  '@creit.tech/xbull-wallet-connect@0.4.0':
     dependencies:
       rxjs: 7.8.1
       tweetnacl: 1.0.3

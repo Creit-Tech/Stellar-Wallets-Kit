@@ -60,9 +60,19 @@
   <br>
   <textarea rows='10' id='xdrTextArea'></textarea>
   <br>
-  <button id='signButton'>Sign</button>
+  <button id='signButton'>Sign XDR</button>
   <br>
   <pre id='signedXdr'></pre>
+
+  <br>
+  <br>
+  <label for='signMessageTextArea'>Sign Message</label>
+  <br>
+  <textarea rows='10' id='signMessageTextArea'></textarea>
+  <br>
+  <button id='signMessageButton'>Sign Message</button>
+  <br>
+  <pre id='signedMessage'></pre>
 </main>
 
 <br><br>
@@ -132,6 +142,18 @@
     console.log('XDR to sign:', inputElement.value);
 
     const data = await kit.signTransaction(inputElement.value, {
+      networkPassphrase: WalletNetwork.TESTNET,
+      address: document.querySelector('#publicKey').value,
+    });
+
+    document.querySelector('#signedXdr').textContent = JSON.stringify(data, null, 2);
+  })
+
+  document.querySelector('#signMessageButton').addEventListener('click', async function(e) {
+    const inputElement = document.querySelector('#signMessageTextArea');
+    console.log('Message to sign:', inputElement.value);
+
+    const data = await kit.signMessage(inputElement.value, {
       networkPassphrase: WalletNetwork.TESTNET,
       address: document.querySelector('#publicKey').value,
     });

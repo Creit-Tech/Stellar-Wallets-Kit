@@ -60,11 +60,27 @@ export class xBullModule implements ModuleInterface {
     };
   }
 
-  async signMessage(): Promise<{ signedMessage: string; signerAddress?: string }> {
-    throw {
-      code: -3,
-      message: 'xBull does not support the "signMessage" function',
-    };
+  async signMessage(
+    message: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+    }
+  ): Promise<{ signedMessage: string; signerAddress?: string }> {
+    try {
+      const bridge: xBullWalletConnect = new xBullWalletConnect();
+
+      const result = await bridge.signMessage(message, {
+        address: opts?.address,
+        networkPassphrase: opts?.networkPassphrase,
+      });
+
+      bridge.closeConnections();
+      return result;
+    } catch (e: any) {
+      throw parseError(e);
+    }
   }
 
   async getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
