@@ -217,7 +217,7 @@ export class StellarWalletsModal extends LitElement {
         </header>
 
         <div class="help__whats_a_wallet">
-          <h2 class="dialog-text-solid help__title">What is a wallet?</h2>
+          <h2 class="dialog-text-solid help__title">What is a Wallet?</h2>
           <p class="dialog-text help__text">
             Wallets are used to send, receive, and store the keys you use to sign blockchain transactions.
           </p>
@@ -227,7 +227,7 @@ export class StellarWalletsModal extends LitElement {
           <h2 class="dialog-text-solid help__title">What is Stellar?</h2>
           <p class="dialog-text help__text">
             Stellar is a decentralized, public blockchain that gives developers the tools to create experiences that are
-            more like cash than crypto
+            more like cash than crypto.
           </p>
         </div>
       </section>
