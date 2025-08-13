@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.7.7...v1.8.0) (2025-08-13)
+### add
+- xBull message signing logic
+- Upgrade xBull Wallet Connect library version
+
 ### [1.7.7](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.7.6...v1.7.7) (2025-07-28)
 ### Fix
 - Allow scrolling the modal (needed for small screens)
