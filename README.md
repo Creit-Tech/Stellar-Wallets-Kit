@@ -10,6 +10,7 @@ A kit to handle all Stellar Wallets at once with a simple API and without caring
 - Lobstr
 - Hana
 - Hot Wallet
+- Klever Wallet
 
 ## Installation
 
@@ -83,6 +84,7 @@ The available modules and their identifier are :
 | Wallet connect | WalletConnectModule | WALLET_CONNECT_ID |
 | xBull | xBullModule | XBULL_ID |
 | HOT Wallet | HotWalletModule | HOTWALLET_ID |
+| Klever Wallet | KleverModule | KLEVER_ID |
 
 
 

@@ -5,6 +5,7 @@ import { RabetModule } from './modules/rabet.module';
 import { xBullModule } from './modules/xbull.module';
 import { HotWalletModule } from './modules/hotwallet.module';
 import { HanaModule } from './modules/hana.module';
+import { KleverModule } from './modules/klever.module';
 import { ModuleInterface } from './types';
 
 /**
@@ -20,6 +21,7 @@ export function allowAllModules(opts?: { filterBy: (module: ModuleInterface) => 
     new LobstrModule(),
     new HanaModule(),
     new HotWalletModule(),
+    new KleverModule(),
   ];
   return opts?.filterBy ? modules.filter(opts.filterBy) : modules;
 }

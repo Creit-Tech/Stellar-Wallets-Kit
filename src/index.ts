@@ -12,3 +12,4 @@ export * from './modules/rabet.module';
 export * from './modules/lobstr.module';
 export * from './modules/hana.module';
 export * from './modules/hotwallet.module';
+export * from './modules/klever.module';
