@@ -56,7 +56,7 @@
     "rxjs": "7.8.1"
   },
   "peerDependencies": {
-    "@stellar/stellar-base": "^12.1.1"
+    "@stellar/stellar-base": "^14.0.0"
   },
   "devDependencies": {
     "@ngneat/elf-cli": "3.1.0",
