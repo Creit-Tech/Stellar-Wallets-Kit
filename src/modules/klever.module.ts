@@ -15,7 +15,7 @@ export class KleverModule implements ModuleInterface {
   productId: string = KLEVER_ID;
   productName: string = 'Klever Wallet';
   productUrl: string = 'https://klever.io/';
-  productIcon: string = 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/76/5e/e2/765ee2d9-32cf-8af6-437f-c8b3c802874c/AppIcon-1x_U007emarketing-0-10-0-85-220-0.png/200x200.jpg';
+  productIcon: string = 'https://stellar.creit.tech/wallet-icons/klever.png';
 
   async runChecks(): Promise<void> {
     if (!(await this.isAvailable())) {
