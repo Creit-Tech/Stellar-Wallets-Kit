@@ -44,6 +44,7 @@ export interface ISupportedWallet {
   name: string;
   type: string;
   isAvailable: boolean;
+  isPlatformWrapper: boolean;
   icon: string;
   url: string;
 }
@@ -185,4 +186,14 @@ export interface ModuleInterface extends KitActions {
    *
    */
   isAvailable(): Promise<boolean>;
+
+  /**
+   * This method will take care of letting the kit know if the user is currently using this wallet to open the dapp.
+   * An example will be how Freighter, xBull, Lobstr, etc have in-app browsers in their mobile versions
+   *
+   * Important:
+   * Your wallet/library needs to be able to answer this request in less than 500ms.
+   * Otherwise, the kit will assume is not wrapping the site
+   */
+  isPlatformWrapper?(): Promise<boolean>;
 }

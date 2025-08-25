@@ -11,6 +11,15 @@ import { ModuleInterface, ModuleType } from '../types';
 import { parseError } from '../utils';
 import { Buffer } from 'buffer';
 
+declare const window: Window &
+  typeof globalThis & {
+  stellar?: {
+    provider: string;
+    platform: string;
+    version: string;
+  };
+};
+
 export const FREIGHTER_ID = 'freighter';
 
 export class FreighterModule implements ModuleInterface {
@@ -28,6 +37,10 @@ export class FreighterModule implements ModuleInterface {
   }
 
   async isAvailable(): Promise<boolean> {
+    // If these values are set it means we are loading the module from the Freighter's mobile version and so we need to
+    // use WalletConnect instead.
+    if (window.stellar?.provider === 'freighter' && window.stellar?.platform === 'mobile') return false;
+
     return isConnected()
       .then(({ isConnected, error }) => !error && isConnected)
       .catch((): boolean => false);

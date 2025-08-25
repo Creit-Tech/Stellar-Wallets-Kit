@@ -81,6 +81,9 @@ export class StellarWalletsKit implements KitActions {
           type: mod.moduleType,
           icon: mod.productIcon,
           isAvailable: await Promise.race([timer, mod.isAvailable()]),
+          isPlatformWrapper: await Promise.race([
+            timer, mod.isPlatformWrapper ? mod.isPlatformWrapper() : Promise.resolve(false)
+          ]),
           url: mod.productUrl,
         };
       })

@@ -5,6 +5,15 @@ import { SessionTypes } from '@walletconnect/types/dist/types/sign-client/sessio
 import { ModuleInterface, ModuleType, WalletNetwork } from '../types';
 import { parseError } from '../utils';
 
+declare const window: Window &
+  typeof globalThis & {
+  stellar?: {
+    provider: string;
+    platform: string;
+    version: string;
+  };
+};
+
 const parseWalletConnectSession = (session: SessionTypes.Struct): IParsedWalletConnectSession => {
   const accounts = session.namespaces.stellar.accounts.map((account: string) => ({
     network: account.split(':')[1] as 'pubnet' | 'testnet',
@@ -52,6 +61,19 @@ export class WalletConnectModule implements ModuleInterface {
 
   async isAvailable(): Promise<boolean> {
     return true;
+  }
+
+  async isPlatformWrapper(): Promise<boolean> {
+    const options: Array<{ provider: string; platform: string; }> = [
+      {
+        provider: 'freighter',
+        platform: 'mobile',
+      },
+    ];
+
+    return !!options.find(({ provider, platform }): boolean => {
+      return window.stellar?.provider === provider && window.stellar?.platform === platform;
+    });
   }
 
   constructor(public wcParams: IWalletConnectConstructorParams) {

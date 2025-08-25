@@ -89,6 +89,13 @@ export class StellarWalletsModal extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
+
+    const platformWrapper: ISupportedWallet | undefined = this.getPlatformWrapper();
+    if (platformWrapper) {
+      setTimeout((): void => {
+        this.pickWalletOption(platformWrapper);
+      }, 10);
+    }
   }
 
   async closeModal(): Promise<void> {
@@ -193,6 +200,10 @@ export class StellarWalletsModal extends LitElement {
     ];
   }
 
+  private getPlatformWrapper(): ISupportedWallet | undefined {
+    return this.getSortedList().find((w: ISupportedWallet): boolean => w.isPlatformWrapper)
+  }
+
   private getThemeStyles() {
     if (!this.theme.value) return {};
 
@@ -210,6 +221,10 @@ export class StellarWalletsModal extends LitElement {
   }
 
   override render() {
+    if (this.getPlatformWrapper()) {
+      return html``;
+    }
+
     const helpSection = html`
       <section class="help-container">
         <header class="help-header">
