@@ -34,7 +34,7 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@albedo-link/intent": "0.13.0",
+    "@albedo-link/intent": "0.12.0",
     "@creit.tech/xbull-wallet-connect": "^0.4.0",
     "@hot-wallet/sdk": "1.0.11",
     "@ledgerhq/hw-app-str": "7.0.4",

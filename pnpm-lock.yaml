@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@albedo-link/intent':
-        specifier: 0.13.0
-        version: 0.13.0
+        specifier: 0.12.0
+        version: 0.12.0
       '@creit.tech/xbull-wallet-connect':
         specifier: ^0.4.0
         version: 0.4.0
@@ -123,8 +123,8 @@ importers:
 
 packages:
 
-  '@albedo-link/intent@0.13.0':
-    resolution: {integrity: sha512-A8CBXqGQEBMXhwxNXj5inC6HLjyx5Do7jW99NOFeecYd1nPUq8gfM0tvoNoR8H8JQ11aTl9tyQBuu/+l3xeBnQ==}
+  '@albedo-link/intent@0.12.0':
+    resolution: {integrity: sha512-UlGBhi0qASDYOjLrOL4484vQ26Ee3zTK2oAgvPMClOs+1XNk3zbs3dECKZv+wqeSI8SkHow8mXLTa16eVh+dQA==}
 
   '@babel/code-frame@7.21.4':
     resolution: {integrity: sha512-LYvhNKfwWSPpocw8GI7gpK2nq3HSDuEPC/uSYaALSJu9xjsalaaYFOq0Pwt5KmVqwEbZlDu81aLXwBOmD/Fv9g==}
@@ -4568,7 +4568,7 @@ packages:
 
 snapshots:
 
-  '@albedo-link/intent@0.13.0': {}
+  '@albedo-link/intent@0.12.0': {}
 
   '@babel/code-frame@7.21.4':
     dependencies:
