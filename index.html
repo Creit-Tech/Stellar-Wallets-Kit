@@ -107,6 +107,7 @@
       ...allowAllModules({ filterBy: module => module.productId === XBULL_ID }),
       new LedgerModule(),
       new TrezorModule({
+        appName: 'Stellar Wallets Kit',
         appUrl: 'http://localhost:5173',
         email: 'test@localhost.com'
       }),

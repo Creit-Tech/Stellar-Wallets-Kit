@@ -34,6 +34,7 @@ export class TrezorModule implements ModuleInterface {
   constructor(params: ITrezorModuleParams) {
     this.TrezorConnect.init({
       manifest: {
+        appName: params.appName,
         appUrl: params.appUrl,
         email: params.email,
       },
@@ -206,7 +207,7 @@ export class TrezorModule implements ModuleInterface {
     if (!network) throw parseError(new Error('You need to provide or set a network passphrase'));
 
     const tx: Transaction = new Transaction(xdr, network);
-    const parsedTx = transformTransaction(mnemonicPath, tx);
+    const parsedTx = transformTransaction(mnemonicPath, tx as any);
     const result = await this.TrezorConnect.stellarSignTransaction(parsedTx);
 
     if (!result.success) {
@@ -248,6 +249,7 @@ export class TrezorModule implements ModuleInterface {
  */
 export interface ITrezorModuleParams {
   appUrl: string;
+  appName: string;
   email: string;
   debug?: boolean;
   lazyLoad?: boolean;
