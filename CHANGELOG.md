@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.9.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.8.0...v1.9.0) (2025-08-25)
+### add
+- Add a new `isPlatform` logic so modules can check if they are the ones that will be used by the user without the need of the user manually picking it.
+- Klever wallet module
+
+### Change
+- Update @stellar/stellar-sdk version to latest
+
 ### [1.8.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.7.7...v1.8.0) (2025-08-13)
 ### add
 - xBull message signing logic
