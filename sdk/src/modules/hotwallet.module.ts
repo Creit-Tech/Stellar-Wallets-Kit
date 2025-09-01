@@ -4,6 +4,9 @@ import { Networks } from "@stellar/stellar-sdk";
 
 export const HOTWALLET_ID: string = "hot-wallet";
 
+/**
+ * **IMPORTANT**: This module requires that you have a "global" polyfill in your app, if not provided this module will break your app.
+ */
 export class HotWalletModule implements ModuleInterface {
   moduleType: ModuleType;
   productId: string;

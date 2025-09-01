@@ -17,6 +17,9 @@
     "paths": {
       "~theme/*": [
         "./theme/*"
+      ],
+      "~utils/*": [
+        "./utils/*"
       ]
     }
   },

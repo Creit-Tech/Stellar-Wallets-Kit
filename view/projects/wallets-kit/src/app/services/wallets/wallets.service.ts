@@ -1,6 +1,7 @@
-import { Injectable, Signal } from '@angular/core';
-import { patchState, signalState, SignalState } from '@ngrx/signals';
+import { Injectable, Signal } from "@angular/core";
+import { patchState } from '@ngrx/signals';
 import { Subject } from 'rxjs';
+import { PersistedState, persistedState } from "~utils/state/persist-state";
 
 export type Wallet = {
   id: string;
@@ -19,19 +20,22 @@ export type WalletsState = {
   providedIn: 'root'
 })
 export class WalletsService {
-  readonly #state: SignalState<WalletsState> = signalState<WalletsState>({
+  readonly #persist: PersistedState<WalletsState> = persistedState<WalletsState>({
     wallets: [],
     usedWallets: []
+  }, {
+    key: '@StellarWalletsKit/Wallets',
+    skipValues: ['wallets']
   });
 
-  wallets: Signal<Wallet[]> = this.#state.wallets;
-  usedWallets: Signal<Wallet['id'][]> = this.#state.usedWallets;
+  wallets: Signal<Wallet[]> = this.#persist.state.wallets;
+  usedWallets: Signal<Wallet['id'][]> = this.#persist.state.usedWallets;
 
   onWalletSelected$: Subject<Wallet> = new Subject<Wallet>();
 
   constructor() { }
 
   updateState(state: Partial<WalletsState>): void {
-    patchState(this.#state, state);
+    patchState(this.#persist.state, state);
   }
 }

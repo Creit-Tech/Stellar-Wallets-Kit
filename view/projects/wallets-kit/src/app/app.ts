@@ -15,31 +15,33 @@ import { Wallet, WalletsService } from './services/wallets/wallets.service';
 import { Footer } from './components/footer/footer';
 import { Subscription } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ConfigurationService } from './services/configuration/configuration.service';
+import { ConfigurationService, ConfigurationState } from './services/configuration/configuration.service';
 
 @Component({
   selector: 'app-root',
   imports: [ RouterOutlet, Header, Footer ],
   template: `
-    <section [class.fixed-mode]="mode() === 'fixed'" class="flex justify-center items-center">
-      @if (mode() === 'fixed') {
-        <div (click)="onClose()" class="absolute left-0 top-0 z-0 w-full h-full bg-[rgba(0,0,0,0.5)]"></div>
-      }
+    @if (mode() !== 'hidden') {
+      <section [class.fixed-mode]="mode() === 'fixed'" class="flex justify-center items-center">
+        @if (mode() === 'fixed') {
+          <div (click)="onClose()" class="absolute left-0 top-0 z-0 w-full h-full bg-[rgba(0,0,0,0.5)]"></div>
+        }
 
-      <section class="smooth-height w-full h-full relative max-w-[25rem] grid grid-cols-1 grid-rows-[auto_1fr_auto] bg-(--swk-background) rounded-(--swk-border-radius) shadow-(--swk-shadow)">
-        <div class="col-span-1">
-          <app-header></app-header>
-        </div>
+        <section class="smooth-height w-full h-full relative max-w-[25rem] grid grid-cols-1 grid-rows-[auto_1fr_auto] bg-(--swk-background) rounded-(--swk-border-radius) shadow-(--swk-shadow)">
+          <div class="col-span-1">
+            <app-header></app-header>
+          </div>
 
-        <div class="col-span-1">
-          <router-outlet />
-        </div>
+          <div class="col-span-1">
+            <router-outlet />
+          </div>
 
-        <div class="col-span-1">
-          <app-footer></app-footer>
-        </div>
+          <div class="col-span-1">
+            <app-footer></app-footer>
+          </div>
+        </section>
       </section>
-    </section>
+    }
   `,
   styles: `
     .fixed-mode {
@@ -72,7 +74,7 @@ export class App implements OnInit {
   close: OutputEmitterRef<Error> = output<Error>();
 
   title: InputSignal<string> = input<string>(this.configurationService.title());
-  mode: InputSignal<'fixed' | 'block'> = input<'fixed' | 'block'>(this.configurationService.mode());
+  mode: InputSignal<ConfigurationState['mode']> = input<ConfigurationState['mode']>(this.configurationService.mode());
 
   wallets: InputSignalWithTransform<Wallet[], Wallet[] | string> = input([], {
     transform: (v: Wallet[] | string): Wallet[] => typeof v === 'string' ? JSON.parse(v) : v,

@@ -20,8 +20,8 @@ import { Toast } from '~theme/components/toast';
   template: `
     <section class="w-full flex items-center justify-center">
       <stellar-wallets-kit class="w-full"
-                           [explanation]="configuration.showExplanation()"
                            (wallet-selected)="onWalletSelected($any($event))"
+                           [explanation]="configuration.showExplanation()"
                            [showNotInstalledLabel]="configuration.showNotInstalledLabel()"
                            [title]="configuration.modalTitle()"
                            [notInstalledText]="configuration.notInstalledLabelText()"

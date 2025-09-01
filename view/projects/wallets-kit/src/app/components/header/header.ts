@@ -1,7 +1,7 @@
 import { Component, computed, inject, Signal } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 import { Button } from '~theme/components/button';
-import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router, RouterLink } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterLink } from '@angular/router';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { ConfigurationService } from '../../services/configuration/configuration.service';
 
@@ -42,8 +42,6 @@ import { ConfigurationService } from '../../services/configuration/configuration
   styles: ``
 })
 export class Header {
-  router: Router = inject(Router);
-  route: ActivatedRoute = inject(ActivatedRoute);
   navigationService: NavigationService = inject(NavigationService);
   configurationService: ConfigurationService = inject(ConfigurationService);
 

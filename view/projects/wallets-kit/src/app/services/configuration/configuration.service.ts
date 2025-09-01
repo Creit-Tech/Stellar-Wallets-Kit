@@ -3,7 +3,7 @@ import { patchState, signalState, SignalState } from '@ngrx/signals';
 
 export type ConfigurationState = {
   title: string;
-  mode: 'fixed' | 'block';
+  mode: 'fixed' | 'block' | 'hidden';
   showNotInstalledLabel: boolean;
   notInstalledText: string;
 };
@@ -20,7 +20,7 @@ export class ConfigurationService {
   });
 
   title: Signal<string> = this.#state.title;
-  mode: Signal<'fixed' | 'block'> = this.#state.mode;
+  mode: Signal<'fixed' | 'block' | 'hidden'> = this.#state.mode;
   showNotInstalledLabel: Signal<boolean> = this.#state.showNotInstalledLabel;
   notInstalledText: Signal<string> = this.#state.notInstalledText;
 
