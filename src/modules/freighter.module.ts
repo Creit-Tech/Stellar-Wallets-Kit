@@ -46,12 +46,19 @@ export class FreighterModule implements ModuleInterface {
       .catch((): boolean => false);
   }
 
-  async getAddress(): Promise<{ address: string }> {
+  async getAddress(params: { skipRequestAccess?: boolean }): Promise<{ address: string }> {
     return this.runChecks()
-      .then(() => requestAccess())
+      .then(async () => {
+        if (params?.skipRequestAccess) return true;
+        return requestAccess();
+      })
       .then(() => getAddress())
       .then(({ address, error }) => {
         if (error) throw error;
+        if (!address) throw {
+          code: -3,
+          message: 'Getting the address is not allowed, please request access first.',
+        };
 
         return { address };
       })

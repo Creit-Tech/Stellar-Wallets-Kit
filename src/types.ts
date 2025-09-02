@@ -59,10 +59,11 @@ export interface KitActions {
    *
    * @param params
    * @param params.path - The path to tell the wallet which position to ask. This is commonly used in hardware wallets.
+   * @param params.skipRequestAccess - Freighter separates the access request from the logic of getting the address, if this is set to true we will avoid requesting the access
    *
    * @return Promise<{ address: string }>
    */
-  getAddress(params?: { path?: string }): Promise<{ address: string }>;
+  getAddress(params?: { path?: string; skipRequestAccess?: boolean; }): Promise<{ address: string }>;
 
   /**
    * A function to request a wallet to sign a built transaction in its XDR mode
