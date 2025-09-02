@@ -56,6 +56,8 @@
   <br>
   <input placeholder='Use the connect button to fetch the public key' id='publicKey' type='text'>
   <br>
+  <button id='getAddress'>Get Address</button>
+  <br>
   <label for='xdrTextArea'>XDR to sign</label>
   <br>
   <textarea rows='10' id='xdrTextArea'></textarea>
@@ -104,7 +106,8 @@
   const kit = new StellarWalletsKit({
     network: WalletNetwork.TESTNET,
     modules: [
-      ...allowAllModules({ filterBy: module => module.productId === XBULL_ID }),
+      ...allowAllModules(),
+      // ...allowAllModules({ filterBy: module => module.productId === XBULL_ID }),
       new LedgerModule(),
       new TrezorModule({
         appName: 'Stellar Wallets Kit',
@@ -137,6 +140,12 @@
   }
 
   createDefaultButton();
+
+  document.querySelector('#getAddress').addEventListener('click', async function(e) {
+    const response = await kit.getAddress({ skipRequestAccess: true });
+    document.querySelector('#publicKey').value = response.address;
+    console.log({ response });
+  })
 
   document.querySelector('#signButton').addEventListener('click', async function(e) {
     const inputElement = document.querySelector('#xdrTextArea');

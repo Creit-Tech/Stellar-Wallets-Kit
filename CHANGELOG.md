@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.9.2](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.9.1...v1.9.2) (2025-09-02)
+### Add
+- Include a `skipRequestAccess` parameter for devs that need to ignore the `requestAccess` to freighter when calling the `getAddress` method.
+
 ### [1.9.1](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.9.0...v1.9.1) (2025-08-26)
 ### Change
 - Downgrade Albedo library to 0.12.0
