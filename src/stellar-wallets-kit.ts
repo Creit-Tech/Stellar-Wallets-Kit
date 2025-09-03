@@ -102,7 +102,7 @@ export class StellarWalletsKit implements KitActions {
     setSelectedModuleId(target.productId);
   }
 
-  public async getAddress(params?: { path?: string }): Promise<{ address: string }> {
+  public async getAddress(params?: { path?: string; skipRequestAccess?: boolean; }): Promise<{ address: string }> {
     const { address } = await this.selectedModule.getAddress(params);
     setAddress(address);
     return { address };

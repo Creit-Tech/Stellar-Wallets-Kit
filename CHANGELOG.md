@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.9.3](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.9.2...v1.9.3) (2025-09-03)
+### Change
+- Upgrade Freighter API's library to latest
+
+### Fix
+- Update the types in kit's class so it includes the new `skipRequestAccess` parameter
+
 ### [1.9.2](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.9.1...v1.9.2) (2025-09-02)
 ### Add
 - Include a `skipRequestAccess` parameter for devs that need to ignore the `requestAccess` to freighter when calling the `getAddress` method.
