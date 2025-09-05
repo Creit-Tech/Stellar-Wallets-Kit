@@ -134,7 +134,12 @@ export class FreighterModule implements ModuleInterface {
 
         if (error || !signedMessage) throw error;
 
-        return { signedMessage: Buffer.from(signedMessage).toString('base64'), signerAddress: signerAddress };
+        return {
+          signedMessage: typeof signedMessage === 'string'
+            ? signedMessage
+            : Buffer.from(signedMessage).toString('base64'),
+          signerAddress: signerAddress
+        };
       })
       .catch(e => {
         throw parseError(e);
