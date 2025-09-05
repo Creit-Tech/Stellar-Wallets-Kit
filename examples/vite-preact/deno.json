@@ -1,0 +1,24 @@
+{
+  "tasks": {
+    "dev": "deno run -A --node-modules-dir npm:vite",
+    "build": "deno run -A --node-modules-dir npm:vite build",
+    "preview": "deno run -A --node-modules-dir npm:vite preview",
+    "serve": "deno run --allow-net --allow-read jsr:@std/http@1/file-server dist/"
+  },
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
+  },
+  "imports": {
+    "@deno/vite-plugin": "npm:@deno/vite-plugin@^1.0.5",
+    "@preact/preset-vite": "npm:@preact/preset-vite@^2.10.2",
+    "@stellar-wallets-kit/sdk": "jsr:@stellar-wallets-kit/sdk@^2.0.0",
+    "@stellar-wallets-kit/components": "jsr:@stellar-wallets-kit/components@^2.0.0",
+    "preact": "npm:preact@^10.27.0",
+    "vite": "npm:vite@^7.0.6"
+  },
+  "links": [
+    "../../packages/"
+  ]
+}

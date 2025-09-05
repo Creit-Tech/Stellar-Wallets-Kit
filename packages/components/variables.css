@@ -1,26 +1,33 @@
-stellar-wallets-kit {
-  --swk-background: #FCFCFCFF;
-  --swk-background-secondary: #F8F8F8FF;
+.stellar-wallets-kit {
+  --swk-background: #fcfcfcff;
+  --swk-background-secondary: #f8f8f8ff;
   --swk-foreground-strong: #000000;
-  --swk-foreground: #161619FF;
-  --swk-foreground-secondary: #2D2D31FF;
-  --swk-primary: #3B82F6;
-  --swk-primary-foreground: #FFFFFF;
-  --swk-transparent: rgba(0,0,0,0);
-  --swk-lighter: #FCFCFC;
-  --swk-light: #F8F8F8;
+  --swk-foreground: #161619ff;
+  --swk-foreground-secondary: #2d2d31ff;
+  --swk-primary: #3b82f6;
+  --swk-primary-foreground: #ffffff;
+
+  --swk-transparent: rgba(0, 0, 0, 0);
+  --swk-lighter: #fcfcfc;
+  --swk-light: #f8f8f8;
   --swk-light-gray: oklch(0.800 0.006 286.033);
   --swk-gray: oklch(0.600 0.006 286.033);
+
   --swk-text-primary: var(--swk-foreground);
   --swk-text-secondary: var(--swk-foreground-secondary);
+
   --swk-transition-duration: 200ms;
+
   --swk-border-radius: 0.8rem;
   --swk-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+
   --swk-modal-title-color: var(--swk-foreground-strong);
   --swk-modal-text-color: var(--swk-foreground-secondary);
+
   --swk-avatar-background: var(--swk-background);
   --swk-avatar-border: 1px solid var(--swk-background-secondary);
   --swk-avatar-fallback: var(--swk-foreground-strong);
+
   --swk-wallet-item-background: var(--swk-background);
   --swk-wallet-item-border: var(--swk-transparent);
   --swk-wallet-item-hover-background: var(--swk-background);
@@ -66,8 +73,7 @@ stellar-wallets-kit {
 
   --swk-focus-ring: rgb(59 130 246);
 
-  --swk-button-shadow:
-          0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1), 0 0 0 1px rgb(0 0 0 / 0.05);
+  --swk-button-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1), 0 0 0 1px rgb(0 0 0 / 0.05);
 
   --swk-input-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.1);
 }
