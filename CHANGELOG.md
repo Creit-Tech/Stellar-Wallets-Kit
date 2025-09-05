@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+
+### [1.9.4](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.9.3...v1.9.4) (2025-09-05)
+### Change
+- Upgrade Freighter's module so it handles the two different ways Freighter answer to the signMessage method.
+
 ### [1.9.3](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.9.2...v1.9.3) (2025-09-03)
 ### Change
 - Upgrade Freighter API's library to latest
