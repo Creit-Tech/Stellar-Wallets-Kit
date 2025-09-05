@@ -319,6 +319,9 @@ export class StellarWalletsKit implements KitActions {
       this.modalElement = document.createElement('stellar-wallets-modal') as StellarWalletsModal;
     }
 
+    const supportedWallets: ISupportedWallet[] = await this.getSupportedWallets();
+    setAllowedWallets(supportedWallets);
+
     this.modalElement.setAttribute('showModal', '');
 
     if (params.modalTitle) {
