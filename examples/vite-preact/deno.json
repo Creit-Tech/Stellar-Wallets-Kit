@@ -15,6 +15,7 @@
     "@preact/preset-vite": "npm:@preact/preset-vite@^2.10.2",
     "@stellar-wallets-kit/sdk": "jsr:@stellar-wallets-kit/sdk@^2.0.0",
     "@stellar-wallets-kit/components": "jsr:@stellar-wallets-kit/components@^2.0.0",
+    "@stellar-wallets-kit/state": "jsr:@stellar-wallets-kit/state@^2.0.0",
     "preact": "npm:preact@^10.27.0",
     "vite": "npm:vite@^7.0.6"
   },

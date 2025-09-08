@@ -1,6 +1,6 @@
 import { html } from "htm/preact";
 import type { VNode } from "preact";
-import { clsx } from "clsx";
+import { cx, tw } from '../twind.ts';
 
 export type AvatarProps = {
   alt: string;
@@ -21,6 +21,6 @@ const defaultClasses: string =
 
 export function Avatar(props: AvatarProps): VNode {
   return html`
-    <img alt="${props.alt}" src="${props.image}" class="${clsx(defaultClasses, props.size)}" />
+    <img alt="${props.alt}" src="${props.image}" class="${tw(cx(defaultClasses, props.size))}" />
   `;
 }

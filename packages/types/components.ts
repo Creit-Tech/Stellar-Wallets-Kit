@@ -25,6 +25,7 @@ export type SwkAppTheme = {
   "border": string;
   "shadow": string;
   "border-radius": string;
+  "font-family": string;
 };
 
 export const SwkAppLightTheme: SwkAppTheme = {
@@ -43,4 +44,5 @@ export const SwkAppLightTheme: SwkAppTheme = {
   "border": "rgba(0, 0, 0, 0.15)",
   "shadow": "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)",
   "border-radius": "0.8rem",
+  "font-family": "sans-serif",
 };
