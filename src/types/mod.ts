@@ -1,6 +1,6 @@
 export * from "./components.ts";
-export * from './sdk.ts';
-export * from './storage.ts';
+export * from "./sdk.ts";
+export * from "./storage.ts";
 
 export enum Networks {
   PUBLIC = "Public Global Stellar Network ; September 2015",

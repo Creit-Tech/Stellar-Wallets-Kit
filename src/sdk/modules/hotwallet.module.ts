@@ -4,7 +4,7 @@ import { type ModuleInterface, ModuleType, Networks } from "../../types/mod.ts";
 export const HOTWALLET_ID: string = "hot-wallet";
 
 /**
- * **IMPORTANT**: This module requires that you have a "global" polyfill in your app, if not provided this module will break your app.
+ * **IMPORTANT**: This module requires that you have a "global" and a "Buffer" polyfill in your app, if not provided then this module will break your app.
  */
 export class HotWalletModule implements ModuleInterface {
   moduleType: ModuleType;

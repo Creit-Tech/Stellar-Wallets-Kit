@@ -1,6 +1,6 @@
 import albedo from "@albedo-link/intent";
 
-import { type ModuleInterface, ModuleType, Networks } from "@stellar-wallets-kit/types";
+import { type ModuleInterface, ModuleType, Networks } from "../../types/mod.ts";
 import { parseError } from "../utils.ts";
 
 export const ALBEDO_ID = "albedo";

@@ -3,15 +3,21 @@ import preactLogo from './assets/preact.svg'
 import { StellarWalletsKit } from '@creit-tech/stellar-wallets-kit/sdk';
 import { activeAddress, activeModule } from '@creit-tech/stellar-wallets-kit/state';
 import { SwkButton } from '@creit-tech/stellar-wallets-kit/components';
-import { xBullModule } from '@creit-tech/stellar-wallets-kit/modules/xbull';
+import { AlbedoModule } from '@creit-tech/stellar-wallets-kit/modules/albedo';
+import { FreighterModule } from '@creit-tech/stellar-wallets-kit/modules/freighter';
 import { HanaModule } from '@creit-tech/stellar-wallets-kit/modules/hana';
+import { LobstrModule } from '@creit-tech/stellar-wallets-kit/modules/lobstr';
 import { RabetModule } from '@creit-tech/stellar-wallets-kit/modules/rabet';
+import { xBullModule } from '@creit-tech/stellar-wallets-kit/modules/xbull';
 
 StellarWalletsKit.init({
   modules: [
-    new xBullModule(),
+    new AlbedoModule(),
+    new FreighterModule(),
     new HanaModule(),
+    new LobstrModule(),
     new RabetModule(),
+    new xBullModule(),
   ],
 });
 

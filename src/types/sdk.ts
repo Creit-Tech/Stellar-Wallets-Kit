@@ -1,5 +1,5 @@
-import type { SwkAppTheme } from './components.ts';
-import type { ModuleInterface, Networks } from './mod.ts';
+import type { SwkAppTheme } from "./components.ts";
+import type { ModuleInterface, Networks } from "./mod.ts";
 
 export interface StellarWalletsKitInitParams {
   modules: ModuleInterface[];

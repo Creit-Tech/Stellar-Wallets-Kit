@@ -1,6 +1,6 @@
 import { html } from "htm/preact";
 import type { VNode } from "preact";
-import { cx, tw } from '../twind.ts';
+import { cx, tw } from "../twind.ts";
 
 export type ButtonProps = {
   size: ButtonSize;
@@ -31,10 +31,14 @@ export enum ButtonShape {
 
 const defaultClasses = "flex items-center justify-center font-semibold easy-in-out transition leading-none";
 
-export function Button({size = ButtonSize.md, mode = ButtonMode.primary, shape = ButtonShape.regular, children, onClick}: ButtonProps): VNode {
+export function Button(
+  { size = ButtonSize.md, mode = ButtonMode.primary, shape = ButtonShape.regular, children, onClick }: ButtonProps,
+): VNode {
   const modeStyle: string = cx({
-    "border-none bg-primary text-primary-foreground shadow-default hover:opacity-70 focus:opacity-90": mode === ButtonMode.primary,
-    "border-none bg-background text-foreground shadow-default hover:opacity-70 focus:opacity-90": mode === ButtonMode.secondary,
+    "border-none bg-primary text-primary-foreground shadow-default hover:opacity-70 focus:opacity-90":
+      mode === ButtonMode.primary,
+    "border-none bg-background text-foreground shadow-default hover:opacity-70 focus:opacity-90":
+      mode === ButtonMode.secondary,
     "bg-transparent text-foreground border-transparent border-1 hover:border-light-gray": mode === ButtonMode.ghost,
   });
 
@@ -62,7 +66,7 @@ export function Button({size = ButtonSize.md, mode = ButtonMode.primary, shape =
 
   return html`
     <button onClick="${() => onClick()}" type="button" class="${tw(cx(
-      'cursor-pointer',
+      "cursor-pointer",
       defaultClasses,
       modeStyle,
       radius,

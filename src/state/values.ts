@@ -1,4 +1,4 @@
-import { computed, type Signal, signal, type ReadonlySignal } from "@preact/signals";
+import { computed, type ReadonlySignal, type Signal, signal } from "@preact/signals";
 import {
   type ISupportedWallet,
   type KitEvent,

@@ -1,6 +1,6 @@
 import { effect } from "@preact/signals";
 import { activeModule, theme } from "./values.ts";
-import { LocalStorageKeys } from '../types/mod.ts';
+import { LocalStorageKeys } from "../types/mod.ts";
 
 export const updatedThemeEffect = effect((): void => {
   // console.debug("[SwkApp]::updatedThemeEffect");
@@ -11,16 +11,16 @@ export const updatedThemeEffect = effect((): void => {
 
 export const updatedSelectedModule = effect((): void => {
   // console.debug("[SwkApp]::updatedSelectedModule");
-  if (typeof window !== 'undefined' && !!activeModule.value) {
+  if (typeof window !== "undefined" && !!activeModule.value) {
     try {
-      const record: string | null = window.localStorage.getItem(LocalStorageKeys.usedWalletsIds);
+      const record: string | null = globalThis.localStorage.getItem(LocalStorageKeys.usedWalletsIds);
       const usedWalletsIds: Set<string> = record ? new Set(JSON.parse(record)) : new Set();
       if (usedWalletsIds.has(activeModule.value.productId)) {
         usedWalletsIds.delete(activeModule.value.productId);
       }
-      window.localStorage.setItem(
+      globalThis.localStorage.setItem(
         LocalStorageKeys.usedWalletsIds,
-        JSON.stringify([ activeModule.value.productId, ...usedWalletsIds ])
+        JSON.stringify([activeModule.value.productId, ...usedWalletsIds]),
       );
     } catch (e) {
       console.error(e);

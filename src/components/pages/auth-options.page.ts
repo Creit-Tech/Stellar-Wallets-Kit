@@ -1,20 +1,20 @@
 import type { VNode } from "preact";
 import { html } from "htm/preact";
 import {
-  activeModules,
+  activeAddress,
+  activeModule,
   addressUpdatedEvent,
   allowedWallets,
   installText,
+  modalTitle,
   moduleSelectedEvent,
   selectedModuleId,
   showInstallLabel,
-  activeAddress,
-  activeModule, modalTitle
 } from "../../state/mod.ts";
 import { computed, type ReadonlySignal } from "@preact/signals";
-import { ISupportedWallet, LocalStorageKeys } from "../../types/mod.ts";
+import { type ISupportedWallet, LocalStorageKeys } from "../../types/mod.ts";
 import { Avatar, AvatarSize } from "../shared/avatar.ts";
-import { tw } from '../twind.ts';
+import { tw } from "../twind.ts";
 
 const sortedWallet: ReadonlySignal<ISupportedWallet[]> = computed((): ISupportedWallet[] => {
   const tempSortedWallets: { available: ISupportedWallet[]; unavailable: ISupportedWallet[] } = allowedWallets.value
@@ -28,15 +28,14 @@ const sortedWallet: ReadonlySignal<ISupportedWallet[]> = computed((): ISupported
       { available: [], unavailable: [] },
     );
 
-  let usedWalletsIds: Array<ISupportedWallet['id']>;
+  let usedWalletsIds: Array<ISupportedWallet["id"]>;
   try {
-    const record: string | null = window?.localStorage.getItem(LocalStorageKeys.usedWalletsIds);
+    const record: string | null = globalThis?.localStorage.getItem(LocalStorageKeys.usedWalletsIds);
     usedWalletsIds = record ? JSON.parse(record) : [];
   } catch (e) {
     console.error(e);
     usedWalletsIds = [];
   }
-
 
   const usedWallets: ISupportedWallet[] = [];
   const nonUsedWallets: ISupportedWallet[] = [];
@@ -76,30 +75,37 @@ async function onWalletSelected(item: ISupportedWallet): Promise<void> {
 }
 
 export function AuthOptionsPage(): VNode {
-  modalTitle.value = 'Connect Wallet';
+  modalTitle.value = "Connect Wallet";
 
   return html`
-    <ul class="${tw('w-full grid gap-2 px-2 py-4')}">
+    <ul class="${tw("w-full grid gap-2 px-2 py-4")}">
       ${sortedWallet.value.map((wallet: ISupportedWallet) => {
         return html`
           <li
             onClick="${() => onWalletSelected(wallet)}"
-            class="${tw('px-2 py-2 cursor-pointer flex justify-between items-center bg-background hover:border-light-gray border-1 border-transparent rounded-default duration-150 ease active:bg-background active:border-gray')}"
+            class="${tw(
+              "px-2 py-2 cursor-pointer flex justify-between items-center bg-background hover:border-light-gray border-1 border-transparent rounded-default duration-150 ease active:bg-background active:border-gray",
+            )}"
           >
-            <div class="${tw('flex items-center gap-2')}">
-              <${Avatar} class="${tw('mr-2')}" alt="${wallet.name} icon" image="${wallet.icon}" size="${AvatarSize.sm}" />
-              <p class="${tw('text-foreground font-semibold')}">${wallet.name}</p>
+            <div class="${tw("flex items-center gap-2")}">
+              <${Avatar} class="${tw("mr-2")}" alt="${wallet.name} icon" image="${wallet.icon}" size="${AvatarSize
+                .sm}" />
+              <p class="${tw("text-foreground font-semibold")}">${wallet.name}</p>
             </div>
 
             ${showInstallLabel.value && !wallet.isAvailable
               ? html`
-                <div class="${tw('ml-4 flex items-center')}">
+                <div class="${tw("ml-4 flex items-center")}">
                   <small
-                    class="${tw('inline-flex items-center border-1 border-border px-2 py-1 rounded-default text-foreground-secondary text-xs bg-background-secondary')}"
+                    class="${tw(
+                      "inline-flex items-center border-1 border-border px-2 py-1 rounded-default text-foreground-secondary text-xs bg-background-secondary",
+                    )}"
                   >
                     ${installText.value}
-                    
-                    <svg class="${tw('w-4 h-4')}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+
+                    <svg class="${tw(
+                      "w-4 h-4",
+                    )}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"></path>
                     </svg>
                   </small>

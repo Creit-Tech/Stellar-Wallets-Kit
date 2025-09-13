@@ -26,7 +26,7 @@ export function defaultModules(opts?: { filterBy: (module: ModuleInterface) => b
 }
 
 /**
- * This method only returns those modules from wallet that follow exactly the SEP-43 standard and don't require extra configuration before they can be loaded
+ * This method only returns those modules from wallets that follow exactly the SEP-43 standard and don't require extra configuration before they can be loaded
  * You can provide a filter function if needed
  *
  * Note: If you are the creator of a module and you want the module to be listed here, the module must not require any extra configuration nor polyfills (everything should be included already in your module's dependencies).

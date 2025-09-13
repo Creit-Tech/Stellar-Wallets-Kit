@@ -1,3 +1,3 @@
 export enum LocalStorageKeys {
-  usedWalletsIds = '@StellarWalletsKit/usedWalletsIds'
+  usedWalletsIds = "@StellarWalletsKit/usedWalletsIds",
 }

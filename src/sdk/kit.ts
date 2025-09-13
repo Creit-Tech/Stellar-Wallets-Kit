@@ -8,28 +8,32 @@ import {
   type KitEvent,
   KitEventType,
   type ModuleInterface,
-  type Networks, type ProfileModalParams,
+  type Networks,
+  type ProfileModalParams,
   type StellarWalletsKitInitParams,
-  SwkAppLightTheme, SwkAppMode,
+  SwkAppLightTheme,
+  SwkAppMode,
   SwkAppRoute,
   type SwkAppTheme,
 } from "../types/mod.ts";
 import {
   activeAddress,
+  activeModule,
   activeModules,
   addressUpdatedEvent,
+  allowedWallets,
   closeEvent,
   hideUnsupportedWallets,
+  mode,
+  resetWalletState,
   selectedModuleId,
   selectedNetwork,
   showInstallLabel,
   theme,
-  activeModule,
-  allowedWallets, mode, resetWalletState
 } from "../state/mod.ts";
 import { navigateTo, SwkApp } from "../components/mod.ts";
 import { parseError } from "./utils.ts";
-import { resetHistory } from '../components/router.ts';
+import { resetHistory } from "../components/router.ts";
 
 export class StellarWalletsKit {
   static init(params: StellarWalletsKitInitParams) {
@@ -56,12 +60,13 @@ export class StellarWalletsKit {
     return activeModule.value;
   }
 
-   /**
+  /**
    * This method sets the active wallet (module) that will be used when calling others methods (for example getAddress).
    */
   static setWallet(id: string): void {
-    const target: ModuleInterface | undefined =
-      activeModules.value.find((mod: ModuleInterface): boolean => mod.productId === id);
+    const target: ModuleInterface | undefined = activeModules.value.find((mod: ModuleInterface): boolean =>
+      mod.productId === id
+    );
 
     if (!target) throw new Error(`Wallet id "${id}" is not and existing module`);
 
@@ -197,7 +202,12 @@ export class StellarWalletsKit {
 
     const wrapper: HTMLDivElement = document.createElement("div");
     (params?.container || document.body).appendChild(wrapper);
-    render(html`<${SwkApp} />`, wrapper);
+    render(
+      html`
+        <${SwkApp} />
+      `,
+      wrapper,
+    );
 
     const subs: Array<() => void> = [];
     const close = (): void => {
@@ -236,7 +246,9 @@ export class StellarWalletsKit {
    */
   // deno-lint-ignore require-await
   static async profileModal(params?: ProfileModalParams): Promise<void> {
-    if (!activeAddress.value) throw { code: -1, message: "There is no active address, the user needs to authenticate first." };
+    if (!activeAddress.value) {
+      throw { code: -1, message: "There is no active address, the user needs to authenticate first." };
+    }
 
     resetHistory();
     navigateTo(SwkAppRoute.PROFILE_PAGE);
@@ -244,7 +256,12 @@ export class StellarWalletsKit {
 
     const wrapper: HTMLDivElement = document.createElement("div");
     (params?.container || document.body).appendChild(wrapper);
-    render(html`<${SwkApp} />`, wrapper);
+    render(
+      html`
+        <${SwkApp} />
+      `,
+      wrapper,
+    );
 
     const sub = closeEvent.subscribe((): void => {
       sub();

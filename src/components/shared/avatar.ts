@@ -1,6 +1,6 @@
 import { html } from "htm/preact";
 import type { VNode } from "preact";
-import { cx, tw } from '../twind.ts';
+import { cx, tw } from "../twind.ts";
 
 export type AvatarProps = {
   alt: string;
