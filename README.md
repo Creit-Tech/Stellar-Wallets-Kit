@@ -174,7 +174,7 @@ await kit.setWallet(XBULL_ID)
 And more methods, check the documentation to see all the methods available.
 
 ## License
-![](https://img.shields.io/badge/License-MIT-lightgrey)
+[![](https://img.shields.io/badge/License-MIT-lightgrey)](https://github.com/Creit-Tech/Stellar-Wallets-Kit/blob/main/LICENSE)
 
 Licensed under the MIT License, Copyright © 2023-present Creit Technologies LLP.
 
