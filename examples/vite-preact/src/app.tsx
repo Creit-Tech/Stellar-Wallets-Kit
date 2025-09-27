@@ -9,6 +9,7 @@ import { HanaModule } from '@creit-tech/stellar-wallets-kit/modules/hana';
 import { LedgerModule } from '@creit-tech/stellar-wallets-kit/modules/ledger';
 import { LobstrModule } from '@creit-tech/stellar-wallets-kit/modules/lobstr';
 import { RabetModule } from '@creit-tech/stellar-wallets-kit/modules/rabet';
+import { TrezorModule } from '@creit-tech/stellar-wallets-kit/modules/trezor';
 import { xBullModule } from '@creit-tech/stellar-wallets-kit/modules/xbull';
 
 StellarWalletsKit.init({
@@ -19,6 +20,11 @@ StellarWalletsKit.init({
     new LedgerModule(),
     new LobstrModule(),
     new RabetModule(),
+    new TrezorModule({
+      appName: 'Stellar Wallets Kit',
+      appUrl: 'http://localhost:5173',
+      email: 'test@email.com'
+    }),
     new xBullModule(),
   ],
 });

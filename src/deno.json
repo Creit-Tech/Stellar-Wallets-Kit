@@ -19,6 +19,8 @@
     "@std/encoding": "jsr:@std/encoding@^1.0.10",
     "@stellar/freighter-api": "npm:@stellar/freighter-api@^5.0.0",
     "@stellar/stellar-base": "npm:@stellar/stellar-base@^14.0.0",
+    "@trezor/connect-plugin-stellar": "npm:@trezor/connect-plugin-stellar@^9.2.3",
+    "@trezor/connect-web": "npm:@trezor/connect-web@^9.6.3",
     "@twind/core": "npm:@twind/core@^1.1.3",
     "@twind/preset-autoprefix": "npm:@twind/preset-autoprefix@^1.0.7",
     "@twind/preset-tailwind": "npm:@twind/preset-tailwind@^1.1.4",
@@ -39,6 +41,7 @@
     "./modules/ledger": "./sdk/modules/ledger.module.ts",
     "./modules/lobstr": "./sdk/modules/lobstr.module.ts",
     "./modules/rabet": "./sdk/modules/rabet.module.ts",
+    "./modules/trezor": "./sdk/modules/trezor.module.ts",
     "./modules/xbull": "./sdk/modules/xbull.module.ts",
     "./modules/utils": "./sdk/modules/utils.ts"
   },

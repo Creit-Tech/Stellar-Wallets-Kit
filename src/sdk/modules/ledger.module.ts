@@ -41,10 +41,6 @@ export class LedgerModule implements HardwareWalletModuleInterface {
     this._transport = undefined;
   }
 
-  /**
-   * This always return true because in theory ledgers aren't supposed
-   * to be connected at all time
-   */
   async isAvailable(): Promise<boolean> {
     return TransportWebUSB.isSupported();
   }
