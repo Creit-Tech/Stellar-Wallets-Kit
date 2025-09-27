@@ -6,6 +6,7 @@ import { SwkButton } from '@creit-tech/stellar-wallets-kit/components';
 import { AlbedoModule } from '@creit-tech/stellar-wallets-kit/modules/albedo';
 import { FreighterModule } from '@creit-tech/stellar-wallets-kit/modules/freighter';
 import { HanaModule } from '@creit-tech/stellar-wallets-kit/modules/hana';
+import { LedgerModule } from '@creit-tech/stellar-wallets-kit/modules/ledger';
 import { LobstrModule } from '@creit-tech/stellar-wallets-kit/modules/lobstr';
 import { RabetModule } from '@creit-tech/stellar-wallets-kit/modules/rabet';
 import { xBullModule } from '@creit-tech/stellar-wallets-kit/modules/xbull';
@@ -15,6 +16,7 @@ StellarWalletsKit.init({
     new AlbedoModule(),
     new FreighterModule(),
     new HanaModule(),
+    new LedgerModule(),
     new LobstrModule(),
     new RabetModule(),
     new xBullModule(),

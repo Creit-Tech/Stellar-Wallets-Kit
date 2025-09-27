@@ -10,11 +10,15 @@
     "@creit.tech/xbull-wallet-connect": "npm:@creit.tech/xbull-wallet-connect@^0.3.0",
     "@deno/dnt": "jsr:@deno/dnt@^0.42.1",
     "@hot-wallet/sdk": "npm:@hot-wallet/sdk@^1.0.11",
+    "@ledgerhq/hw-app-str": "npm:@ledgerhq/hw-app-str@^7.2.6",
+    "@ledgerhq/hw-transport": "npm:@ledgerhq/hw-transport@^6.31.10",
+    "@ledgerhq/hw-transport-webusb": "npm:@ledgerhq/hw-transport-webusb@^6.29.10",
     "@lobstrco/signer-extension-api": "npm:@lobstrco/signer-extension-api@^1.0.0-beta.0",
     "@preact/signals": "npm:@preact/signals@^2.3.1",
     "@std/bytes": "jsr:@std/bytes@^1.0.6",
     "@std/encoding": "jsr:@std/encoding@^1.0.10",
     "@stellar/freighter-api": "npm:@stellar/freighter-api@^5.0.0",
+    "@stellar/stellar-base": "npm:@stellar/stellar-base@^14.0.0",
     "@twind/core": "npm:@twind/core@^1.1.3",
     "@twind/preset-autoprefix": "npm:@twind/preset-autoprefix@^1.0.7",
     "@twind/preset-tailwind": "npm:@twind/preset-tailwind@^1.1.4",
@@ -31,6 +35,8 @@
     "./modules/freighter": "./sdk/modules/freighter.module.ts",
     "./modules/hana": "./sdk/modules/hana.module.ts",
     "./modules/hotwallet": "./sdk/modules/hotwallet.module.ts",
+    "./modules/klever": "./sdk/modules/klever.module.ts",
+    "./modules/ledger": "./sdk/modules/ledger.module.ts",
     "./modules/lobstr": "./sdk/modules/lobstr.module.ts",
     "./modules/rabet": "./sdk/modules/rabet.module.ts",
     "./modules/xbull": "./sdk/modules/xbull.module.ts",
@@ -53,6 +59,9 @@
     }
   },
   "compilerOptions": {
-    "lib": ["DOM", "ESNEXT"]
+    "lib": ["esnext", "dom"],
+    "jsx": "precompile",
+    "jsxImportSource": "preact",
+    "skipLibCheck": true
   }
 }

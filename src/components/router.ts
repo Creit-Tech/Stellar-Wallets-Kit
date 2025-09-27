@@ -35,7 +35,7 @@ function PageTransition({ children, isActive, duration = 300 }: PageTransitionPr
       requestAnimationFrame(() => setVisible(true));
     } else {
       setVisible(false);
-      const timer = setTimeout(() => setShouldRender(false), duration);
+      const timer: number = setTimeout(() => setShouldRender(false), duration);
       return () => clearTimeout(timer);
     }
   }, [isActive, duration]);

@@ -43,7 +43,7 @@ const leftButtonComponent: ReadonlySignal<VNode> = computed((): VNode => {
 
 export function Header(): VNode {
   return html`
-    <header class="${tw('flex items-center px-3 py-2')}">
+    <header class="${tw('flex items-center px-3 py-1')}">
       <div class="${tw('w-3/12 flex justify-start')}">
         ${leftButtonComponent.value}
       </div>

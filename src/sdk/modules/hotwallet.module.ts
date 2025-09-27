@@ -7,22 +7,14 @@ export const HOTWALLET_ID: string = "hot-wallet";
  * **IMPORTANT**: This module requires that you have a "global" and a "Buffer" polyfill in your app, if not provided then this module will break your app.
  */
 export class HotWalletModule implements ModuleInterface {
-  moduleType: ModuleType;
-  productId: string;
-  productName: string;
-  productUrl: string;
-  productIcon: string;
+  moduleType: ModuleType = ModuleType.HOT_WALLET;
+  productId: string = HOTWALLET_ID;
+  productName: string = "HOT Wallet";
+  productUrl: string = "https://hot-labs.org/wallet";
+  productIcon: string = "https://storage.herewallet.app/logo.png";
 
-  constructor() {
-    this.moduleType = ModuleType.HOT_WALLET;
-    this.productId = HOTWALLET_ID;
-    this.productName = "HOT Wallet";
-    this.productUrl = "https://hot-labs.org/wallet";
-    this.productIcon = "https://storage.herewallet.app/logo.png";
-  }
-
-  isAvailable(): Promise<boolean> {
-    return Promise.resolve(true);
+  async isAvailable(): Promise<boolean> {
+    return true;
   }
 
   async getAddress(): Promise<{ address: string }> {

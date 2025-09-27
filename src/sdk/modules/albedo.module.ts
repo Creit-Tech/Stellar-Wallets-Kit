@@ -1,4 +1,5 @@
-import albedo from "@albedo-link/intent";
+import { default as albedoImport, AlbedoIntent } from "@albedo-link/intent";
+const albedo: AlbedoIntent = albedoImport.default;
 
 import { type ModuleInterface, ModuleType, Networks } from "../../types/mod.ts";
 import { parseError } from "../utils.ts";
@@ -13,8 +14,8 @@ export class AlbedoModule implements ModuleInterface {
   productUrl: string = "https://albedo.link/";
   productIcon: string = "https://stellar.creit.tech/wallet-icons/albedo.png";
 
-  isAvailable(): Promise<boolean> {
-    return Promise.resolve(true);
+  async isAvailable(): Promise<boolean> {
+    return true;
   }
 
   async getAddress(): Promise<{ address: string }> {
@@ -55,28 +56,28 @@ export class AlbedoModule implements ModuleInterface {
     }
   }
 
-  signAuthEntry(): Promise<{ signedAuthEntry: string; signerAddress?: string }> {
-    return Promise.reject({
+  async signAuthEntry(): Promise<{ signedAuthEntry: string; signerAddress?: string }> {
+    throw {
       code: -3,
       message: 'Albedo does not support the "signAuthEntry" function',
-    });
+    };
   }
 
   /**
    * We understand that Albedo has a method to sign a message, but that method is not compatible with SEP-0043
    */
-  signMessage(): Promise<{ signedMessage: string; signerAddress?: string }> {
-    return Promise.reject({
+  async signMessage(): Promise<{ signedMessage: string; signerAddress?: string }> {
+    throw {
       code: -3,
       message: 'Albedo does not support the "signMessage" function',
-    });
+    };
   }
 
-  getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
-    return Promise.reject({
+  async getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
+    throw {
       code: -3,
       message: 'Albedo does not support the "getNetwork" function',
-    });
+    };
   }
 }
 

@@ -31,6 +31,7 @@ const config = defineConfig({
         "light": "var(--swk-light)",
         "light-gray": "var(--swk-light-gray)",
         "gray": "var(--swk-gray)",
+        "danger": "var(--swk-danger)",
         "border": "var(--swk-border)",
       },
       boxShadow: {

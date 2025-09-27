@@ -50,8 +50,8 @@ export class HanaModule implements ModuleInterface {
     }
   }
 
-  isAvailable(): Promise<boolean> {
-    return new Promise((resolve) => resolve(typeof window !== "undefined" && !!window.hanaWallet?.stellar));
+  async isAvailable(): Promise<boolean> {
+    return typeof window !== "undefined" && !!window.hanaWallet?.stellar;
   }
 
   async getAddress(): Promise<{ address: string }> {
@@ -125,10 +125,10 @@ export class HanaModule implements ModuleInterface {
     }
   }
 
-  getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
-    return Promise.reject({
+  async getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
+    throw {
       code: -3,
       message: 'Hana does not support the "getNetwork" function',
-    });
+    }
   }
 }

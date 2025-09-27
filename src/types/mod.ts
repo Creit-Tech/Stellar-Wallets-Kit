@@ -152,7 +152,7 @@ export interface ModuleInterface {
    *
    * @return Promise<{ address: string }>
    */
-  getAddress(params?: { path?: string }): Promise<{ address: string }>;
+  getAddress(params?: { path?: string, skipRequestAccess?: boolean }): Promise<{ address: string }>;
 
   /**
    * A function to request a wallet to sign a built transaction in its XDR mode
@@ -229,4 +229,8 @@ export interface ModuleInterface {
    * Once this method is called, the module should clear all connections
    */
   disconnect?(): Promise<void>;
+}
+
+export interface HardwareWalletModuleInterface extends ModuleInterface {
+  getAddresses(page?: number): Promise<{ publicKey: string; index: number }[]>;
 }

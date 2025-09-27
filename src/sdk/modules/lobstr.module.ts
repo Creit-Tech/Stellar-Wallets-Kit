@@ -18,7 +18,7 @@ export class LobstrModule implements ModuleInterface {
     }
   }
 
-  isAvailable(): Promise<boolean> {
+  async isAvailable(): Promise<boolean> {
     return isConnected();
   }
 

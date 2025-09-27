@@ -12,9 +12,10 @@ import {
   showInstallLabel,
 } from "../../state/mod.ts";
 import { computed, type ReadonlySignal } from "@preact/signals";
-import { type ISupportedWallet, LocalStorageKeys } from "../../types/mod.ts";
+import { type ISupportedWallet, LocalStorageKeys, ModuleType, SwkAppRoute } from "../../types/mod.ts";
 import { Avatar, AvatarSize } from "../shared/avatar.ts";
 import { tw } from "../twind.ts";
+import { navigateTo } from '../router.ts';
 
 const sortedWallet: ReadonlySignal<ISupportedWallet[]> = computed((): ISupportedWallet[] => {
   const tempSortedWallets: { available: ISupportedWallet[]; unavailable: ISupportedWallet[] } = allowedWallets.value
@@ -65,12 +66,16 @@ async function onWalletSelected(item: ISupportedWallet): Promise<void> {
   selectedModuleId.value = item.id;
   moduleSelectedEvent.next(item);
 
-  try {
-    const { address } = await activeModule.value!.getAddress();
-    activeAddress.value = address;
-    addressUpdatedEvent.next(address);
-  } catch (e) {
-    addressUpdatedEvent.next(e as any);
+  if (item.type === ModuleType.HW_WALLET) {
+    navigateTo(SwkAppRoute.HW_ACCOUNTS_FETCHER);
+  } else {
+    try {
+      const { address } = await activeModule.value!.getAddress();
+      activeAddress.value = address;
+      addressUpdatedEvent.next(address);
+    } catch (e) {
+      addressUpdatedEvent.next(e as any);
+    }
   }
 }
 

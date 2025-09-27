@@ -28,6 +28,10 @@ function disconnect(): void {
   resetWalletState();
   disconnectEvent.next();
   closeEvent.next();
+
+  if (activeModule.value?.disconnect) {
+    activeModule.value.disconnect();
+  }
 }
 
 export function ProfilePage(): VNode {
