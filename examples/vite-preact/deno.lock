@@ -28,6 +28,7 @@
     "npm:@stellar/freighter-api@*": "5.0.0",
     "npm:@stellar/freighter-api@5": "5.0.0",
     "npm:@stellar/stellar-base@14": "14.0.0",
+    "npm:@stellar/stellar-sdk@^14.2.0": "14.2.0",
     "npm:@trezor/connect-plugin-stellar@^9.2.3": "9.2.3_@stellar+stellar-sdk@13.3.0_@trezor+connect@9.6.3__tslib@2.8.1__@solana+kit@2.3.0___typescript@5.9.2_tslib@2.8.1",
     "npm:@trezor/connect-web@^9.6.3": "9.6.3_tslib@2.8.1",
     "npm:@twind/core@^1.1.3": "1.1.3",
@@ -1409,6 +1410,17 @@
         "sha.js"
       ]
     },
+    "@stellar/stellar-base@14.0.1": {
+      "integrity": "sha512-mI6Kjh9hGWDA1APawQTtCbR7702dNT/8Te1uuRFPqqdoAKBk3WpXOQI3ZSZO+5olW7BSHpmVG5KBPZpIpQxIvw==",
+      "dependencies": [
+        "@noble/curves@1.9.7",
+        "@stellar/js-xdr",
+        "base32.js",
+        "bignumber.js",
+        "buffer",
+        "sha.js"
+      ]
+    },
     "@stellar/stellar-sdk@13.3.0": {
       "integrity": "sha512-8+GHcZLp+mdin8gSjcgfb/Lb6sSMYRX6Nf/0LcSJxvjLQR0XHpjGzOiRbYb2jSXo51EnA6kAV5j+4Pzh5OUKUg==",
       "dependencies": [
@@ -1421,6 +1433,20 @@
         "toml",
         "urijs"
       ]
+    },
+    "@stellar/stellar-sdk@14.2.0": {
+      "integrity": "sha512-7nh2ogzLRMhfkIC0fGjn1LHUzk3jqVw8tjAuTt5ADWfL9CSGBL18ILucE9igz2L/RU2AZgeAvhujAnW91Ut/oQ==",
+      "dependencies": [
+        "@stellar/stellar-base@14.0.1",
+        "axios",
+        "bignumber.js",
+        "eventsource",
+        "feaxios",
+        "randombytes",
+        "toml",
+        "urijs"
+      ],
+      "scripts": true
     },
     "@swc/helpers@0.5.17": {
       "integrity": "sha512-5IKx/Y13RsYd+sauPb2x+U/xZikHjolzfuDgTAl/Tdf3Q8rslRvC19NKDLgAJQ6wsqADk10ntlv08nPFw/gO/A==",
@@ -1448,7 +1474,7 @@
       "integrity": "sha512-agvuAv+jZ2npbkRHLy+7o5GGBoHJfaHulyZi6j1kuNCnx13ZyETppkWF81sETLKpJlK3iAxvdtD3HaP/VUN/hA==",
       "dependencies": [
         "@mobily/ts-belt",
-        "@stellar/stellar-sdk",
+        "@stellar/stellar-sdk@13.3.0",
         "@trezor/env-utils",
         "@trezor/utils",
         "tslib",
@@ -1464,7 +1490,7 @@
         "@solana-program/token-2022",
         "@solana/kit",
         "@solana/rpc-types",
-        "@stellar/stellar-sdk",
+        "@stellar/stellar-sdk@13.3.0",
         "@trezor/blockchain-link-types",
         "@trezor/blockchain-link-utils",
         "@trezor/env-utils",
@@ -1496,7 +1522,7 @@
     "@trezor/connect-plugin-stellar@9.2.3_@stellar+stellar-sdk@13.3.0_@trezor+connect@9.6.3__tslib@2.8.1__@solana+kit@2.3.0___typescript@5.9.2_tslib@2.8.1": {
       "integrity": "sha512-ZzfRAaxkGj6u9dzUb/qsnEzEEg8gk0lhGRzuvX+JvvEmFBubAR7qK0U6Oj24vwLlOlF6swYrDdDNAtJvI0FFsg==",
       "dependencies": [
-        "@stellar/stellar-sdk",
+        "@stellar/stellar-sdk@13.3.0",
         "@trezor/connect",
         "@trezor/utils",
         "tslib"
@@ -3167,6 +3193,7 @@
       "jsr:@creit-tech/stellar-wallets-kit@2",
       "npm:@deno/vite-plugin@^1.0.5",
       "npm:@preact/preset-vite@^2.10.2",
+      "npm:@stellar/stellar-sdk@^14.2.0",
       "npm:buffer@^6.0.3",
       "npm:preact@^10.27.0",
       "npm:vite@^7.0.6"

@@ -1,7 +1,7 @@
 import { computed, type ReadonlySignal, type Signal, signal } from "@preact/signals";
 import {
   type ISupportedWallet,
-  type KitEvent,
+  LocalStorageKeys,
   type ModuleInterface,
   Networks,
   SwkAppLightTheme,
@@ -33,9 +33,9 @@ export const hardwareWalletPaths: Signal<Array<{ publicKey: string; index: numbe
 ///////////////////////////////////
 ///    Wallets state signals    ///
 ///////////////////////////////////
-export const activeAddress: Signal<string | undefined> = signal(undefined);
+export const activeAddress: Signal<string | undefined> = signal(globalThis.localStorage.getItem(LocalStorageKeys.activeAddress) || undefined);
+export const selectedModuleId: Signal<string | undefined> = signal(globalThis.localStorage.getItem(LocalStorageKeys.selectedModuleId) || undefined);
 export const allowedWallets: Signal<ISupportedWallet[]> = signal([]);
-export const selectedModuleId: Signal<string | undefined> = signal(undefined);
 export const activeModules: Signal<ModuleInterface[]> = signal<ModuleInterface[]>([]);
 export const activeModule: ReadonlySignal<ModuleInterface | undefined> = computed((): ModuleInterface | undefined => {
   return activeModules.value

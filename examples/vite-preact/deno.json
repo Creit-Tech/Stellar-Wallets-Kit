@@ -14,6 +14,7 @@
     "@deno/vite-plugin": "npm:@deno/vite-plugin@^1.0.5",
     "@preact/preset-vite": "npm:@preact/preset-vite@^2.10.2",
     "@creit-tech/stellar-wallets-kit": "jsr:@creit-tech/stellar-wallets-kit@^2.0.0",
+    "@stellar/stellar-sdk": "npm:@stellar/stellar-sdk@^14.2.0",
     "buffer": "npm:buffer@^6.0.3",
     "preact": "npm:preact@^10.27.0",
     "vite": "npm:vite@^7.0.6"

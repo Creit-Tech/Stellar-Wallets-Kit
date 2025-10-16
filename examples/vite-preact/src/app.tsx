@@ -12,6 +12,8 @@ import { RabetModule } from '@creit-tech/stellar-wallets-kit/modules/rabet';
 import { TrezorModule } from '@creit-tech/stellar-wallets-kit/modules/trezor';
 import { xBullModule } from '@creit-tech/stellar-wallets-kit/modules/xbull';
 
+import { Transaction, TransactionBuilder, Account, Networks, Operation } from '@stellar/stellar-sdk';
+
 StellarWalletsKit.init({
   modules: [
     new AlbedoModule(),
@@ -38,6 +40,30 @@ async function authModal(): Promise<void> {
   }
 }
 
+async function signTransaction(): Promise<void> {
+  const { address } = await StellarWalletsKit.getAddress();
+  console.log("StellarWalletsKit::getAddress", address);
+  const tx: Transaction = new TransactionBuilder(new Account(address, '-1'), {
+    networkPassphrase: Networks.PUBLIC,
+    fee: '0',
+  })
+    .setTimeout(0)
+    .addOperation(
+      Operation.manageData({
+        name: 'Hello',
+        value: 'World!'
+      })
+    )
+    .build();
+
+  const { signedTxXdr } = await StellarWalletsKit.signTransaction(tx.toXDR(), {
+    networkPassphrase: Networks.PUBLIC,
+    address,
+  });
+
+  console.log('Signed Transaction:', signedTxXdr);
+}
+
 export function App() {
   return (
     <>
@@ -48,14 +74,13 @@ export function App() {
       </div>
       <h1>Vite + Preact</h1>
       <div class="card">
-        <button onClick={authModal}>
-          Connect Wallet
-        </button>
+        <div className="w-full flex justify-center items-center">
+          <button style="margin-right: 2rem" onClick={authModal}>
+            Connect Wallet
+          </button>
 
-        <br/>
-        <br/>
-
-        <SwkButton />
+          <SwkButton />
+        </div>
 
         <p>
           Your selected wallet is: <br/> {activeModule.value?.productName}
@@ -64,9 +89,12 @@ export function App() {
           Your account is: <br/> {activeAddress.value && `${activeAddress.value.slice(0, 4)}....${activeAddress.value.slice(-6)}`}
         </p>
       </div>
-      <p class="read-the-docs">
-        {/*Learn more */}
-      </p>
+
+      <div style="width: 100%;">
+        <button onClick={signTransaction}>
+          Sign Transaction
+        </button>
+      </div>
     </>
   )
 }

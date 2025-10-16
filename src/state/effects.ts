@@ -1,5 +1,5 @@
 import { effect } from "@preact/signals";
-import { activeModule, theme } from "./values.ts";
+import { activeModule, theme, activeAddress, selectedModuleId } from "./values.ts";
 import { LocalStorageKeys } from "../types/mod.ts";
 
 export const updatedThemeEffect = effect((): void => {
@@ -24,6 +24,23 @@ export const updatedSelectedModule = effect((): void => {
       );
     } catch (e) {
       console.error(e);
+    }
+  }
+});
+
+export const updateActiveSession = effect((): void => {
+  // console.debug("[SwkApp]::updateActiveSession");
+  if (typeof window !== "undefined") {
+    if (activeAddress.value) {
+      globalThis.localStorage.setItem(LocalStorageKeys.activeAddress, activeAddress.value);
+    } else {
+      globalThis.localStorage.removeItem(LocalStorageKeys.activeAddress);
+    }
+
+    if (selectedModuleId.value) {
+      globalThis.localStorage.setItem(LocalStorageKeys.selectedModuleId, selectedModuleId.value);
+    } else {
+      globalThis.localStorage.removeItem(LocalStorageKeys.selectedModuleId);
     }
   }
 });

@@ -90,9 +90,7 @@ export class StellarWalletsKit {
   // ---------------------------------------------- Wallet Interaction ----------------------------------------------
 
   static async getAddress(params?: { path?: string }): Promise<{ address: string }> {
-    const { address } = await StellarWalletsKit.selectedModule.getAddress(params);
-    activeAddress.value = address;
-    return { address };
+    return { address: activeAddress.value };
   }
 
   static signTransaction(
