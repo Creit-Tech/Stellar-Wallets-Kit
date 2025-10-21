@@ -28,7 +28,8 @@ export const theme: Signal<SwkAppTheme> = signal<SwkAppTheme>(SwkAppLightTheme);
 export const route: Signal<SwkAppRoute> = signal<SwkAppRoute>(SwkAppRoute.AUTH_OPTIONS);
 export const routerHistory: Signal<SwkAppRoute[]> = signal<SwkAppRoute[]>([SwkAppRoute.AUTH_OPTIONS]);
 export const mnemonicPath: Signal<string | undefined> = signal(undefined);
-export const hardwareWalletPaths: Signal<Array<{ publicKey: string; index: number }>> = signal([]);
+const hardwareWalletPathsInitial: string | undefined = globalThis.localStorage.getItem(LocalStorageKeys.hardwareWalletPaths);
+export const hardwareWalletPaths: Signal<Array<{ publicKey: string; index: number }>> = signal(JSON.parse(hardwareWalletPathsInitial || '[]'));
 
 ///////////////////////////////////
 ///    Wallets state signals    ///
