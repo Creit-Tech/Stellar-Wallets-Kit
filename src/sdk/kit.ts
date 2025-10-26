@@ -90,6 +90,13 @@ export class StellarWalletsKit {
   // ---------------------------------------------- Wallet Interaction ----------------------------------------------
 
   static async getAddress(params?: { path?: string }): Promise<{ address: string }> {
+    if (!activeAddress.value) {
+      throw {
+        code: -1,
+        message: 'No wallet has been connected.'
+      };
+    }
+
     return { address: activeAddress.value };
   }
 

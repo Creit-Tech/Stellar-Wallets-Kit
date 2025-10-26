@@ -1,5 +1,6 @@
 import './app.css'
 import preactLogo from './assets/preact.svg'
+import { SwkAppDarkTheme } from '@creit-tech/stellar-wallets-kit'
 import { StellarWalletsKit } from '@creit-tech/stellar-wallets-kit/sdk';
 import { activeAddress, activeModule } from '@creit-tech/stellar-wallets-kit/state';
 import { SwkButton } from '@creit-tech/stellar-wallets-kit/components';
@@ -15,6 +16,7 @@ import { xBullModule } from '@creit-tech/stellar-wallets-kit/modules/xbull';
 import { Transaction, TransactionBuilder, Account, Networks, Operation } from '@stellar/stellar-sdk';
 
 StellarWalletsKit.init({
+  theme: SwkAppDarkTheme,
   modules: [
     new AlbedoModule(),
     new FreighterModule(),
