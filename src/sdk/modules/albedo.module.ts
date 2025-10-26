@@ -1,4 +1,4 @@
-import { default as albedoImport, AlbedoIntent } from "@albedo-link/intent";
+import { AlbedoIntent, default as albedoImport } from "@albedo-link/intent";
 const albedo: AlbedoIntent = albedoImport.default;
 
 import { type ModuleInterface, ModuleType, Networks } from "../../types/mod.ts";

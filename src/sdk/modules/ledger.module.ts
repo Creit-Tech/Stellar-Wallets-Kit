@@ -57,7 +57,6 @@ export class LedgerModule implements HardwareWalletModuleInterface {
     try {
       const finalTransport: typeof Transport = await this.transport();
 
-
       const str = new Str(finalTransport);
 
       let mnemonicPathValue: string | undefined = opts?.path || mnemonicPath.value;

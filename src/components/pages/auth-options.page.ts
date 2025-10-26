@@ -15,7 +15,7 @@ import { computed, type ReadonlySignal } from "@preact/signals";
 import { type ISupportedWallet, LocalStorageKeys, ModuleType, SwkAppRoute } from "../../types/mod.ts";
 import { Avatar, AvatarSize } from "../shared/avatar.ts";
 import { tw } from "../twind.ts";
-import { navigateTo } from '../router.ts';
+import { navigateTo } from "../router.ts";
 
 const sortedWallet: ReadonlySignal<ISupportedWallet[]> = computed((): ISupportedWallet[] => {
   const tempSortedWallets: { available: ISupportedWallet[]; unavailable: ISupportedWallet[] } = allowedWallets.value

@@ -1,13 +1,13 @@
-import TrezorConnectImport from '@trezor/connect-web';
+import TrezorConnectImport from "@trezor/connect-web";
 const TrezorConnect = TrezorConnectImport as any;
-import { transformTransaction } from '@trezor/connect-plugin-stellar';
-import { Transaction } from '@stellar/stellar-base';
-import { decodeHex, encodeBase64 } from '@std/encoding';
-import { hardwareWalletPaths, mnemonicPath, selectedNetwork } from '../../state/mod.ts';
-import { type HardwareWalletModuleInterface, ModuleType } from '../../types/mod.ts';
+import { transformTransaction } from "@trezor/connect-plugin-stellar";
+import { Transaction } from "@stellar/stellar-base";
+import { decodeHex, encodeBase64 } from "@std/encoding";
+import { hardwareWalletPaths, mnemonicPath, selectedNetwork } from "../../state/mod.ts";
+import { type HardwareWalletModuleInterface, ModuleType } from "../../types/mod.ts";
 import { parseError } from "../utils.ts";
 
-export const TREZOR_ID = 'TREZOR';
+export const TREZOR_ID = "TREZOR";
 
 /**
  * **IMPORTANT**: This module requires that you have a "Buffer" polyfill in your app, if not provided then this module will break your app.
@@ -18,12 +18,12 @@ export class TrezorModule implements HardwareWalletModuleInterface {
   moduleType: ModuleType = ModuleType.HW_WALLET;
 
   productId: string = TREZOR_ID;
-  productName: string = 'Trezor';
-  productUrl: string = 'https://www.trezor.com/';
-  productIcon: string = 'https://stellar.creit.tech/wallet-icons/trezor.png';
+  productName: string = "Trezor";
+  productUrl: string = "https://www.trezor.com/";
+  productIcon: string = "https://stellar.creit.tech/wallet-icons/trezor.png";
 
   constructor(params: ITrezorModuleParams) {
-    if (!params) throw new Error('Trezor module requires some parameters to work.');
+    if (!params) throw new Error("Trezor module requires some parameters to work.");
 
     TrezorConnect.init({
       manifest: {
@@ -34,9 +34,9 @@ export class TrezorModule implements HardwareWalletModuleInterface {
       // More advanced options
       debug: params.debug || false,
       lazyLoad: params.lazyLoad || false,
-      coreMode: params.coreMode || 'auto',
+      coreMode: params.coreMode || "auto",
     }).then(() => {
-      console.log('Trezor is ready');
+      console.log("Trezor is ready");
       this._isAvailable = true;
     });
   }
@@ -52,7 +52,7 @@ export class TrezorModule implements HardwareWalletModuleInterface {
 
   async runChecks(): Promise<void> {
     if (!this._isAvailable) {
-      throw parseError(new Error('Trezor connection has not been started yet.'));
+      throw parseError(new Error("Trezor connection has not been started yet."));
     }
   }
 
@@ -66,11 +66,11 @@ export class TrezorModule implements HardwareWalletModuleInterface {
         mnemonicPathValue = mnemonicPath.value;
       }
 
-      if (!mnemonicPathValue) throw new Error('No mnemonic path has bee selected.');
+      if (!mnemonicPathValue) throw new Error("No mnemonic path has bee selected.");
 
       const result = await TrezorConnect.stellarGetAddress({
         path: mnemonicPathValue,
-        showOnTrezor: false
+        showOnTrezor: false,
       });
 
       if (!result.success) {
@@ -101,7 +101,10 @@ export class TrezorModule implements HardwareWalletModuleInterface {
       throw parseError(new Error(result.payload.error));
     }
 
-    const results = result.payload.map((item: { address: string }, i: number): { index: number; publicKey: string } => ({
+    const results = result.payload.map((
+      item: { address: string },
+      i: number,
+    ): { index: number; publicKey: string } => ({
       publicKey: item.address,
       index: i + startIndex,
     }));
@@ -117,7 +120,7 @@ export class TrezorModule implements HardwareWalletModuleInterface {
       networkPassphrase?: string;
       address?: string;
       path?: string;
-    }
+    },
   ): Promise<{ signedTxXdr: string; signerAddress?: string }> {
     await this.runChecks();
 
@@ -132,14 +135,15 @@ export class TrezorModule implements HardwareWalletModuleInterface {
       account = result.payload.address;
     } else if (opts?.address) {
       const paths: Array<{ publicKey: string; index: number }> = hardwareWalletPaths.value;
-      const target = paths.find(p => p.publicKey === opts.address);
-      if (!target) throw parseError(new Error('This address has not been loaded from this device'));
+      const target = paths.find((p) => p.publicKey === opts.address);
+      if (!target) throw parseError(new Error("This address has not been loaded from this device"));
       mnemonicPathValue = `m/44'/148'/${target.index}'`;
       account = target.publicKey;
     } else {
       mnemonicPathValue = mnemonicPath.value;
-      if (!mnemonicPathValue)
-        throw parseError(new Error('There is no path available, please call the `getAddress` method first.'));
+      if (!mnemonicPathValue) {
+        throw parseError(new Error("There is no path available, please call the `getAddress` method first."));
+      }
       const result = await TrezorConnect.stellarGetAddress({ path: mnemonicPathValue, showOnTrezor: false });
       if (!result.success) {
         throw new Error(result.payload.error);
@@ -148,7 +152,7 @@ export class TrezorModule implements HardwareWalletModuleInterface {
     }
 
     const network: string | undefined = opts?.networkPassphrase || selectedNetwork.value;
-    if (!network) throw parseError(new Error('You need to provide or set a network passphrase'));
+    if (!network) throw parseError(new Error("You need to provide or set a network passphrase"));
 
     const tx: Transaction = new Transaction(xdr, network);
     const parsedTx = transformTransaction(mnemonicPathValue, tx as any);
@@ -197,5 +201,5 @@ export interface ITrezorModuleParams {
   email: string;
   debug?: boolean;
   lazyLoad?: boolean;
-  coreMode?: 'auto' | 'iframe' | 'popup';
+  coreMode?: "auto" | "iframe" | "popup";
 }

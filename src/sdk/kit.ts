@@ -93,7 +93,7 @@ export class StellarWalletsKit {
     if (!activeAddress.value) {
       throw {
         code: -1,
-        message: 'No wallet has been connected.'
+        message: "No wallet has been connected.",
       };
     }
 

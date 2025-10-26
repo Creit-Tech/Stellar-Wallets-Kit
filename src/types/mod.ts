@@ -152,7 +152,7 @@ export interface ModuleInterface {
    *
    * @return Promise<{ address: string }>
    */
-  getAddress(params?: { path?: string, skipRequestAccess?: boolean }): Promise<{ address: string }>;
+  getAddress(params?: { path?: string; skipRequestAccess?: boolean }): Promise<{ address: string }>;
 
   /**
    * A function to request a wallet to sign a built transaction in its XDR mode

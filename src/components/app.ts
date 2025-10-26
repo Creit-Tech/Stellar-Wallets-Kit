@@ -1,6 +1,6 @@
 import { cx, reset, tw } from "./twind.ts";
 import { css } from "@twind/core";
-import type { VNode, Component } from "preact";
+import type { VNode } from "preact";
 import { html } from "htm/preact";
 import { Header } from "./shared/header.ts";
 import { Footer } from "./shared/footer.ts";
@@ -10,7 +10,7 @@ import { AuthOptionsPage } from "./pages/auth-options.page.ts";
 import { WhatIsAWalletPage } from "./pages/what-is-a-wallet.page.ts";
 import { MultiPageAnimator } from "./router.ts";
 import { ProfilePage } from "./pages/profile.page.ts";
-import { HwAccountsFetcherPage } from './pages/hw-accounts-fetcher.page.ts';
+import { HwAccountsFetcherPage } from "./pages/hw-accounts-fetcher.page.ts";
 
 const pages: Record<SwkAppRoute, any> = {
   [SwkAppRoute.AUTH_OPTIONS]: AuthOptionsPage,
@@ -20,10 +20,10 @@ const pages: Record<SwkAppRoute, any> = {
 };
 
 const glass = css`
-    .glass {
-        backdrop-filter: blur(10px);
-        background-color: color-mix(in srgb, var(--swk-background) 25%, transparent);
-    }
+  .glass {
+    backdrop-filter: blur(10px);
+    background-color: color-mix(in srgb, var(--swk-background) 25%, transparent);
+  }
 `;
 
 export function SwkApp(): VNode {

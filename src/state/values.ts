@@ -28,14 +28,22 @@ export const theme: Signal<SwkAppTheme> = signal<SwkAppTheme>(SwkAppLightTheme);
 export const route: Signal<SwkAppRoute> = signal<SwkAppRoute>(SwkAppRoute.AUTH_OPTIONS);
 export const routerHistory: Signal<SwkAppRoute[]> = signal<SwkAppRoute[]>([SwkAppRoute.AUTH_OPTIONS]);
 export const mnemonicPath: Signal<string | undefined> = signal(undefined);
-const hardwareWalletPathsInitial: string | undefined = globalThis.localStorage.getItem(LocalStorageKeys.hardwareWalletPaths);
-export const hardwareWalletPaths: Signal<Array<{ publicKey: string; index: number }>> = signal(JSON.parse(hardwareWalletPathsInitial || '[]'));
+const hardwareWalletPathsInitial: string | undefined = globalThis.localStorage.getItem(
+  LocalStorageKeys.hardwareWalletPaths,
+);
+export const hardwareWalletPaths: Signal<Array<{ publicKey: string; index: number }>> = signal(
+  JSON.parse(hardwareWalletPathsInitial || "[]"),
+);
 
 ///////////////////////////////////
 ///    Wallets state signals    ///
 ///////////////////////////////////
-export const activeAddress: Signal<string | undefined> = signal(globalThis.localStorage.getItem(LocalStorageKeys.activeAddress) || undefined);
-export const selectedModuleId: Signal<string | undefined> = signal(globalThis.localStorage.getItem(LocalStorageKeys.selectedModuleId) || undefined);
+export const activeAddress: Signal<string | undefined> = signal(
+  globalThis.localStorage.getItem(LocalStorageKeys.activeAddress) || undefined,
+);
+export const selectedModuleId: Signal<string | undefined> = signal(
+  globalThis.localStorage.getItem(LocalStorageKeys.selectedModuleId) || undefined,
+);
 export const allowedWallets: Signal<ISupportedWallet[]> = signal([]);
 export const activeModules: Signal<ModuleInterface[]> = signal<ModuleInterface[]>([]);
 export const activeModule: ReadonlySignal<ModuleInterface | undefined> = computed((): ModuleInterface | undefined => {

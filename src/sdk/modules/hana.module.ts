@@ -129,6 +129,6 @@ export class HanaModule implements ModuleInterface {
     throw {
       code: -3,
       message: 'Hana does not support the "getNetwork" function',
-    }
+    };
   }
 }
