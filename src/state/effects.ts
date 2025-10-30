@@ -1,5 +1,5 @@
 import { effect } from "@preact/signals";
-import { activeAddress, activeModule, hardwareWalletPaths, selectedModuleId, theme } from "./values.ts";
+import { activeAddress, activeModule, hardwareWalletPaths, selectedModuleId, theme, wcSessionPaths } from "./values.ts";
 import { LocalStorageKeys } from "../types/mod.ts";
 
 export const updatedThemeEffect = effect((): void => {
@@ -45,6 +45,10 @@ export const updateActiveSession = effect((): void => {
 
     if (typeof hardwareWalletPaths.value !== "undefined") {
       globalThis.localStorage.setItem(LocalStorageKeys.hardwareWalletPaths, JSON.stringify(hardwareWalletPaths.value));
+    }
+
+    if (typeof wcSessionPaths.value !== "undefined") {
+      globalThis.localStorage.setItem(LocalStorageKeys.wcSessionPaths, JSON.stringify(wcSessionPaths.value));
     }
   }
 });

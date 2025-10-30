@@ -3,4 +3,5 @@ export enum LocalStorageKeys {
   activeAddress = "@StellarWalletsKit/activeAddress",
   selectedModuleId = "@StellarWalletsKit/selectedModuleId",
   hardwareWalletPaths = "@StellarWalletsKit/hardwareWalletPaths",
+  wcSessionPaths = "@StellarWalletsKit/wcSessionPaths",
 }

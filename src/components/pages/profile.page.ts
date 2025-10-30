@@ -1,11 +1,11 @@
 import type { VNode } from "preact";
 import { html } from "htm/preact";
 import { tw } from '../twind.ts';
-import { activeAddress, activeModule, modalTitle, resetWalletState } from '../../state/values.ts';
+import { activeAddress, activeModule, modalTitle } from '../../state/values.ts';
 import { Button, ButtonMode, ButtonSize } from '../shared/button.ts';
 import { Avatar, AvatarSize } from '../shared/avatar.ts';
-import { closeEvent, disconnectEvent } from '../../state/events.ts';
 import { type Signal, signal } from "@preact/signals";
+import { disconnect } from '../../sdk/utils.ts';
 
 const showCopiedText: Signal<boolean> = signal(false);
 
@@ -22,16 +22,6 @@ function copyToClipboard(): void {
       }, 2500);
     })
     .catch(e => console.error(e));
-}
-
-function disconnect(): void {
-  resetWalletState();
-  disconnectEvent.next();
-  closeEvent.next();
-
-  if (activeModule.value?.disconnect) {
-    activeModule.value.disconnect();
-  }
 }
 
 export function ProfilePage(): VNode {

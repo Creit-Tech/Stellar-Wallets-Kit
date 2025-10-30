@@ -74,7 +74,7 @@ export class TrezorModule implements HardwareWalletModuleInterface {
       });
 
       if (!result.success) {
-        throw parseError(new Error(result.payload.error));
+        throw new Error(result.payload.error);
       }
 
       return { address: result.payload.address };

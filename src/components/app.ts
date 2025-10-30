@@ -28,7 +28,7 @@ const glass = css`
 
 export function SwkApp(): VNode {
   const kitsClasses: string = tw(cx([
-    mode.value === SwkAppMode.FIXED ? "fixed flex left-0 top-0 z-[9999] w-full h-full" : "inline-flex",
+    mode.value === SwkAppMode.FIXED ? "fixed flex left-0 top-0 z-[999] w-full h-full" : "inline-flex",
     "font-default justify-center items-center",
   ]));
 

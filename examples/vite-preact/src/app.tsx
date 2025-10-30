@@ -1,19 +1,29 @@
-import './app.css'
-import preactLogo from './assets/preact.svg'
-import { SwkAppDarkTheme } from '@creit-tech/stellar-wallets-kit'
-import { StellarWalletsKit } from '@creit-tech/stellar-wallets-kit/sdk';
-import { activeAddress, activeModule } from '@creit-tech/stellar-wallets-kit/state';
-import { SwkButton } from '@creit-tech/stellar-wallets-kit/components';
-import { AlbedoModule } from '@creit-tech/stellar-wallets-kit/modules/albedo';
-import { FreighterModule } from '@creit-tech/stellar-wallets-kit/modules/freighter';
-import { HanaModule } from '@creit-tech/stellar-wallets-kit/modules/hana';
-import { LedgerModule } from '@creit-tech/stellar-wallets-kit/modules/ledger';
-import { LobstrModule } from '@creit-tech/stellar-wallets-kit/modules/lobstr';
-import { RabetModule } from '@creit-tech/stellar-wallets-kit/modules/rabet';
-import { TrezorModule } from '@creit-tech/stellar-wallets-kit/modules/trezor';
-import { xBullModule } from '@creit-tech/stellar-wallets-kit/modules/xbull';
+import "./app.css";
+import preactLogo from "./assets/preact.svg";
+import { SwkAppDarkTheme } from "@creit-tech/stellar-wallets-kit";
+import { StellarWalletsKit } from "@creit-tech/stellar-wallets-kit/sdk";
+import {
+  activeAddress,
+  activeModule,
+} from "@creit-tech/stellar-wallets-kit/state";
+import { SwkButton } from "@creit-tech/stellar-wallets-kit/components";
+import { AlbedoModule } from "@creit-tech/stellar-wallets-kit/modules/albedo";
+import { FreighterModule } from "@creit-tech/stellar-wallets-kit/modules/freighter";
+import { HanaModule } from "@creit-tech/stellar-wallets-kit/modules/hana";
+import { LedgerModule } from "@creit-tech/stellar-wallets-kit/modules/ledger";
+import { LobstrModule } from "@creit-tech/stellar-wallets-kit/modules/lobstr";
+import { RabetModule } from "@creit-tech/stellar-wallets-kit/modules/rabet";
+import { TrezorModule } from "@creit-tech/stellar-wallets-kit/modules/trezor";
+import { xBullModule } from "@creit-tech/stellar-wallets-kit/modules/xbull";
+import { WalletConnectModule } from "@creit-tech/stellar-wallets-kit/modules/wallet-connect";
 
-import { Transaction, TransactionBuilder, Account, Networks, Operation } from '@stellar/stellar-sdk';
+import {
+  Account,
+  Networks,
+  Operation,
+  Transaction,
+  TransactionBuilder,
+} from "@stellar/stellar-sdk";
 
 StellarWalletsKit.init({
   theme: SwkAppDarkTheme,
@@ -25,11 +35,18 @@ StellarWalletsKit.init({
     new LobstrModule(),
     new RabetModule(),
     new TrezorModule({
-      appName: 'Stellar Wallets Kit',
-      appUrl: 'http://localhost:5173',
-      email: 'test@email.com'
+      appName: "Stellar Wallets Kit",
+      appUrl: "http://localhost:5173",
+      email: "test@email.com",
     }),
     new xBullModule(),
+    new WalletConnectModule({
+      projectId: "4e0b84f6ba6bedf7c7f041d919a9f039",
+      metadata: {
+        name: "Stellar Wallets Kit",
+        description: "Add support to all Stellar Wallets with a single library",
+      },
+    }),
   ],
 });
 
@@ -45,16 +62,16 @@ async function authModal(): Promise<void> {
 async function signTransaction(): Promise<void> {
   const { address } = await StellarWalletsKit.getAddress();
   console.log("StellarWalletsKit::getAddress", address);
-  const tx: Transaction = new TransactionBuilder(new Account(address, '-1'), {
+  const tx: Transaction = new TransactionBuilder(new Account(address, "-1"), {
     networkPassphrase: Networks.PUBLIC,
-    fee: '0',
+    fee: "0",
   })
     .setTimeout(0)
     .addOperation(
       Operation.manageData({
-        name: 'Hello',
-        value: 'World!'
-      })
+        name: "Hello",
+        value: "World!",
+      }),
     )
     .build();
 
@@ -63,7 +80,7 @@ async function signTransaction(): Promise<void> {
     address,
   });
 
-  console.log('Signed Transaction:', signedTxXdr);
+  console.log("Signed Transaction:", signedTxXdr);
 }
 
 export function App() {
@@ -85,10 +102,13 @@ export function App() {
         </div>
 
         <p>
-          Your selected wallet is: <br/> {activeModule.value?.productName}
+          Your selected wallet is: <br /> {activeModule.value?.productName}
         </p>
         <p>
-          Your account is: <br/> {activeAddress.value && `${activeAddress.value.slice(0, 4)}....${activeAddress.value.slice(-6)}`}
+          Your account is: <br /> {activeAddress.value &&
+            `${activeAddress.value.slice(0, 4)}....${
+              activeAddress.value.slice(-6)
+            }`}
         </p>
       </div>
 
@@ -98,5 +118,5 @@ export function App() {
         </button>
       </div>
     </>
-  )
+  );
 }
