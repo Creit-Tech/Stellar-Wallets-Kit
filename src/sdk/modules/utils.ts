@@ -5,6 +5,7 @@ import { LobstrModule } from "./lobstr.module.ts";
 import { RabetModule } from "./rabet.module.ts";
 import { xBullModule } from "./xbull.module.ts";
 import { HanaModule } from "./hana.module.ts";
+import { KleverModule } from "./klever.module.ts";
 
 /**
  * This method returns all modules that don't require extra configuration before they can be loaded
@@ -21,6 +22,7 @@ export function defaultModules(opts?: { filterBy: (module: ModuleInterface) => b
     new xBullModule(),
     new LobstrModule(),
     new HanaModule(),
+    new KleverModule(),
   ];
   return opts?.filterBy ? modules.filter(opts.filterBy) : modules;
 }

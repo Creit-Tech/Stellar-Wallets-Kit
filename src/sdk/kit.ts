@@ -32,7 +32,7 @@ import {
   theme,
 } from "../state/mod.ts";
 import { navigateTo, SwkApp } from "../components/mod.ts";
-import { parseError } from "./utils.ts";
+import { disconnect, parseError } from "./utils.ts";
 import { resetHistory } from "../components/router.ts";
 
 export class StellarWalletsKit {
@@ -135,10 +135,7 @@ export class StellarWalletsKit {
   }
 
   static async disconnect(): Promise<void> {
-    if (StellarWalletsKit.selectedModule.disconnect) {
-      await StellarWalletsKit.selectedModule.disconnect();
-    }
-    resetWalletState();
+    disconnect();
   }
 
   /**
