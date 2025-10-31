@@ -1,4 +1,4 @@
-import { getPublicKey, isConnected, signTransaction } from "@lobstrco/signer-extension-api";
+import { getPublicKey, isConnected, signMessage, signTransaction } from "@lobstrco/signer-extension-api";
 import { type ModuleInterface, ModuleType } from "../../types/mod.ts";
 import { parseError } from "../utils.ts";
 
@@ -59,17 +59,40 @@ export class LobstrModule implements ModuleInterface {
     }
   }
 
+  async signMessage(
+    message: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+    },
+  ): Promise<{ signedMessage: string; signerAddress?: string }> {
+    if (opts?.address) {
+      console.warn(`Lobstr doesn't allow specifying what public key should sign the transaction, we skip the value`);
+    }
+
+    if (opts?.networkPassphrase) {
+      console.warn(`Lobstr doesn't allow specifying the network that should be used, we skip the value`);
+    }
+
+    try {
+      await this.runChecks();
+      const result = await signMessage(message);
+
+      if (!result) {
+        throw new Error("Signing message failed");
+      }
+
+      return result;
+    } catch (e) {
+      throw parseError(e);
+    }
+  }
+
   signAuthEntry(): Promise<{ signedAuthEntry: string; signerAddress?: string }> {
     return Promise.reject({
       code: -3,
       message: 'Lobstr does not support the "signAuthEntry" function',
-    });
-  }
-
-  signMessage(): Promise<{ signedMessage: string; signerAddress?: string }> {
-    return Promise.reject({
-      code: -3,
-      message: 'Lobstr does not support the "signMessage" function',
     });
   }
 

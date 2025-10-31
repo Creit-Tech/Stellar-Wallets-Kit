@@ -1,4 +1,5 @@
 import { build, emptyDir } from "@deno/dnt";
+import denoFile from "./deno.json" with { type: "json" };
 
 await emptyDir("./dist");
 
@@ -79,14 +80,14 @@ await build({
   },
   typeCheck: false,
   package: {
-    name: "@creit-tech/stellar-wallets-kit",
-    version: "2.0.0",
+    name: denoFile.name,
+    version: denoFile.version,
     description: "A kit to handle all Stellar Wallets at once",
     author: {
-      name: "Creit Technologies LLP",
+      name: "Creit Tech",
       url: "https://creit.tech",
     },
-    license: "MIT",
+    license: denoFile.license,
     repository: {
       type: "git",
       url: "https://github.com/Creit-Tech/Stellar-Wallets-Kit.git",
