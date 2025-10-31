@@ -25,7 +25,6 @@ import {
   closeEvent,
   hideUnsupportedWallets,
   mode,
-  resetWalletState,
   selectedModuleId,
   selectedNetwork,
   showInstallLabel,

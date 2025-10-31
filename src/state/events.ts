@@ -80,10 +80,7 @@ export function createSubject<T>() {
   };
 }
 
-export type ModuleSelectedEventType = ISupportedWallet | IKitError;
-export const moduleSelectedEvent = createSubject<ModuleSelectedEventType>();
-
+export const moduleSelectedEvent = createSubject<ISupportedWallet | IKitError>();
 export const addressUpdatedEvent = createSubject<string | IKitError>();
-
 export const closeEvent = createSubject<void>();
 export const disconnectEvent = createSubject<void>();
