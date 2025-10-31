@@ -38,6 +38,9 @@ export class WalletConnectModule implements ModuleInterface {
       manualWCControl: true,
       enableReconnect: true,
       networks: [],
+      featuredWalletIds: [
+        "aef3112adf415ec870529e96b4d7b434f13961a079d1ee42c9738217d8adeb91",
+      ],
       ...(params.appKitOptions || {}),
     });
 

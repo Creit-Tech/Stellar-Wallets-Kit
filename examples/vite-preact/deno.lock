@@ -6,6 +6,7 @@
     "npm:@ledgerhq/hw-app-str@^7.2.6": "7.2.8",
     "npm:@ledgerhq/hw-transport-webusb@^6.29.10": "6.29.12",
     "npm:@ledgerhq/hw-transport@^6.31.10": "6.31.12",
+    "npm:@lobstrco/signer-extension-api@2.0.0": "2.0.0",
     "npm:@preact/preset-vite@^2.10.2": "2.10.2_@babel+core@7.28.4_vite@7.1.5__picomatch@4.0.3_preact@10.27.2",
     "npm:@preact/signals@^2.3.1": "2.3.2_preact@10.27.2",
     "npm:@reown/appkit@^1.8.11": "1.8.12_valtio@2.1.7",
@@ -447,6 +448,9 @@
       "dependencies": [
         "@lit-labs/ssr-dom-shim"
       ]
+    },
+    "@lobstrco/signer-extension-api@2.0.0": {
+      "integrity": "sha512-jwlVyzMFF296iaNgMWn1lu+EU6BeUD4mgPurEsy8EygYNCrjA8igLpsDlXhfvXhst9tX5w4wRuTDX+FZtpfCug=="
     },
     "@mobily/ts-belt@3.13.1": {
       "integrity": "sha512-K5KqIhPI/EoCTbA6CGbrenM9s41OouyK8A03fGJJcla/zKucsgLbz8HNbeseoLarRPgyWJsUyCYqFhI7t3Ra9Q=="

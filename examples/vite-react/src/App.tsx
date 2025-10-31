@@ -51,7 +51,7 @@ StellarWalletsKit.init({
         description: "Add support to all Stellar Wallets with a single library",
         icons: [],
         url: 'http://localhost:5173/',
-      },
+      }
     }),
   ],
 });
