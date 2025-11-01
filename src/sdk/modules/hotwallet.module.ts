@@ -28,15 +28,21 @@ export class HotWalletModule implements ModuleInterface {
     return await HOT.request("stellar:signTransaction", { xdr, accountToSign: opts?.address });
   }
 
-  async signAuthEntry(authEntry: string, opts?: { address?: string }) {
+  async signAuthEntry(
+    authEntry: string,
+    opts?: { address?: string },
+  ): Promise<{ signedAuthEntry: string; signerAddress?: string }> {
     return await HOT.request("stellar:signAuthEntry", { authEntry, accountToSign: opts?.address });
   }
 
-  async signMessage(message: string, opts?: { address?: string }) {
+  async signMessage(
+    message: string,
+    opts?: { address?: string },
+  ): Promise<{ signedMessage: string; signerAddress?: string }> {
     return await HOT.request("stellar:signMessage", { message, accountToSign: opts?.address });
   }
 
-  async getNetwork() {
+  async getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
     return { network: "mainnet", networkPassphrase: Networks.PUBLIC };
   }
 }

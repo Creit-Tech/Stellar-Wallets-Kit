@@ -44,14 +44,14 @@ export const activeModule: ReadonlySignal<ModuleInterface | undefined> = compute
     .find((m: ModuleInterface): boolean => m.productId === selectedModuleId.value);
 });
 export const mnemonicPath: Signal<string | undefined> = signal(undefined);
-const hardwareWalletPathsInitial: string | undefined = globalThis.localStorage.getItem(
+const hardwareWalletPathsInitial: string | null = globalThis.localStorage.getItem(
   LocalStorageKeys.hardwareWalletPaths,
 );
 export const hardwareWalletPaths: Signal<Array<{ publicKey: string; index: number }>> = signal(
   JSON.parse(hardwareWalletPathsInitial || "[]"),
 );
 
-const wcSessionPathsInitial: string | undefined = globalThis.localStorage.getItem(LocalStorageKeys.wcSessionPaths);
+const wcSessionPathsInitial: string | null = globalThis.localStorage.getItem(LocalStorageKeys.wcSessionPaths);
 export const wcSessionPaths: Signal<Array<{ publicKey: string; topic: string }>> = signal(
   JSON.parse(wcSessionPathsInitial || "[]"),
 );

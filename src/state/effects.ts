@@ -2,14 +2,14 @@ import { effect } from "@preact/signals";
 import { activeAddress, activeModule, hardwareWalletPaths, selectedModuleId, theme, wcSessionPaths } from "./values.ts";
 import { LocalStorageKeys } from "../types/mod.ts";
 
-export const updatedThemeEffect = effect((): void => {
+export const updatedThemeEffect: () => void = effect((): void => {
   // console.debug("[SwkApp]::updatedThemeEffect");
   for (const [key, value] of Object.entries(theme.value)) {
     document.documentElement.style.setProperty(`--swk-${key}`, value);
   }
 });
 
-export const updatedSelectedModule = effect((): void => {
+export const updatedSelectedModule: () => void = effect((): void => {
   // console.debug("[SwkApp]::updatedSelectedModule");
   if (typeof window !== "undefined" && !!activeModule.value) {
     try {
@@ -28,7 +28,7 @@ export const updatedSelectedModule = effect((): void => {
   }
 });
 
-export const updateActiveSession = effect((): void => {
+export const updateActiveSession: () => void = effect((): void => {
   // console.debug("[SwkApp]::updateActiveSession");
   if (typeof window !== "undefined") {
     if (activeAddress.value) {

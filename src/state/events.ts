@@ -1,19 +1,37 @@
-import { effect, signal } from "@preact/signals";
+import { effect, type Signal, signal } from "@preact/signals";
 import type { IKitError, ISupportedWallet } from "../types/mod.ts";
 
-export function createSubject<T>() {
-  const trigger = signal<null | T>(null);
+interface Subject<T> {
+  next(v: T): void;
+
+  error(err: unknown): void;
+
+  complete(): void;
+
+  subscribe(
+    next?: (v: T) => void,
+    error?: (err: unknown) => void,
+    complete?: () => void,
+  ): () => void;
+
+  isCompleted(): boolean;
+
+  hasError(): boolean;
+}
+
+export function createSubject<T>(): Subject<T> {
+  const trigger: Signal<T | null> = signal<null | T>(null);
   let status: "active" | "completed" | "error" = "active";
   let storedError: unknown = null;
 
-  const nextListeners = new Set<(v: T) => void>();
-  const errorListeners = new Set<(err: unknown) => void>();
-  const completeListeners = new Set<() => void>();
+  const nextListeners: Set<(v: T) => void> = new Set<(v: T) => void>();
+  const errorListeners: Set<(err: unknown) => void> = new Set<(err: unknown) => void>();
+  const completeListeners: Set<() => void> = new Set<() => void>();
 
   // Notify listeners whenever trigger changes
   effect((): void => {
     if (status === "active" && trigger.value !== null) {
-      const v = trigger.value;
+      const v: T | (T & undefined) = trigger.value;
       trigger.value = null; // Reset trigger so effect only fires once
       for (const cb of nextListeners) cb(v as T);
     }
@@ -52,18 +70,18 @@ export function createSubject<T>() {
     ) {
       if (status === "error") {
         error?.(storedError);
-        return () => {};
+        return (): void => {};
       }
       if (status === "completed") {
         complete?.();
-        return () => {};
+        return (): void => {};
       }
 
       if (next) nextListeners.add(next);
       if (error) errorListeners.add(error);
       if (complete) completeListeners.add(complete);
 
-      return () => {
+      return (): void => {
         if (next) nextListeners.delete(next);
         if (error) errorListeners.delete(error);
         if (complete) completeListeners.delete(complete);
@@ -80,7 +98,7 @@ export function createSubject<T>() {
   };
 }
 
-export const moduleSelectedEvent = createSubject<ISupportedWallet | IKitError>();
-export const addressUpdatedEvent = createSubject<string | IKitError>();
-export const closeEvent = createSubject<void>();
-export const disconnectEvent = createSubject<void>();
+export const moduleSelectedEvent: Subject<ISupportedWallet | IKitError> = createSubject<ISupportedWallet | IKitError>();
+export const addressUpdatedEvent: Subject<string | IKitError> = createSubject<string | IKitError>();
+export const closeEvent: Subject<void> = createSubject<void>();
+export const disconnectEvent: Subject<void> = createSubject<void>();

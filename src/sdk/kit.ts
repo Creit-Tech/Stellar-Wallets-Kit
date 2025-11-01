@@ -5,10 +5,10 @@ import {
   type AuthModalParams,
   type IKitError,
   type ISupportedWallet,
-  type KitEvent,
-  KitEventStateUpdated,
+  type KitEventDisconnected,
+  type KitEventStateUpdated,
   KitEventType,
-  KitEventWalletSelected,
+  type KitEventWalletSelected,
   type ModuleInterface,
   type Networks,
   type ProfileModalParams,
@@ -33,7 +33,7 @@ import {
   showInstallLabel,
   theme,
 } from "../state/mod.ts";
-import { navigateTo, SwkApp, SwkButton, SwkButtonProps } from "../components/mod.ts";
+import { navigateTo, SwkApp, SwkButton, type SwkButtonProps } from "../components/mod.ts";
 import { disconnect, parseError } from "./utils.ts";
 import { resetHistory } from "../components/router.ts";
 
@@ -145,14 +145,14 @@ export class StellarWalletsKit {
    *
    * NOTE: These events are also triggered at launch IE the first time the values are set.
    */
-  static on(type: KitEventType.STATE_UPDATED, callback: (event: KitEventStateUpdated) => void);
-  static on(type: KitEventType.WALLET_SELECTED, callback: (event: KitEventWalletSelected) => void);
-  static on(type: KitEventType.DISCONNECT, callback: () => void);
-  static on(type: KitEventType, callback: (event: KitEvent) => void) {
+  static on(type: KitEventType.STATE_UPDATED, callback: (event: KitEventStateUpdated) => void): () => void;
+  static on(type: KitEventType.WALLET_SELECTED, callback: (event: KitEventWalletSelected) => void): () => void;
+  static on(type: KitEventType.DISCONNECT, callback: (event: KitEventDisconnected) => void): () => void;
+  static on(type: any, callback: any): () => void {
     switch (type) {
       case KitEventType.STATE_UPDATED: {
-        let currentActiveAddress = undefined;
-        let currentSelectedNetwork = undefined;
+        let currentActiveAddress: string | undefined = undefined;
+        let currentSelectedNetwork: Networks | undefined = undefined;
         return effect(() => {
           if (
             (activeAddress.value !== currentActiveAddress || selectedNetwork.value !== currentSelectedNetwork)
@@ -168,7 +168,7 @@ export class StellarWalletsKit {
       }
 
       case KitEventType.WALLET_SELECTED: {
-        let current = undefined;
+        let current: string | undefined = undefined;
         return effect(() => {
           if (selectedModuleId.value !== current) {
             current = selectedModuleId.value;
@@ -182,7 +182,7 @@ export class StellarWalletsKit {
 
       case KitEventType.DISCONNECT:
         return disconnectEvent.subscribe((): void => {
-          callback({ eventType: KitEventType.DISCONNECT });
+          callback({ eventType: KitEventType.DISCONNECT, payload: {} });
         });
       default:
         throw new Error(`${type} event type is not supported`);
@@ -209,7 +209,7 @@ export class StellarWalletsKit {
     return results;
   }
 
-  static async createButton(container: HTMLElement, props?: SwkButtonProps = {}): Promise<void> {
+  static async createButton(container: HTMLElement, props: SwkButtonProps = {}): Promise<void> {
     render(
       html`
         <${SwkButton}
@@ -282,7 +282,6 @@ export class StellarWalletsKit {
   /**
    * This method opens the "profile" modal, this modal allows the user to check its currently connected account, copy its public key
    */
-  // deno-lint-ignore require-await
   static async profileModal(params?: ProfileModalParams): Promise<void> {
     if (!activeAddress.value) {
       throw { code: -1, message: "There is no active address, the user needs to authenticate first." };

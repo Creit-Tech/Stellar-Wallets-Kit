@@ -1,8 +1,9 @@
-import { SessionTypes, SignClientTypes } from "@walletconnect/types";
-import { SignClient } from "@walletconnect/sign-client";
-import { AppKit, CreateAppKit, createAppKit } from "@reown/appkit/core";
+import type { SessionTypes, SignClientTypes } from "@walletconnect/types";
+import { type default as Client, SignClient } from "@walletconnect/sign-client";
+import { type AppKit, type CreateAppKit, createAppKit } from "@reown/appkit/core";
+import { mainnet } from "@reown/appkit/networks";
 
-import { ModuleInterface, ModuleType, Networks } from "../../types/mod.ts";
+import { type ModuleInterface, ModuleType, Networks } from "../../types/mod.ts";
 import { disconnect, parseError } from "../utils.ts";
 import { activeAddress, selectedNetwork, wcSessionPaths } from "../../state/values.ts";
 
@@ -16,49 +17,48 @@ export class WalletConnectModule implements ModuleInterface {
   productName: string = "WalletConnect";
   productUrl: string = "https://walletconnect.com/";
 
-  modal: AppKit;
-  signClient: SignClient;
+  modal!: AppKit;
+  signClient!: Client;
 
   initiated: boolean = false;
 
   constructor(public wcParams: TWalletConnectModuleParams) {
     if (!wcParams) throw new Error("The WalletConnect modules have required params.");
-    this.init(wcParams);
-  }
 
-  async init(params: TWalletConnectModuleParams): Promise<void> {
-    this.signClient = await SignClient.init({
-      projectId: params.projectId,
-      metadata: params.metadata,
-      ...(params.signClientOptions || {}),
+    SignClient.init({
+      projectId: wcParams.projectId,
+      metadata: wcParams.metadata,
+      ...(wcParams.signClientOptions || {}),
+    }).then((client): void => {
+      client.on("display_uri" as any, (uri: string): void => {
+        this.modal.open({ uri });
+      });
+      client.on("session_delete", (ev: any): void => {
+        this.closeSession(ev.topic);
+      });
+      /**
+       * The next events are not currently supported but could be included later:
+       * session_update
+       * session_event
+       * session_ping
+       * session_expire
+       * session_extend
+       * proposal_expire
+       */
+
+      this.signClient = client;
     });
 
     this.modal = createAppKit({
-      projectId: params.projectId,
+      projectId: wcParams.projectId,
       manualWCControl: true,
       enableReconnect: true,
-      networks: [],
+      networks: [mainnet],
       featuredWalletIds: [
         "aef3112adf415ec870529e96b4d7b434f13961a079d1ee42c9738217d8adeb91",
       ],
-      ...(params.appKitOptions || {}),
+      ...(wcParams.appKitOptions || {}),
     });
-
-    this.signClient.on("display_uri", (uri: string): void => {
-      this.modal.open({ uri });
-    });
-    this.signClient.on("session_delete", (ev: any): void => {
-      this.closeSession(ev.topic);
-    });
-    /**
-     * The next events are not currently supported but could be included later:
-     * session_update
-     * session_event
-     * session_ping
-     * session_expire
-     * session_extend
-     * proposal_expire
-     */
   }
 
   async isAvailable(): Promise<boolean> {
@@ -71,11 +71,11 @@ export class WalletConnectModule implements ModuleInterface {
     }
   }
 
-  async getAddress(params?: { path?: string; skipRequestAccess?: boolean }): Promise<{ address: string }> {
+  async getAddress(): Promise<{ address: string }> {
     await this.runChecks();
 
     if (selectedNetwork.value !== Networks.PUBLIC && selectedNetwork.value !== Networks.TESTNET) {
-      throw parseError(new Error(`Network ${params.network} is not supported by WalletConnect.`));
+      throw parseError(new Error(`Network ${selectedNetwork.value} is not supported by WalletConnect.`));
     }
 
     const { uri, approval } = await this.signClient.connect({
@@ -104,6 +104,7 @@ export class WalletConnectModule implements ModuleInterface {
       return { address: accounts[0] };
     } catch (e) {
       this.modal.close();
+      throw e;
     }
   }
 
@@ -123,7 +124,7 @@ export class WalletConnectModule implements ModuleInterface {
       throw parseError(new Error("No WalletConnect session found or it expired for the selected address."));
     }
 
-    const { signedXDR } = await this.signClient.request({
+    const { signedXDR } = await this.signClient.request<{ signedXDR: string }>({
       topic: targetSession.topic,
       chainId: opts?.networkPassphrase === Networks.PUBLIC
         ? WalletConnectTargetChain.PUBLIC

@@ -78,7 +78,6 @@ await build({
   shims: {
     deno: false,
   },
-  typeCheck: false,
   package: {
     name: denoFile.name,
     version: denoFile.version,

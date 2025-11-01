@@ -53,7 +53,7 @@ export type KitEventWalletSelected = {
 };
 export type KitEventDisconnected = {
   eventType: KitEventType.DISCONNECT;
-  payload: {};
+  payload: Record<PropertyKey, never>;
 };
 
 export type KitEvent = KitEventStateUpdated | KitEventWalletSelected | KitEventDisconnected;

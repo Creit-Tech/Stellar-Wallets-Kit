@@ -1,9 +1,9 @@
 import { type VNode, Component } from 'preact';
-import { signal, Signal } from '@preact/signals';
+import { signal, type Signal } from '@preact/signals';
 import { html } from 'htm/preact';
 import { activeAddress, activeModule, hardwareWalletPaths, mnemonicPath, modalTitle } from '../../state/values.ts';
 import { tw } from "../twind.ts";
-import { HardwareWalletModuleInterface } from '../../types/mod.ts';
+import type { HardwareWalletModuleInterface } from '../../types/mod.ts';
 import { Button, ButtonSize } from '../shared/button.ts';
 import { addressUpdatedEvent } from '../../state/events.ts';
 
@@ -106,7 +106,7 @@ export class HwAccountsFetcherPage extends Component {
       </div>
     `;
 
-    if (!!this.stateSignal.value.error) {
+    if (this.stateSignal.value.error) {
       return errorComponent;
     } else {
       return this.stateSignal.value.loading

@@ -23,8 +23,8 @@ export class LedgerModule implements HardwareWalletModuleInterface {
   productUrl: string = "https://www.ledger.com/";
   productIcon: string = "https://stellar.creit.tech/wallet-icons/ledger.png";
 
-  private _transport?: TransportImport.default;
-  async transport(): Promise<TransportImport.default> {
+  private _transport?: any;
+  async transport(): Promise<any> {
     if (!(await TransportWebUSB.isSupported())) throw new Error("Ledger can not be used with this device.");
 
     if (!this._transport) {

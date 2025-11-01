@@ -1,4 +1,4 @@
-import { ModuleInterface, ModuleType } from "../../types/mod.ts";
+import { type ModuleInterface, ModuleType } from "../../types/mod.ts";
 import { parseError } from "../utils.ts";
 
 declare const window: Window & {

@@ -1,7 +1,7 @@
 import { tw, reset } from "./twind.ts";
 import type { VNode } from "preact";
 import { html } from "htm/preact";
-import { Button, ButtonMode, ButtonShape, ButtonSize } from "./shared/mod.ts";
+import { Button, ButtonMode, ButtonShape, type ButtonSize } from "./shared/mod.ts";
 import { activeModule, activeModules, activeAddress } from '../state/mod.ts';
 import { StellarWalletsKit } from '../sdk/kit.ts';
 

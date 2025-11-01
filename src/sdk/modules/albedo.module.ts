@@ -1,5 +1,5 @@
-import { AlbedoIntent, default as albedoImport } from "@albedo-link/intent";
-const albedo: AlbedoIntent = albedoImport.default;
+import { type AlbedoIntent, default as albedoImport } from "@albedo-link/intent";
+const albedo: AlbedoIntent = (albedoImport as any).default;
 
 import { type ModuleInterface, ModuleType, Networks } from "../../types/mod.ts";
 import { parseError } from "../utils.ts";

@@ -32,11 +32,11 @@ function PageTransition({ children, isActive, duration = 300 }: PageTransitionPr
   useEffect(() => {
     if (isActive) {
       setShouldRender(true);
-      requestAnimationFrame(() => setVisible(true));
+      globalThis.requestAnimationFrame(() => setVisible(true));
     } else {
       setVisible(false);
-      const timer: number = setTimeout(() => setShouldRender(false), duration);
-      return () => clearTimeout(timer);
+      const timer = globalThis.setTimeout(() => setShouldRender(false), duration);
+      return () => globalThis.clearTimeout(timer);
     }
   }, [isActive, duration]);
 
