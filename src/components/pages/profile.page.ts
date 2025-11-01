@@ -28,7 +28,7 @@ export function ProfilePage(): VNode {
   modalTitle.value = '';
 
   return html`
-    <section class="${tw('w-full flex flex-col pb-4')}">
+    <section class="${tw('w-full flex flex-col pb-8')}">
       <div class="${tw('w-full flex justify-center mb-4')}">
         <${Avatar} alt="${activeModule.value?.productName} icon" image="${activeModule.value?.productIcon}" size="${AvatarSize.xl}" />
       </div>

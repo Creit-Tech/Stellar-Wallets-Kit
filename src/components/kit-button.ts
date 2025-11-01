@@ -33,13 +33,13 @@ export function SwkButton(props: SwkButtonProps): VNode {
     : 'Connect Wallet';
 
   return html`
-    <div class="${tw(reset)} ${tw('inline-block')}">
+    <div class="${tw(reset)} ${tw('inline-block')}">      
       <${Button} styles=${props.styles} 
                  classes=${props.classes}
                  mode=${props.mode || ButtonMode.primary}
                  shape=${props.shape || ButtonShape.regular}
                  size=${props.size}
-                 onClick=${() => handleOnClick(props.onClick)}>
+                 onClick=${() => handleOnClick(props.onClick)}>        
         ${props.children ? props.children : content}
       <//>
     </div>

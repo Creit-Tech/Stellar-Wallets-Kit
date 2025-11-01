@@ -10,6 +10,8 @@ import {
   type SwkAppTheme,
 } from "../types/mod.ts";
 
+const localstorage: Storage | undefined = globalThis.localStorage;
+
 ///////////////////////////////////
 /// Configuration state signals ///
 ///////////////////////////////////
@@ -32,10 +34,10 @@ export const routerHistory: Signal<SwkAppRoute[]> = signal<SwkAppRoute[]>([SwkAp
 ///    Wallets state signals    ///
 ///////////////////////////////////
 export const activeAddress: Signal<string | undefined> = signal(
-  globalThis.localStorage.getItem(LocalStorageKeys.activeAddress) || undefined,
+  localstorage?.getItem(LocalStorageKeys.activeAddress) || undefined,
 );
 export const selectedModuleId: Signal<string | undefined> = signal(
-  globalThis.localStorage.getItem(LocalStorageKeys.selectedModuleId) || undefined,
+  localstorage?.getItem(LocalStorageKeys.selectedModuleId) || undefined,
 );
 export const allowedWallets: Signal<ISupportedWallet[]> = signal([]);
 export const activeModules: Signal<ModuleInterface[]> = signal<ModuleInterface[]>([]);
@@ -44,14 +46,14 @@ export const activeModule: ReadonlySignal<ModuleInterface | undefined> = compute
     .find((m: ModuleInterface): boolean => m.productId === selectedModuleId.value);
 });
 export const mnemonicPath: Signal<string | undefined> = signal(undefined);
-const hardwareWalletPathsInitial: string | null = globalThis.localStorage.getItem(
+const hardwareWalletPathsInitial: string | null = localstorage?.getItem(
   LocalStorageKeys.hardwareWalletPaths,
 );
 export const hardwareWalletPaths: Signal<Array<{ publicKey: string; index: number }>> = signal(
   JSON.parse(hardwareWalletPathsInitial || "[]"),
 );
 
-const wcSessionPathsInitial: string | null = globalThis.localStorage.getItem(LocalStorageKeys.wcSessionPaths);
+const wcSessionPathsInitial: string | null = localstorage?.getItem(LocalStorageKeys.wcSessionPaths);
 export const wcSessionPaths: Signal<Array<{ publicKey: string; topic: string }>> = signal(
   JSON.parse(wcSessionPathsInitial || "[]"),
 );

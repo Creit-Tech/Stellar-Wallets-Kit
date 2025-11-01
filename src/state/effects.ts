@@ -2,23 +2,26 @@ import { effect } from "@preact/signals";
 import { activeAddress, activeModule, hardwareWalletPaths, selectedModuleId, theme, wcSessionPaths } from "./values.ts";
 import { LocalStorageKeys } from "../types/mod.ts";
 
+const localstorage: Storage | undefined = globalThis.localStorage;
+const document: Document = globalThis.document;
+
 export const updatedThemeEffect: () => void = effect((): void => {
-  // console.debug("[SwkApp]::updatedThemeEffect");
-  for (const [key, value] of Object.entries(theme.value)) {
-    document.documentElement.style.setProperty(`--swk-${key}`, value);
+  if (document) {
+    for (const [key, value] of Object.entries(theme.value)) {
+      document.documentElement.style.setProperty(`--swk-${key}`, value);
+    }
   }
 });
 
 export const updatedSelectedModule: () => void = effect((): void => {
-  // console.debug("[SwkApp]::updatedSelectedModule");
-  if (typeof window !== "undefined" && !!activeModule.value) {
+  if (!!localstorage && !!activeModule.value) {
     try {
-      const record: string | null = globalThis.localStorage.getItem(LocalStorageKeys.usedWalletsIds);
+      const record: string | null = localstorage.getItem(LocalStorageKeys.usedWalletsIds);
       const usedWalletsIds: Set<string> = record ? new Set(JSON.parse(record)) : new Set();
       if (usedWalletsIds.has(activeModule.value.productId)) {
         usedWalletsIds.delete(activeModule.value.productId);
       }
-      globalThis.localStorage.setItem(
+      localstorage.setItem(
         LocalStorageKeys.usedWalletsIds,
         JSON.stringify([activeModule.value.productId, ...usedWalletsIds]),
       );
@@ -29,26 +32,25 @@ export const updatedSelectedModule: () => void = effect((): void => {
 });
 
 export const updateActiveSession: () => void = effect((): void => {
-  // console.debug("[SwkApp]::updateActiveSession");
-  if (typeof window !== "undefined") {
+  if (!!localstorage) {
     if (activeAddress.value) {
-      globalThis.localStorage.setItem(LocalStorageKeys.activeAddress, activeAddress.value);
+      localstorage.setItem(LocalStorageKeys.activeAddress, activeAddress.value);
     } else {
-      globalThis.localStorage.removeItem(LocalStorageKeys.activeAddress);
+      localstorage.removeItem(LocalStorageKeys.activeAddress);
     }
 
     if (selectedModuleId.value) {
-      globalThis.localStorage.setItem(LocalStorageKeys.selectedModuleId, selectedModuleId.value);
+      localstorage.setItem(LocalStorageKeys.selectedModuleId, selectedModuleId.value);
     } else {
-      globalThis.localStorage.removeItem(LocalStorageKeys.selectedModuleId);
+      localstorage.removeItem(LocalStorageKeys.selectedModuleId);
     }
 
     if (typeof hardwareWalletPaths.value !== "undefined") {
-      globalThis.localStorage.setItem(LocalStorageKeys.hardwareWalletPaths, JSON.stringify(hardwareWalletPaths.value));
+      localstorage.setItem(LocalStorageKeys.hardwareWalletPaths, JSON.stringify(hardwareWalletPaths.value));
     }
 
     if (typeof wcSessionPaths.value !== "undefined") {
-      globalThis.localStorage.setItem(LocalStorageKeys.wcSessionPaths, JSON.stringify(wcSessionPaths.value));
+      localstorage.setItem(LocalStorageKeys.wcSessionPaths, JSON.stringify(wcSessionPaths.value));
     }
   }
 });
