@@ -3,6 +3,8 @@ import type { VNode } from "preact";
 import { cx, tw } from "../twind.ts";
 
 export type ButtonProps = {
+  styles?: string;
+  classes?: string;
   size: ButtonSize;
   mode: ButtonMode;
   shape: ButtonShape;
@@ -22,6 +24,7 @@ export enum ButtonMode {
   primary = "primary",
   secondary = "secondary",
   ghost = "ghost",
+  free = "free",
 }
 
 export enum ButtonShape {
@@ -32,7 +35,8 @@ export enum ButtonShape {
 const defaultClasses = "flex items-center justify-center font-semibold easy-in-out transition leading-none";
 
 export function Button(
-  { size = ButtonSize.md, mode = ButtonMode.primary, shape = ButtonShape.regular, children, onClick }: ButtonProps,
+  { size = ButtonSize.md, mode = ButtonMode.primary, shape = ButtonShape.regular, classes, styles, children, onClick }:
+    ButtonProps,
 ): VNode {
   const modeStyle: string = cx({
     "border-none bg-primary text-primary-foreground shadow-default hover:opacity-70 focus:opacity-90":
@@ -64,15 +68,17 @@ export function Button(
     "p-3": shape === ButtonShape.icon && size === ButtonSize.xl,
   });
 
+  const theme: string = mode === ButtonMode.free ? "" : tw(cx(
+    "cursor-pointer",
+    defaultClasses,
+    modeStyle,
+    radius,
+    sizeStyle,
+    padding,
+  ));
+
   return html`
-    <button onClick="${() => onClick()}" type="button" class="${tw(cx(
-      "cursor-pointer",
-      defaultClasses,
-      modeStyle,
-      radius,
-      sizeStyle,
-      padding,
-    ))}">
+    <button onClick="${() => onClick()}" type="button" style="${styles}" class="${theme} ${classes}">
       ${children}
     </button>
   `;

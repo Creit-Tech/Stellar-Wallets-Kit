@@ -1,11 +1,16 @@
 import { tw, reset } from "./twind.ts";
 import type { VNode } from "preact";
 import { html } from "htm/preact";
-import { Button, ButtonMode, ButtonShape } from "./shared/mod.ts";
+import { Button, ButtonMode, ButtonShape, ButtonSize } from "./shared/mod.ts";
 import { activeModule, activeModules, activeAddress } from '../state/mod.ts';
 import { StellarWalletsKit } from '../sdk/kit.ts';
 
 export type SwkButtonProps = {
+  styles?: string;
+  classes?: string;
+  mode?: ButtonMode;
+  shape?: ButtonShape;
+  size?: ButtonSize;
   onClick?: () => void;
   children?: any;
 };
@@ -29,7 +34,12 @@ export function SwkButton(props: SwkButtonProps): VNode {
 
   return html`
     <div class="${tw(reset)} ${tw('inline-block')}">
-      <${Button} mode="${ButtonMode.primary}" shape="${ButtonShape.regular}" onClick=${() => handleOnClick(props.onClick)}>
+      <${Button} styles=${props.styles} 
+                 classes=${props.classes}
+                 mode=${props.mode || ButtonMode.primary}
+                 shape=${props.shape || ButtonShape.regular}
+                 size=${props.size}
+                 onClick=${() => handleOnClick(props.onClick)}>
         ${props.children ? props.children : content}
       <//>
     </div>

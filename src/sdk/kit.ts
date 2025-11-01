@@ -33,7 +33,7 @@ import {
   showInstallLabel,
   theme,
 } from "../state/mod.ts";
-import { navigateTo, SwkApp, SwkButton } from "../components/mod.ts";
+import { navigateTo, SwkApp, SwkButton, SwkButtonProps } from "../components/mod.ts";
 import { disconnect, parseError } from "./utils.ts";
 import { resetHistory } from "../components/router.ts";
 
@@ -209,10 +209,18 @@ export class StellarWalletsKit {
     return results;
   }
 
-  static async createButton(container: HTMLElement): Promise<void> {
+  static async createButton(container: HTMLElement, props?: SwkButtonProps = {}): Promise<void> {
     render(
       html`
-        <${SwkButton} />
+        <${SwkButton}
+          styles="${props.styles}"
+          classes="${props.classes}"
+          mode="${props.mode}"
+          shape="${props.shape}"
+          size="${props.size}"
+          onClick="${() => props.onClick && props.onClick()}"
+          children="${props.children}"
+        />
       `,
       container,
     );

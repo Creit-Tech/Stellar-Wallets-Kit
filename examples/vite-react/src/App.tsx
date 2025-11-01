@@ -1,36 +1,33 @@
+import { Component } from 'react'
+import './App.css'
+
 import { KitEventType, SwkAppDarkTheme } from "@creit-tech/stellar-wallets-kit/types";
 import { StellarWalletsKit } from "@creit-tech/stellar-wallets-kit/sdk";
 import { activeAddress, activeModule, } from "@creit-tech/stellar-wallets-kit/state";
-import { AlbedoModule } from "@creit-tech/stellar-wallets-kit/modules/albedo";
-import { FreighterModule } from "@creit-tech/stellar-wallets-kit/modules/freighter";
-import { HanaModule } from "@creit-tech/stellar-wallets-kit/modules/hana";
-import { LedgerModule } from "@creit-tech/stellar-wallets-kit/modules/ledger";
-import { LobstrModule } from "@creit-tech/stellar-wallets-kit/modules/lobstr";
-import { RabetModule } from "@creit-tech/stellar-wallets-kit/modules/rabet";
+import { ButtonMode } from '@creit-tech/stellar-wallets-kit/components';
+import { defaultModules } from '@creit-tech/stellar-wallets-kit/modules/utils';
 import { TrezorModule } from "@creit-tech/stellar-wallets-kit/modules/trezor";
-import { xBullModule } from "@creit-tech/stellar-wallets-kit/modules/xbull";
 import { WalletConnectModule } from "@creit-tech/stellar-wallets-kit/modules/wallet-connect";
 
 import { Account, Networks, Operation, TransactionBuilder, } from "@stellar/stellar-sdk";
 
-import { Component } from 'react'
-import './App.css'
-
 StellarWalletsKit.init({
-  theme: SwkAppDarkTheme,
+  theme: {
+    ...SwkAppDarkTheme,
+    primary: '#1a1a1a',
+    'primary-foreground': 'rgba(255, 255, 255, 0.87)',
+    'border-radius': '8px',
+    shadow: 'none',
+    background: '#1a1a1a',
+    foreground: 'rgba(255, 255, 255, 0.87)'
+  },
   modules: [
-    new AlbedoModule(),
-    new FreighterModule(),
-    new HanaModule(),
-    new LedgerModule(),
-    new LobstrModule(),
-    new RabetModule(),
+    ...defaultModules(),
     new TrezorModule({
       appName: "Stellar Wallets Kit",
       appUrl: "http://localhost:5173",
       email: "test@email.com",
     }),
-    new xBullModule(),
     new WalletConnectModule({
       projectId: "4e0b84f6ba6bedf7c7f041d919a9f039",
       metadata: {
@@ -65,7 +62,9 @@ export class App extends Component<any, any> {
     StellarWalletsKit.on(KitEventType.DISCONNECT, () => {
       this.setState({address: undefined, productName: undefined});
     });
-    StellarWalletsKit.createButton(document.querySelector('#button')!);
+    StellarWalletsKit.createButton(document.querySelector('#button')!, {
+      mode: ButtonMode.free,
+    });
   }
 
   async authModal(): Promise<void> {
@@ -141,7 +140,8 @@ export class App extends Component<any, any> {
               <div style={ {marginBottom: '3rem'} }></div>
 
               <div>
-                <p>This is the built button, it follows the theme configured in the kit:</p>
+                <p>This is the built button, it follows the theme configured in the kit but we are using the "free" mode
+                  of the button so it uses our global React defined styles :</p>
                 <div id="button"></div>
               </div>
             </div>
