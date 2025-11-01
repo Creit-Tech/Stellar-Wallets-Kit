@@ -14,8 +14,6 @@ import { WalletConnectModule } from "@creit-tech/stellar-wallets-kit/modules/wal
 import { Account, Networks, Operation, TransactionBuilder, } from "@stellar/stellar-sdk";
 
 import { Component } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 StellarWalletsKit.init({
@@ -67,6 +65,7 @@ export class App extends Component<any, any> {
     StellarWalletsKit.on(KitEventType.DISCONNECT, () => {
       this.setState({address: undefined, productName: undefined});
     });
+    StellarWalletsKit.createButton(document.querySelector('#button')!);
   }
 
   async authModal(): Promise<void> {
@@ -109,14 +108,6 @@ export class App extends Component<any, any> {
   render() {
     return (
       <>
-        <div>
-          <div>
-            <img src={ viteLogo } className="logo" alt="Vite logo"/>
-          </div>
-          <div>
-            <img src={ reactLogo } className="logo react" alt="React logo"/>
-          </div>
-        </div>
         <h1>Vite + React</h1>
         <div className="card">
           <section>
@@ -146,6 +137,13 @@ export class App extends Component<any, any> {
                 Your account is: <br/> { this.state.address &&
                 `${ this.state.address.slice(0, 4) }....${ this.state.address.slice(-6) }` }
               </p>
+
+              <div style={ {marginBottom: '3rem'} }></div>
+
+              <div>
+                <p>This is the built button, it follows the theme configured in the kit:</p>
+                <div id="button"></div>
+              </div>
             </div>
           </section>
         </div>

@@ -33,8 +33,9 @@ import {
   showInstallLabel,
   theme,
 } from "../state/mod.ts";
-import { navigateTo, SwkApp } from "../components/mod.ts";
+import { navigateTo, SwkApp, SwkButton } from "../components/mod.ts";
 import { disconnect, parseError } from "./utils.ts";
+import { resetHistory } from "../components/router.ts";
 
 export class StellarWalletsKit {
   static init(params: StellarWalletsKitInitParams) {
@@ -90,7 +91,7 @@ export class StellarWalletsKit {
 
   // ---------------------------------------------- Wallet Interaction ----------------------------------------------
 
-  static async getAddress(params?: { path?: string }): Promise<{ address: string }> {
+  static async getAddress(): Promise<{ address: string }> {
     if (!activeAddress.value) {
       throw {
         code: -1,
@@ -206,6 +207,15 @@ export class StellarWalletsKit {
     allowedWallets.value = results;
 
     return results;
+  }
+
+  static async createButton(container: HTMLElement): Promise<void> {
+    render(
+      html`
+        <${SwkButton} />
+      `,
+      container,
+    );
   }
 
   // ---------------------------------------------- Modal methods ----------------------------------------------
