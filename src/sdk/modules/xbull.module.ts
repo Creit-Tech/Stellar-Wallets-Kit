@@ -66,7 +66,7 @@ export class xBullModule implements ModuleInterface {
       networkPassphrase?: string;
       address?: string;
       path?: string;
-    }
+    },
   ): Promise<{ signedMessage: string; signerAddress?: string }> {
     try {
       const bridge: xBullWalletConnect = new xBullWalletConnect();
