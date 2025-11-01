@@ -9,18 +9,64 @@ All notable changes to this project will be documented in this file. See [standa
 - Full refactor of the whole repository
 - Migrate into a "monorepo" style repository
 - Separate the UI and the SDK
-  - The UI (modal, buttons, etc) is now using Angular instead of Lit
-  - The SDK (the class StellarWalletsKit) is now a regular Deno library
+    - The UI (modal, buttons, etc) is now using Angular instead of Lit
+    - The SDK (the class StellarWalletsKit) is now a regular Deno library
 - The UI now uses a series of CSS variables that can be defined by developers to personalize the complete UI (the SDK makes this process easier)
 - The SDK internal state is now using a simple Signal library instead of RxJS (aiming to reduce the kit's size)
 - The SDK now exports the internal state so developers can update it if they need to (tho, still not recommended)
 - Creation of a "Playground" website
-  - This website makes it easy for developers to see how the kit looks and how to configure it
-  - The website shows all components and modules available (even those that require extra configuration like hardware wallets and Wallet Connect)
-  - The website gives the developer the code to use in order to have the same style shown in the playground
+    - This website makes it easy for developers to see how the kit looks and how to configure it
+    - The website shows all components and modules available (even those that require extra configuration like hardware wallets and Wallet Connect)
+    - The website gives the developer the code to use in order to have the same style shown in the playground
 - The wallet selection modal now allows developers to choose between showing or hiding the explanation text
 - The `openModal` method was removed and we now have `authModal`, this new method works as a regular Promise and it returns the address after the user has picked their selected wallet
 - Include a new logic for events updates from the kit
+
+### [1.9.5](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.9.4...v1.9.5) (2025-09-05)
+### Add
+- Update the supported wallets everytime the modal is opened instead of just when the kit instance is created
+
+### [1.9.4](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.9.3...v1.9.4) (2025-09-05)
+### Change
+- Upgrade Freighter's module so it handles the two different ways Freighter answer to the signMessage method.
+
+### [1.9.3](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.9.2...v1.9.3) (2025-09-03)
+### Change
+- Upgrade Freighter API's library to latest
+
+### Fix
+- Update the types in kit's class so it includes the new `skipRequestAccess` parameter
+
+### [1.9.2](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.9.1...v1.9.2) (2025-09-02)
+### Add
+- Include a `skipRequestAccess` parameter for devs that need to ignore the `requestAccess` to freighter when calling the `getAddress` method.
+
+### [1.9.1](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.9.0...v1.9.1) (2025-08-26)
+### Change
+- Downgrade Albedo library to 0.12.0
+
+### [1.9.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.8.0...v1.9.0) (2025-08-25)
+### add
+- Add a new `isPlatformWrapper` logic so modules can check if they are the ones that will be used by the user without the need of the user manually picking it.
+- Klever wallet module
+
+### Change
+- Update @stellar/stellar-sdk version to latest
+- Update Trezor library
+- Update Albedo library
+
+### [1.8.0](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.7.7...v1.8.0) (2025-08-13)
+### add
+- xBull message signing logic
+- Upgrade xBull Wallet Connect library version
+
+### [1.7.7](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.7.6...v1.7.7) (2025-07-28)
+### Fix
+- Allow scrolling the modal (needed for small screens)
+
+### [1.7.6](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.7.5...v1.7.6) (2025-07-10)
+### Fix
+- Make the `isAvailable` method for Rabet and Hana so it has a small delay to avoid checking before the extensions have placed the window object
 
 ### [1.7.5](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.7.3...v1.7.5) (2025-06-03)
 ### Add
