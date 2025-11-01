@@ -16,32 +16,6 @@ export interface IKitError {
   ext?: string;
 }
 
-export interface IModalTheme {
-  bgColor: string;
-  textColor: string;
-  solidTextColor: string;
-  headerButtonColor: string;
-  dividerColor: string;
-  helpBgColor: string;
-  notAvailableTextColor: string;
-  notAvailableBgColor: string;
-  notAvailableBorderColor: string;
-}
-
-/**
- * @deprecated - This type is deprecated, use `IModalTheme` instead
- */
-export type ITheme = IModalTheme;
-
-export interface IButtonTheme {
-  bgColor: string;
-  textColor: string;
-  solidTextColor: string;
-  dividerColor: string;
-  buttonPadding: string;
-  buttonBorderRadius: string;
-}
-
 export enum ModuleType {
   HW_WALLET = "HW_WALLET",
   HOT_WALLET = "HOT_WALLET",
@@ -61,23 +35,28 @@ export interface ISupportedWallet {
 export enum KitEventType {
   STATE_UPDATED = "STATE_UPDATE",
   WALLET_SELECTED = "WALLET_SELECTED",
+  DISCONNECT = "DISCONNECT",
 }
 
 export type KitEventStateUpdated = {
   eventType: KitEventType.STATE_UPDATED;
   payload: {
-    address: string;
+    address: string | undefined;
     networkPassphrase: string;
   };
 };
 export type KitEventWalletSelected = {
   eventType: KitEventType.WALLET_SELECTED;
   payload: {
-    id: string;
+    id: string | undefined;
   };
 };
+export type KitEventDisconnected = {
+  eventType: KitEventType.DISCONNECT;
+  payload: {};
+};
 
-export type KitEvent = KitEventStateUpdated | KitEventWalletSelected;
+export type KitEvent = KitEventStateUpdated | KitEventWalletSelected | KitEventDisconnected;
 
 export interface IOnChangeEvent {
   address: string;

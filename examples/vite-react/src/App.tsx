@@ -1,12 +1,6 @@
-import { type IKitError, SwkAppDarkTheme, type ISupportedWallet } from "@creit-tech/stellar-wallets-kit/types";
+import { KitEventType, SwkAppDarkTheme } from "@creit-tech/stellar-wallets-kit/types";
 import { StellarWalletsKit } from "@creit-tech/stellar-wallets-kit/sdk";
-import {
-  activeAddress,
-  activeModule,
-  addressUpdatedEvent,
-  disconnectEvent,
-  moduleSelectedEvent
-} from "@creit-tech/stellar-wallets-kit/state";
+import { activeAddress, activeModule, } from "@creit-tech/stellar-wallets-kit/state";
 import { AlbedoModule } from "@creit-tech/stellar-wallets-kit/modules/albedo";
 import { FreighterModule } from "@creit-tech/stellar-wallets-kit/modules/freighter";
 import { HanaModule } from "@creit-tech/stellar-wallets-kit/modules/hana";
@@ -17,12 +11,7 @@ import { TrezorModule } from "@creit-tech/stellar-wallets-kit/modules/trezor";
 import { xBullModule } from "@creit-tech/stellar-wallets-kit/modules/xbull";
 import { WalletConnectModule } from "@creit-tech/stellar-wallets-kit/modules/wallet-connect";
 
-import {
-  Account,
-  Networks,
-  Operation,
-  TransactionBuilder,
-} from "@stellar/stellar-sdk";
+import { Account, Networks, Operation, TransactionBuilder, } from "@stellar/stellar-sdk";
 
 import { Component } from 'react'
 import reactLogo from './assets/react.svg'
@@ -59,24 +48,28 @@ StellarWalletsKit.init({
 export class App extends Component<any, any> {
   state = {
     address: activeAddress.value,
-    productName: activeModule.value?.productName,
+    moduleId: activeModule.value?.productId,
   };
 
-  componentDidMount() {
-    addressUpdatedEvent.subscribe((address: string | IKitError): void => {
-      console.log(`Address updated:`, address);
-      if (typeof address === 'string') this.setState({address});
+  componentDidMount(): void {
+    /**
+     * IMPORTANT: In this example we are not destroying these subscriptions,
+     * in your app you should do it when components are unmount.
+     */
+    StellarWalletsKit.on(KitEventType.STATE_UPDATED, event => {
+      console.log(`Address updated:`, event.payload.address);
+      this.setState({address: event.payload.address});
     });
-    moduleSelectedEvent.subscribe((module: ISupportedWallet | IKitError): void => {
-      console.log(`Module updated:`, module);
-      if ('name' in module) this.setState({productName: module.name});
+    StellarWalletsKit.on(KitEventType.WALLET_SELECTED, event => {
+      console.log(`Wallet ID:`, event.payload.id);
+      this.setState({moduleId: event.payload.id});
     });
-    disconnectEvent.subscribe((): void => {
+    StellarWalletsKit.on(KitEventType.DISCONNECT, () => {
       this.setState({address: undefined, productName: undefined});
     });
   }
 
-  async authModal() {
+  async authModal(): Promise<void> {
     try {
       const {address} = await StellarWalletsKit.authModal();
       console.log(`Address fetched:`, address);
@@ -85,11 +78,11 @@ export class App extends Component<any, any> {
     }
   }
 
-  async disconnect() {
+  async disconnect(): Promise<void> {
     StellarWalletsKit.disconnect();
   }
 
-  async signTransaction() {
+  async signTransaction(): Promise<void> {
     const {address} = await StellarWalletsKit.getAddress();
     console.log("StellarWalletsKit::getAddress", address);
     const tx = new TransactionBuilder(new Account(address, "-1"), {
@@ -147,7 +140,7 @@ export class App extends Component<any, any> {
 
             <div>
               <p>
-                Your selected wallet is: <br/> { this.state.productName }
+                Your selected wallet is: <br/> { this.state.moduleId }
               </p>
               <p>
                 Your account is: <br/> { this.state.address &&

@@ -6,7 +6,9 @@ import {
   type IKitError,
   type ISupportedWallet,
   type KitEvent,
+  KitEventStateUpdated,
   KitEventType,
+  KitEventWalletSelected,
   type ModuleInterface,
   type Networks,
   type ProfileModalParams,
@@ -23,6 +25,7 @@ import {
   addressUpdatedEvent,
   allowedWallets,
   closeEvent,
+  disconnectEvent,
   hideUnsupportedWallets,
   mode,
   selectedModuleId,
@@ -32,7 +35,6 @@ import {
 } from "../state/mod.ts";
 import { navigateTo, SwkApp } from "../components/mod.ts";
 import { disconnect, parseError } from "./utils.ts";
-import { resetHistory } from "../components/router.ts";
 
 export class StellarWalletsKit {
   static init(params: StellarWalletsKitInitParams) {
@@ -139,31 +141,48 @@ export class StellarWalletsKit {
 
   /**
    * A signal based event you can listen for different events across the kit
+   *
+   * NOTE: These events are also triggered at launch IE the first time the values are set.
    */
+  static on(type: KitEventType.STATE_UPDATED, callback: (event: KitEventStateUpdated) => void);
+  static on(type: KitEventType.WALLET_SELECTED, callback: (event: KitEventWalletSelected) => void);
+  static on(type: KitEventType.DISCONNECT, callback: () => void);
   static on(type: KitEventType, callback: (event: KitEvent) => void) {
     switch (type) {
-      case KitEventType.STATE_UPDATED:
+      case KitEventType.STATE_UPDATED: {
+        let currentActiveAddress = undefined;
+        let currentSelectedNetwork = undefined;
         return effect(() => {
-          console.log(`Wallets Kit Effect: ${KitEventType.STATE_UPDATED}`);
-          if (activeAddress.value && selectedNetwork.value) {
+          if (
+            (activeAddress.value !== currentActiveAddress || selectedNetwork.value !== currentSelectedNetwork)
+          ) {
+            currentActiveAddress = activeAddress.value;
+            currentSelectedNetwork = selectedNetwork.value;
             callback({
               eventType: KitEventType.STATE_UPDATED,
               payload: { address: activeAddress.value, networkPassphrase: selectedNetwork.value },
             });
           }
         });
+      }
 
-      case KitEventType.WALLET_SELECTED:
+      case KitEventType.WALLET_SELECTED: {
+        let current = undefined;
         return effect(() => {
-          console.log(`Wallets Kit Effect: ${KitEventType.WALLET_SELECTED}`);
-          if (selectedModuleId.value) {
+          if (selectedModuleId.value !== current) {
+            current = selectedModuleId.value;
             callback({
               eventType: KitEventType.WALLET_SELECTED,
               payload: { id: selectedModuleId.value },
             });
           }
         });
+      }
 
+      case KitEventType.DISCONNECT:
+        return disconnectEvent.subscribe((): void => {
+          callback({ eventType: KitEventType.DISCONNECT });
+        });
       default:
         throw new Error(`${type} event type is not supported`);
     }
