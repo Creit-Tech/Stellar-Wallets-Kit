@@ -1,0 +1,152 @@
+# Wallet Developers
+
+If you're a wallet developer and you want your wallet to be added to the kit, you can do it by creating a "module"
+compatible with the kit.
+
+This module needs to follow this interface:
+
+```typescript
+/**
+ * A module is a "plugin" we can use within the kit so is able to handle a
+ * specific type of wallet/service. There are some modules that are already
+ * in the kit but any wallet developer can create their own modules
+ */
+export interface ModuleInterface {
+  /**
+   * The Module type is used for filtering purposes, define the correct one in
+   * your module so we display it accordingly
+   */
+  moduleType: ModuleType;
+
+  /**
+   * This ID of the module, you should expose this ID as a constant variable
+   * so developers can use it to show/filter this module if they need to.
+   */
+  productId: string;
+
+  /**
+   * This is the name the kit will show in the builtin Modal.
+   */
+  productName: string;
+
+  /**
+   * This is the URL where users can either download, buy and just know how to
+   * get the product.
+   */
+  productUrl: string;
+
+  /**
+   * This icon will be displayed in the builtin Modal along with the product name.
+   */
+  productIcon: string;
+
+  /**
+   * This function should return true is the wallet is installed and/or available.
+   * If for example this wallet/service doesn't need to be installed to be used,
+   * return `true`.
+   *
+   * Important:
+   * Your wallet/library needs to be able to answer this function in less than 1000ms.
+   * Otherwise, the kit will show it as unavailable
+   */
+  isAvailable(): Promise<boolean>;
+
+  /**
+   * This method is optional and is only used if the wallet can handle changes in its state.
+   * For example if the user changes the current state of the wallet like it switches to another network, this should be triggered
+   */
+  onChange?(callback: (event: IOnChangeEvent) => void): void;
+
+  /**
+   * Function used to request the public key from the active account or
+   * specific path on a wallet.
+   *
+   * IMPORTANT: This method will do everything that is needed to get the address, in some wallets this could mean opening extra components for the user to pick (hardware wallets for example)
+   *
+   * @param params
+   * @param params.path - The path to tell the wallet which position to ask. This is commonly used in hardware wallets.
+   *
+   * @return Promise<{ address: string }>
+   */
+  getAddress(params?: { path?: string; skipRequestAccess?: boolean }): Promise<{ address: string }>;
+
+  /**
+   * A function to request a wallet to sign a built transaction in its XDR mode
+   *
+   * @param xdr - A Transaction or a FeeBumpTransaction
+   * @param opts - Options compatible with https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0043.md#signtransaction
+   * @param opts.networkPassphrase - The Stellar network to use when signing
+   * @param opts.address - The public key of the account that should be used to sign
+   * @param opts.path - This options is added for special cases like Hardware wallets
+   *
+   * @return Promise<{ signedTxXdr: string; signerAddress: string }>
+   */
+  signTransaction(
+    xdr: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+      submit?: boolean;
+      submitUrl?: string;
+    },
+  ): Promise<{ signedTxXdr: string; signerAddress?: string }>;
+
+  /**
+   * A function to request a wallet to sign an AuthEntry XDR.
+   *
+   * @param authEntry - An XDR string version of `HashIdPreimageSorobanAuthorization`
+   * @param opts - Options compatible with https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0043.md#signauthentry
+   * @param opts.networkPassphrase - The Stellar network to use when signing
+   * @param opts.address - The public key of the account that should be used to sign
+   * @param opts.path - This options is added for special cases like Hardware wallets
+   *
+   * @return - Promise<{ signedAuthEntry: string; signerAddress: string }>
+   */
+  signAuthEntry(
+    authEntry: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+    },
+  ): Promise<{ signedAuthEntry: string; signerAddress?: string }>;
+
+  /**
+   * A function to request a wallet to sign an AuthEntry XDR.
+   *
+   * @param message - An arbitrary string rather than a transaction or auth entry
+   * @param opts - Options compatible with https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0043.md#signmessage
+   * @param opts.networkPassphrase - The Stellar network to use when signing
+   * @param opts.address - The public key of the account that should be used to sign
+   * @param opts.path - This options is added for special cases like Hardware wallets
+   *
+   * @return - Promise<{ signedMessage: string; signerAddress: string }>
+   */
+  signMessage(
+    message: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+      path?: string;
+    },
+  ): Promise<{ signedMessage: string; signerAddress?: string }>;
+
+  /**
+   * A function to request the current selected network in the wallet. This comes
+   * handy when you are dealing with a wallet that doesn't allow you to specify which network to use (For example Lobstr and Rabet)
+   *
+   * @return - Promise<{ network: string; networkPassphrase: string }>
+   */
+  getNetwork(): Promise<{ network: string; networkPassphrase: string }>;
+
+  /**
+   * This method should be included if your wallet have some sort of async connection, for example WalletConnect
+   * Once this method is called, the module should clear all connections
+   */
+  disconnect?(): Promise<void>;
+}
+```
+
+After your module is done, open a PR with the module and we will review. Make sure to list if your module requires some
+extra dependency like for example a polyfill of Buffer .

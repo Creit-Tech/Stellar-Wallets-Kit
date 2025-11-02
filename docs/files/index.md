@@ -1,8 +1,30 @@
-# Stellar Wallets Kit
+---
+# https://vitepress.dev/reference/default-theme-home-page
+layout: home
 
-A kit to handle all Stellar Wallets at once with a simple API and without caring about individual configurations for
-each one of them. This library cares only about the connection and interaction with the wallets, allowing developers
-handling the UI/UX in the way they want.
+hero:
+  name: "Stellar Wallets Kit"
+  text: "All Stellar Wallets with just one library"
+  tagline: Forget about reading the wallets' documentation, just support all of them at once with this kit.
+  image:
+    src: /auth-modal.png
+    alt: Auth modal
+  actions:
+    - theme: brand
+      text: Get started
+      link: /#getting-started
+    - theme: alt
+      text: Documentation
+      link: /installation
+
+features:
+  - title: Framework Agnostic
+    details: No matter if you're using React, Angular, Vue or even vanilla! Our library works everywhere (default modules).
+  - title: Active Support
+    details: We are the same creators of xBull Wallet and other Stellar libraries, so we are constantly using and improving our own libraries.
+  - title: Custom Themes
+    details: Define the theme of the kit's components so it feels just like your website, users probably won't know you are using a library ;)
+---
 
 ## Getting started
 
@@ -49,8 +71,9 @@ console.log("Signed Transaction:", signedTxXdr);
 And that's it! you just added support to all Stellar wallets and signed a transaction that is ready to go to the public
 network with just a few lines of code 🙌
 
-You need something more complex? Maybe listening to updates from the kit or manually handling connection yourself? Check
-out the [documentation](https://stellarwalletskit.dev/) for more details.
+You need something more complex? Maybe listening to updates from the kit or manually handling the connection yourself?
+Check
+the [documentation](/installation) for more details.
 
 ## Compatible Wallets:
 
@@ -64,10 +87,6 @@ out the [documentation](https://stellarwalletskit.dev/) for more details.
 - Hot Wallet
 - Klever Wallet
 
-## Installation and usage
-
-Check how to install and use our library in our documentation at https://stellarwalletskit.dev
-
 ## Who is using the kit?
 
 If you would like to see the kit in action, check these websites that are already using it:
@@ -77,14 +96,3 @@ If you would like to see the kit in action, check these websites that are alread
 - https://mainnet.blend.capital/
 - https://app.fxdao.io/
 - https://app.sorobandomains.org/
-- https://stellar.cables.finance/
-
-## License
-
-![](https://img.shields.io/badge/License-MIT-lightgrey)
-
-Licensed under the MIT License, Copyright © 2023-present Creit Technologies LLP.
-
-Checkout the `LICENSE.md` file for more details.
-
-

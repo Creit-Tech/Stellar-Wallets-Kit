@@ -1,0 +1,29 @@
+{
+  "tasks": {
+    "dev": "deno run --check -A --node-modules-dir npm:vite",
+    "build": "deno run -A --node-modules-dir npm:vite build",
+    "preview": "deno run -A --node-modules-dir npm:vite preview",
+    "serve": "deno run --allow-net --allow-read jsr:@std/http@1/file-server dist/"
+  },
+  "compilerOptions": {
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
+  },
+  "imports": {
+    "@deno/vite-plugin": "npm:@deno/vite-plugin@^1.0.5",
+    "@preact/preset-vite": "npm:@preact/preset-vite@^2.10.2",
+    "@creit-tech/stellar-wallets-kit": "jsr:@creit-tech/stellar-wallets-kit@2.0.0-beta.1",
+    "@stellar/stellar-sdk": "npm:@stellar/stellar-sdk@^14.2.0",
+    "buffer": "npm:buffer@^6.0.3",
+    "preact": "npm:preact@^10.27.0",
+    "vite": "npm:vite@^7.0.6"
+  },
+  "links": [
+    "../../src"
+  ]
+}
