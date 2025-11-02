@@ -11,7 +11,6 @@ export interface StellarWalletsKitInitParams {
     showInstallLabel?: boolean;
     hideUnsupportedWallets?: boolean;
   };
-  profileModal?: ProfileModalParams;
 }
 
 export type AuthModalParams = {
