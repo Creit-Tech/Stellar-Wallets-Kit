@@ -1,6 +1,6 @@
 {
   "name": "@creit-tech/stellar-wallets-kit",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "license": "MIT",
   "tasks": {
     "build-npm": "deno run -A build_npm.ts",
