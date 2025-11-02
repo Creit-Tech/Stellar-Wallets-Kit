@@ -14,7 +14,7 @@ export const updatedThemeEffect: () => void = effect((): void => {
 });
 
 export const updatedSelectedModule: () => void = effect((): void => {
-  if (!!localstorage && !!activeModule.value) {
+  if (localstorage && !!activeModule.value) {
     try {
       const record: string | null = localstorage.getItem(LocalStorageKeys.usedWalletsIds);
       const usedWalletsIds: Set<string> = record ? new Set(JSON.parse(record)) : new Set();
@@ -32,7 +32,7 @@ export const updatedSelectedModule: () => void = effect((): void => {
 });
 
 export const updateActiveSession: () => void = effect((): void => {
-  if (!!localstorage) {
+  if (localstorage) {
     if (activeAddress.value) {
       localstorage.setItem(LocalStorageKeys.activeAddress, activeAddress.value);
     } else {

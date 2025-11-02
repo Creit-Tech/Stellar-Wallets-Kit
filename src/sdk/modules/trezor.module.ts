@@ -1,5 +1,7 @@
 import TrezorConnectImport from "@trezor/connect-web";
-const TrezorConnect = TrezorConnectImport as any;
+const TrezorConnect: typeof TrezorConnectImport = "default" in TrezorConnectImport
+  ? (TrezorConnectImport as any).default
+  : (TrezorConnectImport as any);
 import { transformTransaction } from "@trezor/connect-plugin-stellar";
 import { Transaction } from "@stellar/stellar-base";
 import { decodeHex, encodeBase64 } from "@std/encoding";
