@@ -1,0 +1,45 @@
+name: Deploy Documentation
+on:
+  workflow_dispatch:
+
+jobs:
+  build_and_deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22'
+
+      - name: Move to folder
+        run: cd docs
+
+      - name: Install dependencies
+        run: npm i -g pnpm & pnpm i
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Deploy static site to S3 bucket
+        if: success()
+        env:
+          BUCKET_NAME: ${{ secrets.DOCS_S3_BUCKET }}
+        run: aws s3 sync ./.vitepress/dist/ s3://$BUCKET_NAME --delete
+
+      - name: Invalidate Cloudfront cache
+        if: success()
+        env:
+          DISTRIBUTION_ID: ${{ secrets.MAINNET_DISTRIBUTION_ID }}
+        run: aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths '/*'
