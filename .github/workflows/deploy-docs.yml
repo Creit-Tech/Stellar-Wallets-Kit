@@ -23,22 +23,23 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Move to folder
-        run: cd docs
-
       - name: Install dependencies
+        working-directory: ./docs
         run: npm i -g pnpm && pnpm i
 
       - name: Build
+        working-directory: ./docs
         run: pnpm run build
 
       - name: Deploy static site to S3 bucket
+        working-directory: ./docs
         if: success()
         env:
           BUCKET_NAME: ${{ secrets.DOCS_S3_BUCKET }}
         run: aws s3 sync ./.vitepress/dist/ s3://$BUCKET_NAME --delete
 
       - name: Invalidate Cloudfront cache
+        working-directory: ./docs
         if: success()
         env:
           DISTRIBUTION_ID: ${{ secrets.MAINNET_DISTRIBUTION_ID }}
