@@ -15,6 +15,14 @@ pnpm add jsr:@creit-tech/stellar-wallets-kit
 deno add jsr:@creit-tech/stellar-wallets-kit
 ```
 
+```shell
+yarn add jsr:@creit-tech/stellar-wallets-kit
+```
+
+```shell
+bunx jsr add @creit-tech/stellar-wallets-kit
+```
+
 ## Users updating from V1
 
 The first version of the library was hosted in [NPM](https://www.npmjs.com/package/@creit.tech/stellar-wallets-kit) with

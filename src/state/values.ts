@@ -45,13 +45,17 @@ export const activeModule: ReadonlySignal<ModuleInterface | undefined> = compute
   return activeModules.value
     .find((m: ModuleInterface): boolean => m.productId === selectedModuleId.value);
 });
-export const mnemonicPath: Signal<string | undefined> = signal(undefined);
 const hardwareWalletPathsInitial: string | null = localstorage?.getItem(
   LocalStorageKeys.hardwareWalletPaths,
 );
 export const hardwareWalletPaths: Signal<Array<{ publicKey: string; index: number }>> = signal(
   JSON.parse(hardwareWalletPathsInitial || "[]"),
 );
+export const mnemonicPath: Signal<string | undefined> = computed(() => {
+  const path = hardwareWalletPaths.value.find(({ publicKey }): boolean => publicKey === activeAddress.value);
+  if (!path) return undefined;
+  return `44'/148'/${path.index}'`;
+});
 
 const wcSessionPathsInitial: string | null = localstorage?.getItem(LocalStorageKeys.wcSessionPaths);
 export const wcSessionPaths: Signal<Array<{ publicKey: string; topic: string }>> = signal(
@@ -60,7 +64,6 @@ export const wcSessionPaths: Signal<Array<{ publicKey: string; topic: string }>>
 
 export function resetWalletState(): void {
   routerHistory.value = [];
-  mnemonicPath.value = undefined;
   hardwareWalletPaths.value = [];
   wcSessionPaths.value = [];
 

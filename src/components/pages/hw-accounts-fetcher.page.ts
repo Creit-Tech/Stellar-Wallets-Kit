@@ -53,7 +53,6 @@ export class HwAccountsFetcherPage extends Component {
   }
 
   async selectAccount(params: { publicKey: string; index: number }): Promise<void> {
-    mnemonicPath.value = `44'/148'/${params.index}'`;
     activeAddress.value = params.publicKey;
     addressUpdatedEvent.next(params.publicKey);
   }
