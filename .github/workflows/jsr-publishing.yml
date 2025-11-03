@@ -16,6 +16,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
+      - name: Copy files
+        run: cp README.md ./src && cp LICENSE ./src
+
       - name: Publish package
         run: npx jsr publish
         working-directory: ./src
