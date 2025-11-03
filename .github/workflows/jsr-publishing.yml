@@ -1,0 +1,21 @@
+name: Publish Package to JSR
+on:
+  workflow_dispatch:
+
+  release:
+    types:
+      - published
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Publish package
+        run: npx jsr publish
+        working-directory: ./src
