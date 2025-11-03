@@ -20,5 +20,5 @@ jobs:
         run: cp README.md ./src && cp LICENSE ./src
 
       - name: Publish package
-        run: npx jsr publish
+        run: npx jsr publish --allow-dirty
         working-directory: ./src
