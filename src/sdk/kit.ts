@@ -104,7 +104,7 @@ export class StellarWalletsKit {
 
   static signTransaction(
     xdr: string,
-    opts?: { networkPassphrase?: string; address?: string; path?: string; submit?: boolean; submitUrl?: string },
+    opts?: { networkPassphrase?: string; address?: string; path?: string },
   ): Promise<{ signedTxXdr: string; signerAddress?: string }> {
     return StellarWalletsKit.selectedModule.signTransaction(xdr, {
       ...opts,

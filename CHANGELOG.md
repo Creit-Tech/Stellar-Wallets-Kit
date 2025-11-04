@@ -33,6 +33,9 @@ See [standard-version](https://github.com/conventional-changelog/standard-versio
   different authorization logic (for example, Freighter)
 - The kit now keeps more information in the localstorage, for example, it will remember the last Wallet Connect topic it
   used, so when using Wallet Connect, the user doesn't need to connect again and again.
+- Freighter and Lobstr are now default wallets in the wallet connect modal, this way users will see them first instead
+  of regular EVM wallets.
+- Fully remove both `submit` and `submitUrl` parameters
 - And many more.
 
 ### [1.9.5](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.9.4...v1.9.5) (2025-09-05)

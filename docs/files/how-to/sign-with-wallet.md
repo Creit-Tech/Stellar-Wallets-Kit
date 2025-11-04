@@ -19,7 +19,7 @@ These are the current methods the kit support related to signatures:
 interface StellarWalletsKit {
   signTransaction(
     xdr: string,
-    opts?: { networkPassphrase?: string; address?: string; path?: string; submit?: boolean; submitUrl?: string },
+    opts?: { networkPassphrase?: string; address?: string; path?: string; },
   ): Promise<{ signedTxXdr: string; signerAddress?: string }>;
 
   signAuthEntry(

@@ -41,8 +41,6 @@ export class KleverModule implements ModuleInterface {
       networkPassphrase?: string;
       address?: string;
       path?: string;
-      submit?: boolean;
-      submitUrl?: string;
     },
   ): Promise<{ signedTxXdr: string; signerAddress?: string }> {
     return this.runChecks()

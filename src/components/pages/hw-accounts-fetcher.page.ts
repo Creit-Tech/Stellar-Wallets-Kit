@@ -1,7 +1,7 @@
 import { type VNode, Component } from 'preact';
 import { signal, type Signal } from '@preact/signals';
 import { html } from 'htm/preact';
-import { activeAddress, activeModule, hardwareWalletPaths, mnemonicPath, modalTitle } from '../../state/values.ts';
+import { activeAddress, activeModule, hardwareWalletPaths, modalTitle } from '../../state/values.ts';
 import { tw } from "../twind.ts";
 import type { HardwareWalletModuleInterface } from '../../types/mod.ts';
 import { Button, ButtonSize } from '../shared/button.ts';

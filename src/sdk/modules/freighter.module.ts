@@ -82,8 +82,6 @@ export class FreighterModule implements ModuleInterface {
       networkPassphrase?: string;
       address?: string;
       path?: string;
-      submit?: boolean;
-      submitUrl?: string;
     },
   ): Promise<{ signedTxXdr: string; signerAddress?: string }> {
     try {

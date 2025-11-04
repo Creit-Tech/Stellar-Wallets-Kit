@@ -87,8 +87,6 @@ export interface ModuleInterface {
       networkPassphrase?: string;
       address?: string;
       path?: string;
-      submit?: boolean;
-      submitUrl?: string;
     },
   ): Promise<{ signedTxXdr: string; signerAddress?: string }>;
 
