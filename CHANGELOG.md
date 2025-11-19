@@ -38,6 +38,11 @@ See [standard-version](https://github.com/conventional-changelog/standard-versio
 - Fully remove both `submit` and `submitUrl` parameters
 - And many more.
 
+### Fix
+
+- Update Freighter module `signAuthEntry` method so it ignores the freighter-api types and follow a similar logic to the
+  `signMessage` method uses (handle both a string and buffer response)
+
 ### [1.9.5](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.9.4...v1.9.5) (2025-09-05)
 
 ### Add
