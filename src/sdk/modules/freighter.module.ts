@@ -111,13 +111,10 @@ export class FreighterModule implements ModuleInterface {
     try {
       await this.runChecks();
 
-      /**
-       * TODO: We are using "any" because the Freighter api has a bug with the types, they will fix it in a future version. Remove the "any" once we update the dependency
-       */
       const { signedAuthEntry, signerAddress, error } = await signAuthEntry(authEntry, {
         address: opts?.address,
         networkPassphrase: opts?.networkPassphrase,
-      }) as any;
+      });
 
       if (error) return Promise.reject(error);
       if (!signedAuthEntry) {

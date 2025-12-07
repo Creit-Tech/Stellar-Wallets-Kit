@@ -96,7 +96,7 @@ export function AuthOptionsPage(): VNode {
           <${Avatar} alt="${wrapper.name} icon" image="${wrapper.icon}" size="${AvatarSize.md}" />
         </div>
 
-        <p class="${tw("text-lg w-full")}">
+        <p class="${tw("text-foreground text-lg w-full")}">
           Connecting to your wallet using <b>${wrapper.name}</b>
         </p>
       </div>
@@ -104,7 +104,7 @@ export function AuthOptionsPage(): VNode {
   }
 
   const loadingMessage = html`
-    <div class="${tw("w-full text-center p-4")}">Loading wallets...</div>
+    <div class="${tw("w-full text-center text-foreground font-semibold p-4")}">Loading wallets...</div>
   `;
 
   const walletItem = sortedWallet.value.map((wallet: ISupportedWallet) => {
