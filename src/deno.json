@@ -20,7 +20,7 @@
     "@reown/appkit": "npm:@reown/appkit@1.8.12",
     "@std/bytes": "jsr:@std/bytes@1.0.6",
     "@std/encoding": "jsr:@std/encoding@1.0.10",
-    "@stellar/freighter-api": "npm:@stellar/freighter-api@5.0.0",
+    "@stellar/freighter-api": "npm:@stellar/freighter-api@6.0.0",
     "@stellar/stellar-base": "npm:@stellar/stellar-base@14.0.1",
     "@trezor/connect-plugin-stellar": "npm:@trezor/connect-plugin-stellar@9.2.3",
     "@trezor/connect-web": "npm:@trezor/connect-web@9.6.4",

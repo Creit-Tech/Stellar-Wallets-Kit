@@ -199,8 +199,12 @@ export class StellarWalletsKit {
           type: mod.moduleType,
           icon: mod.productIcon,
           isAvailable: await Promise.race([timer, mod.isAvailable()]),
+          isPlatformWrapper: await Promise.race([
+            timer,
+            mod.isPlatformWrapper ? mod.isPlatformWrapper() : Promise.resolve(false),
+          ]),
           url: mod.productUrl,
-        };
+        } satisfies ISupportedWallet;
       }),
     );
 
@@ -236,8 +240,6 @@ export class StellarWalletsKit {
     navigateTo(SwkAppRoute.AUTH_OPTIONS);
     mode.value = params?.container ? SwkAppMode.BLOCK : SwkAppMode.FIXED;
 
-    await StellarWalletsKit.refreshSupportedWallets();
-
     const wrapper: HTMLDivElement = document.createElement("div");
     (params?.container || document.body).appendChild(wrapper);
     render(
@@ -246,6 +248,8 @@ export class StellarWalletsKit {
       `,
       wrapper,
     );
+
+    await StellarWalletsKit.refreshSupportedWallets();
 
     const subs: Array<() => void> = [];
     const close = (): void => {

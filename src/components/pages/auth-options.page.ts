@@ -82,44 +82,71 @@ async function onWalletSelected(item: ISupportedWallet): Promise<void> {
 export function AuthOptionsPage(): VNode {
   modalTitle.value = "Connect Wallet";
 
+  // If the auth modal is rendered from a wallet wrapper, we assume the direct connection
+  const wrapper: ISupportedWallet | undefined = sortedWallet.value.find((w: ISupportedWallet): boolean =>
+    w.isPlatformWrapper
+  );
+  if (wrapper) {
+    onWalletSelected(wrapper)
+      .then();
+
+    return html`
+      <div class="${tw("w-full text-center px-4 py-8")}">
+        <div class="${tw("w-full mb-4")}">
+          <${Avatar} alt="${wrapper.name} icon" image="${wrapper.icon}" size="${AvatarSize.md}" />
+        </div>
+
+        <p class="${tw("text-lg w-full")}">
+          Connecting to your wallet using <b>${wrapper.name}</b>
+        </p>
+      </div>
+    `;
+  }
+
+  const loadingMessage = html`
+    <div class="${tw("w-full text-center p-4")}">Loading wallets...</div>
+  `;
+
+  const walletItem = sortedWallet.value.map((wallet: ISupportedWallet) => {
+    return html`
+      <li
+        onClick="${() => onWalletSelected(wallet)}"
+        class="${tw(
+          "px-2 py-2 cursor-pointer flex justify-between items-center bg-background hover:border-light-gray border-1 border-transparent rounded-default duration-150 ease active:bg-background active:border-gray",
+        )}"
+      >
+        <div class="${tw("flex items-center gap-2")}">
+          <${Avatar} class="${tw("mr-2")}" alt="${wallet.name} icon" image="${wallet.icon}" size="${AvatarSize
+            .sm}" />
+          <p class="${tw("text-foreground font-semibold")}">${wallet.name}</p>
+        </div>
+
+        ${showInstallLabel.value && !wallet.isAvailable
+          ? html`
+            <div class="${tw("ml-4 flex items-center")}">
+              <small
+                class="${tw(
+                  "inline-flex items-center border-1 border-border px-2 py-1 rounded-default text-foreground-secondary text-xs bg-background-secondary",
+                )}"
+              >
+                ${installText.value}
+
+                <svg class="${tw(
+                  "w-4 h-4",
+                )}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"></path>
+                </svg>
+              </small>
+            </div>
+          `
+          : ""}
+      </li>
+    `;
+  });
+
   return html`
     <ul class="${tw("w-full grid gap-2 px-2 py-4")}">
-      ${sortedWallet.value.map((wallet: ISupportedWallet) => {
-        return html`
-          <li
-            onClick="${() => onWalletSelected(wallet)}"
-            class="${tw(
-              "px-2 py-2 cursor-pointer flex justify-between items-center bg-background hover:border-light-gray border-1 border-transparent rounded-default duration-150 ease active:bg-background active:border-gray",
-            )}"
-          >
-            <div class="${tw("flex items-center gap-2")}">
-              <${Avatar} class="${tw("mr-2")}" alt="${wallet.name} icon" image="${wallet.icon}" size="${AvatarSize
-                .sm}" />
-              <p class="${tw("text-foreground font-semibold")}">${wallet.name}</p>
-            </div>
-
-            ${showInstallLabel.value && !wallet.isAvailable
-              ? html`
-                <div class="${tw("ml-4 flex items-center")}">
-                  <small
-                    class="${tw(
-                      "inline-flex items-center border-1 border-border px-2 py-1 rounded-default text-foreground-secondary text-xs bg-background-secondary",
-                    )}"
-                  >
-                    ${installText.value}
-
-                    <svg class="${tw(
-                      "w-4 h-4",
-                    )}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"></path>
-                    </svg>
-                  </small>
-                </div>
-              `
-              : ""}
-          </li>
-        `;
-      })}
+      ${sortedWallet.value.length === 0 ? loadingMessage : walletItem}
     </ul>
   `;
 }

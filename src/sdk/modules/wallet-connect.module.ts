@@ -7,6 +7,17 @@ import { type ModuleInterface, ModuleType, Networks } from "../../types/mod.ts";
 import { disconnect, parseError } from "../utils.ts";
 import { activeAddress, selectedNetwork, wcSessionPaths } from "../../state/values.ts";
 
+declare const window:
+  & Window
+  & typeof globalThis
+  & {
+    stellar?: {
+      provider: string;
+      platform: string;
+      version: string;
+    };
+  };
+
 export const WALLET_CONNECT_ID = "wallet_connect";
 
 export class WalletConnectModule implements ModuleInterface {
@@ -64,6 +75,19 @@ export class WalletConnectModule implements ModuleInterface {
 
   async isAvailable(): Promise<boolean> {
     return !!this.signClient && !!this.modal;
+  }
+
+  async isPlatformWrapper(): Promise<boolean> {
+    const options: Array<{ provider: string; platform: string }> = [
+      {
+        provider: "freighter",
+        platform: "mobile",
+      },
+    ];
+
+    return !!options.find(({ provider, platform }): boolean => {
+      return window.stellar?.provider === provider && window.stellar?.platform === platform;
+    });
   }
 
   async runChecks(): Promise<void> {
