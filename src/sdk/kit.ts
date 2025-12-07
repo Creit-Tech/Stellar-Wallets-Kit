@@ -198,11 +198,11 @@ export class StellarWalletsKit {
           name: mod.productName,
           type: mod.moduleType,
           icon: mod.productIcon,
-          isAvailable: await Promise.race([timer, mod.isAvailable()]),
+          isAvailable: await Promise.race([timer, mod.isAvailable()]).catch((): boolean => false),
           isPlatformWrapper: await Promise.race([
             timer,
             mod.isPlatformWrapper ? mod.isPlatformWrapper() : Promise.resolve(false),
-          ]),
+          ]).catch((): boolean => false),
           url: mod.productUrl,
         } satisfies ISupportedWallet;
       }),
