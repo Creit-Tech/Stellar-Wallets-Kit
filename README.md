@@ -63,6 +63,7 @@ out the [documentation](https://stellarwalletskit.dev/) for more details.
 - Hana
 - Hot Wallet
 - Klever Wallet
+- OneKey Wallet
 
 ## Installation and usage
 
