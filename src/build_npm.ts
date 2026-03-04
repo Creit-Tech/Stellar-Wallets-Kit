@@ -53,6 +53,10 @@ await build({
       path: "./sdk/modules/lobstr.module.ts",
     },
     {
+      name: "./modules/onekey",
+      path: "./sdk/modules/onekey.module.ts",
+    },
+    {
       name: "./modules/rabet",
       path: "./sdk/modules/rabet.module.ts",
     },

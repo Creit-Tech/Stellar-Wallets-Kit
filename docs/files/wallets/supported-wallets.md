@@ -15,6 +15,7 @@ These are the current supported wallets/modules:
 | xBull          | xBullModule         | /xbull          | Yes          |
 | HOT            | HotWalletModule     | /hotwallet      | No           |
 | Klever         | KleverModule        | /klever         | Yes          |
+| OneKey         | OneKeyModule        | /onekey         | Yes          |
 
 ## How to import a wallet's module?
 
