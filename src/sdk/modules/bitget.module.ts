@@ -25,10 +25,10 @@ export class BitgetModule implements ModuleInterface {
     }
   }
 
-  async isAvailable() {
+  async isAvailable(): Promise<boolean> {
     return !!this.provider;
   }
-  async getAddress() {
+  async getAddress(): Promise<{ address: string }> {
     try {
       await this.runChecks();
       const address = await this.provider.connect();
@@ -44,7 +44,7 @@ export class BitgetModule implements ModuleInterface {
       address?: string;
       path?: string;
     },
-  ) {
+  ): Promise<{ signedMessage: string; signerAddress?: string }> {
     try {
       await this.runChecks();
       const signatureHex = await this.provider.signMessage(message, opts?.address);
@@ -63,7 +63,7 @@ export class BitgetModule implements ModuleInterface {
       submit?: boolean;
       submitUrl?: string;
     },
-  ) {
+  ): Promise<{ signedTxXdr: string; signerAddress?: string }> {
     try {
       await this.runChecks();
       const signedTxXdr = await this.provider.signTransaction(xdr, opts);
@@ -73,14 +73,7 @@ export class BitgetModule implements ModuleInterface {
     }
   }
 
-  async signAuthEntry(
-    authEntry: string,
-    opts?: {
-      networkPassphrase?: string;
-      address?: string;
-      path?: string;
-    },
-  ): Promise<{
+  async signAuthEntry(): Promise<{
     signedAuthEntry: string;
     signerAddress?: string;
   }> {
@@ -90,7 +83,7 @@ export class BitgetModule implements ModuleInterface {
     };
   }
 
-  async getNetwork() {
+  async getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
     try {
       await this.runChecks();
       return this.provider.network();
