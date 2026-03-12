@@ -45,6 +45,7 @@
     "./modules/klever": "./sdk/modules/klever.module.ts",
     "./modules/ledger": "./sdk/modules/ledger.module.ts",
     "./modules/lobstr": "./sdk/modules/lobstr.module.ts",
+    "./modules/onekey": "./sdk/modules/onekey.module.ts",
     "./modules/rabet": "./sdk/modules/rabet.module.ts",
     "./modules/trezor": "./sdk/modules/trezor.module.ts",
     "./modules/wallet-connect": "./sdk/modules/wallet-connect.module.ts",
