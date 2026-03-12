@@ -16,6 +16,7 @@ These are the current supported wallets/modules:
 | HOT            | HotWalletModule     | /hotwallet      | No           |
 | Klever         | KleverModule        | /klever         | Yes          |
 | OneKey         | OneKeyModule        | /onekey         | Yes          |
+| Bitget         | BitgetModule        | /bitget         | Yes          |
 
 ## How to import a wallet's module?
 

@@ -39,6 +39,7 @@
     "./types": "./types/mod.ts",
     "./sdk": "./sdk/mod.ts",
     "./modules/albedo": "./sdk/modules/albedo.module.ts",
+    "./modules/bitget": "./sdk/modules/bitget.module.ts",
     "./modules/freighter": "./sdk/modules/freighter.module.ts",
     "./modules/hana": "./sdk/modules/hana.module.ts",
     "./modules/hotwallet": "./sdk/modules/hotwallet.module.ts",

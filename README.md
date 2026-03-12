@@ -64,6 +64,7 @@ out the [documentation](https://stellarwalletskit.dev/) for more details.
 - Hot Wallet
 - Klever Wallet
 - OneKey Wallet
+- Bitget Wallet
 
 ## Installation and usage
 

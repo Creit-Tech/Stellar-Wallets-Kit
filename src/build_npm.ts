@@ -29,6 +29,10 @@ await build({
       path: "./sdk/modules/albedo.module.ts",
     },
     {
+      name: "./modules/bitget",
+      path: "./sdk/modules/bitget.module.ts",
+    },
+    {
       name: "./modules/freighter",
       path: "./sdk/modules/freighter.module.ts",
     },
