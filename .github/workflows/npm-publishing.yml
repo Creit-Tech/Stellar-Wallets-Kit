@@ -22,6 +22,8 @@ jobs:
       - run: deno task build-npm
         working-directory: src
 
+      - run: cp README.md ./src/dist/
+        
       - run: npm publish
         working-directory: src/dist
         env:

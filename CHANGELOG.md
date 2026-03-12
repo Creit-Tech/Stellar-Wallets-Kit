@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.0.1 (2026-03-11)
+
+### Changes
+
+- Update the recently included Bitget module
+- Include PRs 85 and 86
+
 ### 2.0.0 (2026-02-11)
 
 ### Changes
