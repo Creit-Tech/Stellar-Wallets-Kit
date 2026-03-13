@@ -136,6 +136,26 @@ export class StellarWalletsKit {
     });
   }
 
+  static signAndSubmitTransaction(
+    xdr: string,
+    opts?: { networkPassphrase?: string; address?: string },
+  ): Promise<{ status: "success" | "pending" }> {
+    const module = StellarWalletsKit.selectedModule;
+
+    if (!module.signAndSubmitTransaction) {
+      throw {
+        code: -3,
+        message:
+          `The selected module "${module.productName}" does not support the "signAndSubmitTransaction" method. This method is only available for WalletConnect-based modules.`,
+      };
+    }
+
+    return module.signAndSubmitTransaction(xdr, {
+      ...opts,
+      networkPassphrase: opts?.networkPassphrase || selectedNetwork.value,
+    });
+  }
+
   static getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
     return StellarWalletsKit.selectedModule.getNetwork();
   }
