@@ -111,6 +111,13 @@ export class WalletConnectModule implements ModuleInterface {
           events: [],
         },
       },
+      optionalNamespaces: {
+        stellar: {
+          methods: [WalletConnectAllowedMethods.SIGN_AND_SUBMIT],
+          chains: this.wcParams.allowedChains || [WalletConnectTargetChain.PUBLIC],
+          events: [],
+        },
+      },
     });
 
     if (uri) {
@@ -161,6 +168,39 @@ export class WalletConnectModule implements ModuleInterface {
     });
 
     return { signedTxXdr: signedXDR };
+  }
+
+  async signAndSubmitTransaction(xdr: string, opts?: {
+    networkPassphrase?: string;
+    address?: string;
+  }): Promise<{ status: "success" | "pending" }> {
+    await this.runChecks();
+
+    const paths = wcSessionPaths.value;
+    const targetSession = paths.find((path) => {
+      return (opts?.address || activeAddress.value) === path.publicKey;
+    });
+
+    if (!targetSession) {
+      throw parseError(new Error("No WalletConnect session found or it expired for the selected address."));
+    }
+
+    const result = await this.signClient.request<{ status: string }>({
+      topic: targetSession.topic,
+      chainId: opts?.networkPassphrase === Networks.PUBLIC
+        ? WalletConnectTargetChain.PUBLIC
+        : WalletConnectTargetChain.TESTNET,
+      request: {
+        method: WalletConnectAllowedMethods.SIGN_AND_SUBMIT,
+        params: { xdr },
+      },
+    });
+
+    if (result.status !== "success" && result.status !== "pending") {
+      throw parseError(new Error(`Unexpected status from wallet: ${result.status}`));
+    }
+
+    return { status: result.status as "success" | "pending" };
   }
 
   async disconnect(): Promise<void> {
@@ -241,8 +281,9 @@ export enum WalletConnectTargetChain {
 
 /**
  * Wallet connect supports both just signing a xdr or signing and sending the transaction to the network.
- * This will only be compatible with just signing the transaction
+ * SIGN returns the signed XDR, while SIGN_AND_SUBMIT sends the transaction to the network (useful for multisig).
  */
 export enum WalletConnectAllowedMethods {
   SIGN = "stellar_signXDR",
+  SIGN_AND_SUBMIT = "stellar_signAndSubmitXDR",
 }
