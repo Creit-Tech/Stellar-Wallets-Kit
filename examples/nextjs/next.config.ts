@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@creit-tech/stellar-wallets-kit"],
+  /* config options here */
 };
 
 export default nextConfig;
