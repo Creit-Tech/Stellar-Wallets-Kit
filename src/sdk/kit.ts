@@ -93,6 +93,7 @@ export class StellarWalletsKit {
 
   /**
    * This method will get you the `address` that's currently active in the Kit's memory. Such address is fetched when the user connects its wallet
+   *
    * NOTE: If you want to fetch the address directly from the wallet, use the `fetchAddress` method instead.
    */
   static async getAddress(): Promise<{ address: string }> {
@@ -104,6 +105,19 @@ export class StellarWalletsKit {
     }
 
     return { address: activeAddress.value };
+  }
+
+  /**
+   * This method will fetch the address from the selected module and update the internal kit's memory
+   *
+   * NOTE: We suggest that you use `getAddress` when possible instead of this method. Trying to fetch the address from a module
+   * that is not ready might cause unexpected behaviors (for example with Freighter if no permission has been granted or when the user is using a hardware wallet);
+   */
+  static async fetchAddress(): Promise<{ address: string }> {
+    const { address } = await StellarWalletsKit.selectedModule.getAddress();
+    activeAddress.value = address;
+    addressUpdatedEvent.next(address);
+    return { address };
   }
 
   static signTransaction(
@@ -145,8 +159,7 @@ export class StellarWalletsKit {
     if (!module.signAndSubmitTransaction) {
       throw {
         code: -3,
-        message:
-          `The selected module "${module.productName}" does not support the "signAndSubmitTransaction" method. This method is only available for WalletConnect-based modules.`,
+        message: `The selected module "${module.productName}" does not support the "signAndSubmitTransaction" method.`,
       };
     }
 

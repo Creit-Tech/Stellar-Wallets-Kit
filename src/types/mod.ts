@@ -209,8 +209,9 @@ export interface ModuleInterface {
    * This is particularly useful for multisig accounts where the wallet coordinates
    * collecting all required signatures before submitting.
    *
-   * Not all modules support this method. Currently only WalletConnect-based modules
-   * support sign-and-submit functionality.
+   * NOTE: Not all modules support this method. Currently only WalletConnect-based modules support sign-and-submit functionality
+   * and not all WalletConnect-based wallets support this feature. We suggest avoiding it unless you are sure your users will
+   * use a compatible wallet
    *
    * @param xdr - A Transaction or a FeeBumpTransaction in XDR format
    * @param opts - Options for the signing operation
