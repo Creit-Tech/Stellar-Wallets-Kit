@@ -205,6 +205,31 @@ export interface ModuleInterface {
   ): Promise<{ signedMessage: string; signerAddress?: string }>;
 
   /**
+   * A function to request a wallet to sign and submit a transaction to the network.
+   * This is particularly useful for multisig accounts where the wallet coordinates
+   * collecting all required signatures before submitting.
+   *
+   * Not all modules support this method. Currently only WalletConnect-based modules
+   * support sign-and-submit functionality.
+   *
+   * @param xdr - A Transaction or a FeeBumpTransaction in XDR format
+   * @param opts - Options for the signing operation
+   * @param opts.networkPassphrase - The Stellar network to use when signing
+   * @param opts.address - The public key of the account that should be used to sign
+   *
+   * @return Promise<{ status: "success" | "pending" }> - "success" means the transaction
+   * was submitted successfully. "pending" means the wallet is coordinating remaining
+   * signatures (common with multisig accounts).
+   */
+  signAndSubmitTransaction?(
+    xdr: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+    },
+  ): Promise<{ status: "success" | "pending" }>;
+
+  /**
    * A function to request the current selected network in the wallet. This comes
    * handy when you are dealing with a wallet that doesn't allow you to specify which network to use (For example Lobstr and Rabet)
    *
