@@ -1,21 +1,20 @@
 import { type ModuleInterface, ModuleType } from "../../types/mod.ts";
 import { parseError } from "../utils.ts";
 
-
 interface SignTransactionResult {
   signedTxXdr: string;
   signerAddress?: string;
-};
+}
 
 interface SignAuthEntryResult {
   signedAuthEntry: string;
   signerAddress?: string;
-};
+}
 
 interface SignMessageResult {
   signedMessage: string;
   signerAddress?: string;
-};
+}
 
 declare const window: {
   $onekey?: {
@@ -26,18 +25,16 @@ declare const window: {
         address?: string;
         path?: string;
       }): Promise<SignTransactionResult>;
-      signAuthEntry(authEntry: string,
-        opts?: {
-          networkPassphrase?: string;
-          address?: string;
-          path?: string;
-        },): Promise<SignAuthEntryResult>;
-      signMessage(message: string,
-        opts?: {
-          networkPassphrase?: string;
-          address?: string;
-          path?: string;
-        }): Promise<SignMessageResult>;
+      signAuthEntry(authEntry: string, opts?: {
+        networkPassphrase?: string;
+        address?: string;
+        path?: string;
+      }): Promise<SignAuthEntryResult>;
+      signMessage(message: string, opts?: {
+        networkPassphrase?: string;
+        address?: string;
+        path?: string;
+      }): Promise<SignMessageResult>;
     };
   };
 };
