@@ -64,7 +64,8 @@ export class WalletConnectModule implements ModuleInterface {
       projectId: wcParams.projectId,
       manualWCControl: true,
       enableReconnect: true,
-      networks: [mainnet],
+      // We use "as any" here because the AppKit types are not correct after the package got updated
+      networks: [mainnet as any],
       featuredWalletIds: [
         "aef3112adf415ec870529e96b4d7b434f13961a079d1ee42c9738217d8adeb91", // Freighter
         "76a3d548a08cf402f5c7d021f24fd2881d767084b387a5325df88bc3d4b6f21b", // Lobstr
