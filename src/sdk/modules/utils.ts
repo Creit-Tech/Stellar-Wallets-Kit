@@ -8,6 +8,7 @@ import { HanaModule } from "./hana.module.ts";
 import { KleverModule } from "./klever.module.ts";
 import { OneKeyModule } from "./onekey.module.ts";
 import { BitgetModule } from "./bitget.module.ts";
+import { FordefiModule } from "./fordefi.module.ts";
 
 /**
  * This method returns all modules that don't require extra configuration before they can be loaded
@@ -22,6 +23,7 @@ export function defaultModules(opts?: {
   const modules: ModuleInterface[] = [
     new AlbedoModule(),
     new FreighterModule(),
+    new FordefiModule(),
     new RabetModule(),
     new xBullModule(),
     new LobstrModule(),
