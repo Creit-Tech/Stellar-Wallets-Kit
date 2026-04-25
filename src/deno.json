@@ -52,6 +52,7 @@
     "./modules/trezor": "./sdk/modules/trezor.module.ts",
     "./modules/wallet-connect": "./sdk/modules/wallet-connect.module.ts",
     "./modules/xbull": "./sdk/modules/xbull.module.ts",
+    "./modules/cactuslink": "./sdk/modules/cactuslink.module.ts",
     "./modules/utils": "./sdk/modules/utils.ts"
   },
   "fmt": {
