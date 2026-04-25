@@ -77,9 +77,14 @@ await build({
       path: "./sdk/modules/xbull.module.ts",
     },
     {
+      name: "./modules/cactuslink",
+      path: "./sdk/modules/cactuslink.module.ts",
+    },
+    {
       name: "./modules/utils",
       path: "./sdk/modules/utils.ts",
     },
+
   ],
   outDir: "./dist",
   shims: {

@@ -8,6 +8,7 @@ import { HanaModule } from "./hana.module.ts";
 import { KleverModule } from "./klever.module.ts";
 import { OneKeyModule } from "./onekey.module.ts";
 import { BitgetModule } from "./bitget.module.ts";
+import { CactusLinkModule } from "./cactuslink.module.ts";
 
 /**
  * This method returns all modules that don't require extra configuration before they can be loaded
@@ -29,6 +30,7 @@ export function defaultModules(opts?: {
     new KleverModule(),
     new OneKeyModule(),
     new BitgetModule(),
+    new CactusLinkModule(),
   ];
   return opts?.filterBy ? modules.filter(opts.filterBy) : modules;
 }
