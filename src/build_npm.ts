@@ -33,6 +33,10 @@ await build({
       path: "./sdk/modules/bitget.module.ts",
     },
     {
+      name: "./modules/fordefi",
+      path: "./sdk/modules/fordefi.module.ts",
+    },
+    {
       name: "./modules/freighter",
       path: "./sdk/modules/freighter.module.ts",
     },
