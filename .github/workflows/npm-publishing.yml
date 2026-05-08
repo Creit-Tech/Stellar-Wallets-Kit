@@ -17,7 +17,7 @@ jobs:
           node-version: '24.15.0'
           registry-url: 'https://registry.npmjs.org'
 
-      - run: npm -g i deno pnpm
+      - run: npm -g i deno@2.7.4 pnpm@10.33.4
 
       - run: deno task build-npm
         working-directory: src
