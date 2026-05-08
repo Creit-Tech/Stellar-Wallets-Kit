@@ -14,7 +14,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '20.11.0'
+          node-version: '24.15.0'
           registry-url: 'https://registry.npmjs.org'
 
       - run: npm -g i deno pnpm
@@ -23,7 +23,7 @@ jobs:
         working-directory: src
 
       - run: cp README.md ./src/dist/
-        
+
       - run: npm publish
         working-directory: src/dist
         env:
