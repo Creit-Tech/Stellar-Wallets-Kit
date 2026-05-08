@@ -9,7 +9,7 @@ declare const window: {
     signTransaction(
       xdr: string,
       opts?: { address?: string; networkPassphrase?: string },
-    ): Promise<{ signedTxXdr: string}>;
+    ): Promise<{ signedTxXdr: string }>;
     signAuthEntry(
       authEntry: string,
       opts?: { address?: string; networkPassphrase?: string },
@@ -42,9 +42,14 @@ export class CactusLinkModule implements ModuleInterface {
     return typeof window !== "undefined" && !!window.cactuslink_stellar;
   }
 
-  async getAddress(): Promise<{ address: string }> {
+  async getAddress(params: { skipRequestAccess?: boolean }): Promise<{ address: string }> {
     try {
       await this.runChecks();
+
+      if (params?.skipRequestAccess !== true) {
+        const requestAccessResult = await window.cactuslink_stellar!.requestAccess();
+        if (requestAccessResult.error) return Promise.reject(parseError(requestAccessResult.error));
+      }
 
       const { address } = await window.cactuslink_stellar!.getAddress();
       if (!address) {
@@ -100,7 +105,7 @@ export class CactusLinkModule implements ModuleInterface {
       }
 
       return {
-        signedAuthEntry
+        signedAuthEntry,
       };
     } catch (e) {
       throw parseError(e);
@@ -127,7 +132,7 @@ export class CactusLinkModule implements ModuleInterface {
       }
 
       return {
-        signedMessage
+        signedMessage,
       };
     } catch (e) {
       throw parseError(e);
