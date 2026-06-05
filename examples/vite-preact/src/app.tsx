@@ -19,10 +19,14 @@ import { WalletConnectModule } from "@creit-tech/stellar-wallets-kit/modules/wal
 
 import {
   Account,
+  Address,
+  Asset,
+  hash,
   Networks,
   Operation,
   Transaction,
   TransactionBuilder,
+  xdr,
 } from "@stellar/stellar-sdk";
 
 StellarWalletsKit.init({
@@ -45,6 +49,8 @@ StellarWalletsKit.init({
       metadata: {
         name: "Stellar Wallets Kit",
         description: "Add support to all Stellar Wallets with a single library",
+        url: "http://localhost:5173",
+        icons: [],
       },
     }),
   ],
@@ -83,6 +89,54 @@ async function signTransaction(): Promise<void> {
   console.log("Signed Transaction:", signedTxXdr);
 }
 
+async function signMessage() {
+  const { address } = await StellarWalletsKit.getAddress();
+  console.log("StellarWalletsKit::getAddress", address);
+  const { signedMessage } = await StellarWalletsKit.signMessage(
+    "Hello, World!",
+    {
+      networkPassphrase: Networks.PUBLIC,
+      address,
+    },
+  );
+  console.log("Signed Message:", signedMessage);
+}
+
+async function signAuthEntry() {
+  const { address } = await StellarWalletsKit.getAddress();
+  console.log("StellarWalletsKit::getAddress", address);
+
+  const authEntry = xdr.HashIdPreimage.envelopeTypeSorobanAuthorization(
+    new xdr.HashIdPreimageSorobanAuthorization({
+      networkId: hash(new TextEncoder().encode(Networks.PUBLIC) as any),
+      nonce: new xdr.Int64("2490954433969549058"),
+      invocation: new xdr.SorobanAuthorizedInvocation({
+        function: xdr.SorobanAuthorizedFunction
+          .sorobanAuthorizedFunctionTypeContractFn(
+            new xdr.InvokeContractArgs({
+              contractAddress: new Address(
+                Asset.native().contractId(Networks.PUBLIC),
+              ).toScAddress(),
+              functionName: "balance",
+              args: [new Address(address).toScVal()],
+            }),
+          ),
+        subInvocations: [],
+      }),
+      signatureExpirationLedger: 2953350,
+    }),
+  );
+
+  const { signedAuthEntry } = await StellarWalletsKit.signAuthEntry(
+    authEntry.toXDR("base64"),
+    {
+      networkPassphrase: Networks.PUBLIC,
+      address,
+    },
+  );
+  console.log("Signed Auth Entry:", signedAuthEntry);
+}
+
 export function App() {
   return (
     <>
@@ -112,9 +166,17 @@ export function App() {
         </p>
       </div>
 
-      <div style="width: 100%;">
+      <div style="display: flex; flex-direction: column; gap: 16px; max-width: 180px; margin: auto;">
         <button onClick={signTransaction}>
           Sign Transaction
+        </button>
+
+        <button onClick={signMessage}>
+          Sign Message
+        </button>
+
+        <button onClick={signAuthEntry}>
+          Sign Auth Entry
         </button>
       </div>
     </>

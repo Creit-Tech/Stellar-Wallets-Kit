@@ -114,7 +114,11 @@ export class WalletConnectModule implements ModuleInterface {
       },
       optionalNamespaces: {
         stellar: {
-          methods: [WalletConnectAllowedMethods.SIGN_AND_SUBMIT],
+          methods: [
+            WalletConnectAllowedMethods.SIGN_AND_SUBMIT,
+            WalletConnectAllowedMethods.SIGN_AUTH_ENTRY,
+            WalletConnectAllowedMethods.SIGN_MESSAGE,
+          ],
           chains: this.wcParams.allowedChains || [WalletConnectTargetChain.PUBLIC],
           events: [],
         },
@@ -147,18 +151,10 @@ export class WalletConnectModule implements ModuleInterface {
     path?: string;
   }): Promise<{ signedTxXdr: string; signerAddress?: string }> {
     await this.runChecks();
-
-    const paths = wcSessionPaths.value;
-    const targetSession = paths.find((path) => {
-      return (opts?.address || activeAddress.value) === path.publicKey;
-    });
-
-    if (!targetSession) {
-      throw parseError(new Error("No WalletConnect session found or it expired for the selected address."));
-    }
+    const { topic } = await this.#getTargetSession(opts);
 
     const { signedXDR } = await this.signClient.request<{ signedXDR: string }>({
-      topic: targetSession.topic,
+      topic,
       chainId: opts?.networkPassphrase === Networks.PUBLIC
         ? WalletConnectTargetChain.PUBLIC
         : WalletConnectTargetChain.TESTNET,
@@ -176,18 +172,10 @@ export class WalletConnectModule implements ModuleInterface {
     address?: string;
   }): Promise<{ status: "success" | "pending" }> {
     await this.runChecks();
-
-    const paths = wcSessionPaths.value;
-    const targetSession = paths.find((path) => {
-      return (opts?.address || activeAddress.value) === path.publicKey;
-    });
-
-    if (!targetSession) {
-      throw parseError(new Error("No WalletConnect session found or it expired for the selected address."));
-    }
+    const { topic } = await this.#getTargetSession(opts);
 
     const result = await this.signClient.request<{ status: string }>({
-      topic: targetSession.topic,
+      topic,
       chainId: opts?.networkPassphrase === Networks.PUBLIC
         ? WalletConnectTargetChain.PUBLIC
         : WalletConnectTargetChain.TESTNET,
@@ -202,6 +190,55 @@ export class WalletConnectModule implements ModuleInterface {
     }
 
     return { status: result.status as "success" | "pending" };
+  }
+
+  async signAuthEntry(
+    authEntry: string,
+    opts?: { networkPassphrase?: string; address?: string },
+  ): Promise<{ signedAuthEntry: string; signerAddress?: string }> {
+    await this.runChecks();
+    const { topic } = await this.#getTargetSession(opts);
+
+    const { signedAuthEntry, signerAddress } = await this.signClient.request<
+      { signedAuthEntry: string; signerAddress?: string }
+    >({
+      topic,
+      chainId: opts?.networkPassphrase === Networks.PUBLIC
+        ? WalletConnectTargetChain.PUBLIC
+        : WalletConnectTargetChain.TESTNET,
+      request: {
+        method: WalletConnectAllowedMethods.SIGN_AUTH_ENTRY,
+        params: { entryXdr: authEntry },
+      },
+    });
+
+    return { signedAuthEntry, signerAddress };
+  }
+
+  async signMessage(
+    message: string,
+    opts?: {
+      networkPassphrase?: string;
+      address?: string;
+    },
+  ): Promise<{ signedMessage: string; signerAddress?: string }> {
+    await this.runChecks();
+    const { topic } = await this.#getTargetSession(opts);
+
+    const { signature, signerAddress } = await this.signClient.request<
+      { signature: string; signerAddress?: string }
+    >({
+      topic,
+      chainId: opts?.networkPassphrase === Networks.PUBLIC
+        ? WalletConnectTargetChain.PUBLIC
+        : WalletConnectTargetChain.TESTNET,
+      request: {
+        method: WalletConnectAllowedMethods.SIGN_MESSAGE,
+        params: { message },
+      },
+    });
+
+    return { signedMessage: signature, signerAddress };
   }
 
   async disconnect(): Promise<void> {
@@ -245,25 +282,26 @@ export class WalletConnectModule implements ModuleInterface {
     });
   }
 
-  async signAuthEntry(): Promise<{ signedAuthEntry: string; signerAddress?: string }> {
-    throw {
-      code: -3,
-      message: 'WalletConnect does not support the "signAuthEntry" function',
-    };
-  }
-
-  async signMessage(): Promise<{ signedMessage: string; signerAddress?: string }> {
-    throw {
-      code: -3,
-      message: 'WalletConnect does not support the "signMessage" function',
-    };
-  }
-
   async getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
     throw {
       code: -3,
       message: 'WalletConnect does not support the "getNetwork" function',
     };
+  }
+
+  // -- Utils
+
+  async #getTargetSession(opts?: { networkPassphrase?: string; address?: string }) {
+    const paths = wcSessionPaths.value;
+    const targetSession = paths.find((path) => {
+      return (opts?.address || activeAddress.value) === path.publicKey;
+    });
+
+    if (!targetSession) {
+      throw parseError(new Error("No WalletConnect session found or it expired for the selected address."));
+    }
+
+    return targetSession;
   }
 }
 
@@ -281,10 +319,12 @@ export enum WalletConnectTargetChain {
 }
 
 /**
- * Wallet connect supports both just signing a xdr or signing and sending the transaction to the network.
+ * Wallet connect documentation points out both sign and sign and submit, but following Freighter's features (https://github.com/stellar/freighter-mobile/issues/815) there are more namespaces included
  * SIGN returns the signed XDR, while SIGN_AND_SUBMIT sends the transaction to the network (useful for multisig).
  */
 export enum WalletConnectAllowedMethods {
   SIGN = "stellar_signXDR",
   SIGN_AND_SUBMIT = "stellar_signAndSubmitXDR",
+  SIGN_MESSAGE = "stellar_signMessage",
+  SIGN_AUTH_ENTRY = "stellar_signAuthEntry",
 }
