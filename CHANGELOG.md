@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.3.0 (2026-06-05)
+
+### Add
+
+- Adds support to sign both messages and authorization entries using WalletConnect (
+  following https://docs.freighter.app/mobile-walletconnect/signing)
+
+### Fix
+
+- It upgrades the Trezor libraries to the latest ALPHA releases. This is because when a website is using modern
+  bundling (ESM only), the process breaks since the `@trezor/connect-plugin-stellar` package is looking for ESM code
+  that isn't available in old `@trezor/connect-web` versions.
+
 ### 2.2.0 (2026-05-08)
 
 ### Add
