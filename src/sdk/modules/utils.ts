@@ -6,6 +6,7 @@ import { RabetModule } from "./rabet.module.ts";
 import { xBullModule } from "./xbull.module.ts";
 import { HanaModule } from "./hana.module.ts";
 import { KleverModule } from "./klever.module.ts";
+import { MetaMaskModule } from "./metamask.module.ts";
 import { OneKeyModule } from "./onekey.module.ts";
 import { BitgetModule } from "./bitget.module.ts";
 import { FordefiModule } from "./fordefi.module.ts";
@@ -33,6 +34,7 @@ export function defaultModules(opts?: {
     new OneKeyModule(),
     new BitgetModule(),
     new CactusLinkModule(),
+    new MetaMaskModule(),
   ];
   return opts?.filterBy ? modules.filter(opts.filterBy) : modules;
 }
@@ -45,6 +47,6 @@ export function defaultModules(opts?: {
  * If your module requires some extra polyfill or configuration then the user of the kit needs to include it manually.
  */
 export function sep43Modules(opts?: { filterBy: (module: ModuleInterface) => boolean }): ModuleInterface[] {
-  const modules: ModuleInterface[] = [new FreighterModule()];
+  const modules: ModuleInterface[] = [new FreighterModule(), new MetaMaskModule()];
   return opts?.filterBy ? modules.filter(opts.filterBy) : modules;
 }
