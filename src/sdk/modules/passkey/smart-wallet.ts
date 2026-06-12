@@ -101,7 +101,14 @@ export function passkeyKitSignatureEncoder(assertion: PasskeyAssertion): xdr.ScV
   ]);
   const signature = xdr.ScVal.scvVec([xdr.ScVal.scvSymbol("Secp256r1"), signatureStruct]);
 
-  return xdr.ScVal.scvMap([new xdr.ScMapEntry({ key: signerKey, val: signature })]);
+  // Signatures is a one-field tuple struct in the contract, and Soroban encodes
+  // tuple structs as a Vec of their fields, so the map rides inside a Vec.
+  // Confirmed byte-for-byte against the Rust SDK's encoding and verified by a
+  // passkey-signed transfer on testnet:
+  // https://stellar.expert/explorer/testnet/tx/dd2d9815ee1a3ea34e95bf58fd2658ba3892a5e47d7bb758c50f75ef49e9c534
+  return xdr.ScVal.scvVec([
+    xdr.ScVal.scvMap([new xdr.ScMapEntry({ key: signerKey, val: signature })]),
+  ]);
 }
 
 /** Apply an encoded signature to the entry's address credentials, in place. */
