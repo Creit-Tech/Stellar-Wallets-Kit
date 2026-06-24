@@ -85,10 +85,13 @@ await build({
       path: "./sdk/modules/cactuslink.module.ts",
     },
     {
+      name: "./modules/dcent",
+      path: "./sdk/modules/dcent.module.ts",
+    },
+    {
       name: "./modules/utils",
       path: "./sdk/modules/utils.ts",
     },
-
   ],
   outDir: "./dist",
   shims: {
