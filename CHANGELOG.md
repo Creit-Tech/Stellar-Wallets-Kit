@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.4.0 (2026-06-24)
+
+### Change
+
+- Remove the library @stellar/stellar-base and install @stellar/stellar-sdk (the base version has been deprecated by
+  Stellar)
+
 ### 2.3.0 (2026-06-05)
 
 ### Add

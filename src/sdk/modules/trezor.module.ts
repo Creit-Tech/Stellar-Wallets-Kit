@@ -3,7 +3,7 @@ const TrezorConnect: any = "default" in TrezorConnectImport
   ? (TrezorConnectImport as any).default
   : (TrezorConnectImport as any);
 import { transformTransaction } from "@trezor/connect-plugin-stellar";
-import { Transaction } from "@stellar/stellar-base";
+import { Transaction } from "@stellar/stellar-sdk";
 import { decodeHex, encodeBase64 } from "@std/encoding";
 import { hardwareWalletPaths, mnemonicPath, selectedNetwork } from "../../state/mod.ts";
 import { type HardwareWalletModuleInterface, ModuleType } from "../../types/mod.ts";

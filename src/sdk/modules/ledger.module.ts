@@ -4,7 +4,7 @@ import TransportImport from "@ledgerhq/hw-transport";
 const Transport = TransportImport as any;
 import TransportWebUSBImport from "@ledgerhq/hw-transport-webusb";
 const TransportWebUSB = TransportWebUSBImport as any;
-import { StrKey, Transaction } from "@stellar/stellar-base";
+import { StrKey, Transaction } from "@stellar/stellar-sdk";
 import { encodeBase64 } from "@std/encoding";
 import { parseError } from "../utils.ts";
 import { type HardwareWalletModuleInterface, ModuleType } from "../../types/mod.ts";
