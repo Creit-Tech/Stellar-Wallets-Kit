@@ -19,6 +19,8 @@
     "npm:@ledgerhq/hw-transport-webusb@6.29.12": "6.29.12",
     "npm:@ledgerhq/hw-transport@6.31.12": "6.31.12",
     "npm:@lobstrco/signer-extension-api@2.0.0": "2.0.0",
+    "npm:@metamask/connect-stellar@0.2": "0.2.0",
+    "npm:@metamask/multichain-api-client@0.11": "0.11.0",
     "npm:@preact/signals@2.9.0": "2.9.0_preact@10.29.1",
     "npm:@reown/appkit@1.8.19": "1.8.19_@types+react@19.2.14_fastestsmallesttextencoderdecoder@1.0.22_typescript@6.0.3",
     "npm:@stellar/freighter-api@6.0.0": "6.0.0",
@@ -106,7 +108,7 @@
         "idb-keyval",
         "ox@0.6.9_typescript@6.0.3",
         "preact@10.24.2",
-        "viem@2.48.8_typescript@6.0.3_zod@3.25.76",
+        "viem",
         "zustand"
       ]
     },
@@ -125,7 +127,7 @@
         "jose",
         "md5",
         "uncrypto",
-        "viem@2.48.8_typescript@6.0.3_zod@3.25.76",
+        "viem",
         "zod@3.25.76"
       ]
     },
@@ -251,6 +253,18 @@
     },
     "@lobstrco/signer-extension-api@2.0.0": {
       "integrity": "sha512-jwlVyzMFF296iaNgMWn1lu+EU6BeUD4mgPurEsy8EygYNCrjA8igLpsDlXhfvXhst9tX5w4wRuTDX+FZtpfCug=="
+    },
+    "@metamask/connect-stellar@0.2.0": {
+      "integrity": "sha512-IJ5cGOUBEdSkvWOBOQuQGVkEder6nmnM9r/JxIgl7sTs0WuGi0WUfWJ9L0M7HwUQcgEZ/ZbP7n0aOuZC5pHV9g==",
+      "dependencies": [
+        "@metamask/multichain-api-client@0.12.0"
+      ]
+    },
+    "@metamask/multichain-api-client@0.11.0": {
+      "integrity": "sha512-htoO8TCMXLKl6gl4m8fB69f+pC4N6Q2hG9Zcchiypi39jasUUntDV7CTbZuzj39w7SRheR/sc6lZBA8FFb13Cg=="
+    },
+    "@metamask/multichain-api-client@0.12.0": {
+      "integrity": "sha512-5YxIcK93n9DMhjTY5nuPj4aN5Nvabnnu4njf8kzXB0DKDKvvowe4YaQNvnjw/ZrHiDwE1ScPCyLgsdmPYCQhCQ=="
     },
     "@mobily/ts-belt@3.13.1": {
       "integrity": "sha512-K5KqIhPI/EoCTbA6CGbrenM9s41OouyK8A03fGJJcla/zKucsgLbz8HNbeseoLarRPgyWJsUyCYqFhI7t3Ra9Q=="
@@ -486,7 +500,7 @@
       "dependencies": [
         "big.js",
         "dayjs",
-        "viem@2.48.8_typescript@6.0.3_zod@3.22.4"
+        "viem"
       ]
     },
     "@reown/appkit-controllers@1.8.19_@types+react@19.2.14_typescript@6.0.3": {
@@ -496,7 +510,7 @@
         "@reown/appkit-wallet",
         "@walletconnect/universal-provider",
         "valtio",
-        "viem@2.48.8_typescript@6.0.3_zod@3.25.76"
+        "viem"
       ]
     },
     "@reown/appkit-pay@1.8.19_@types+react@19.2.14_fastestsmallesttextencoderdecoder@1.0.22_typescript@6.0.3": {
@@ -550,7 +564,7 @@
         "@walletconnect/logger@3.0.2",
         "@walletconnect/universal-provider",
         "valtio",
-        "viem@2.48.8_typescript@6.0.3_zod@3.25.76"
+        "viem"
       ],
       "optionalDependencies": [
         "@base-org/account",
@@ -582,7 +596,7 @@
         "bs58@6.0.0",
         "semver@7.7.2",
         "valtio",
-        "viem@2.48.8_typescript@6.0.3_zod@3.25.76"
+        "viem"
       ],
       "optionalDependencies": [
         "@lit/react"
@@ -600,7 +614,7 @@
       "integrity": "sha512-N5p/ulfnnA2Pi2M3YeWjULeWbjo7ei22JwU/IXnhoHzKq3pYCN6ynL9mJBOlvDVv892EgLPCWCOwQk/uBT2v0Q==",
       "dependencies": [
         "@safe-global/safe-gateway-typescript-sdk",
-        "viem@2.48.8_typescript@6.0.3_zod@3.25.76"
+        "viem"
       ]
     },
     "@safe-global/safe-gateway-typescript-sdk@3.23.1": {
@@ -3540,23 +3554,6 @@
         "typescript"
       ]
     },
-    "ox@0.14.20_typescript@6.0.3_zod@3.25.76": {
-      "integrity": "sha512-rby38C3nDn8eQkf29Zgw4hkCZJ64Qqi0zRPWL8ENUQ7JVuoITqrVtwWQgM/He19SCMUEc7hS/Sjw0jIOSLJhOw==",
-      "dependencies": [
-        "@adraffy/ens-normalize",
-        "@noble/ciphers",
-        "@noble/curves@1.9.1",
-        "@noble/hashes@1.8.0",
-        "@scure/bip32",
-        "@scure/bip39",
-        "abitype@1.2.3_typescript@6.0.3_zod@3.25.76",
-        "eventemitter3",
-        "typescript"
-      ],
-      "optionalPeers": [
-        "typescript"
-      ]
-    },
     "ox@0.6.9_typescript@6.0.3": {
       "integrity": "sha512-wi5ShvzE4eOcTwQVsIPdFr+8ycyX+5le/96iAJutaZAvCes1J0+RvpEPg5QDPDiaR0XQQAvZVl7AwqQcINuUug==",
       "dependencies": [
@@ -4183,23 +4180,6 @@
         "typescript"
       ]
     },
-    "viem@2.48.8_typescript@6.0.3_zod@3.25.76": {
-      "integrity": "sha512-Xj3Nrt66SKtn06kczU91ELn9Difr84ZM5A62BTlaisT5lpgt058i2mBkfMZCXHGb1ocOLjzC2ztPhD0Lvky7uQ==",
-      "dependencies": [
-        "@noble/curves@1.9.1",
-        "@noble/hashes@1.8.0",
-        "@scure/bip32",
-        "@scure/bip39",
-        "abitype@1.2.3_typescript@6.0.3_zod@3.25.76",
-        "isows",
-        "ox@0.14.20_typescript@6.0.3_zod@3.25.76",
-        "typescript",
-        "ws@8.18.3"
-      ],
-      "optionalPeers": [
-        "typescript"
-      ]
-    },
     "webidl-conversions@3.0.1": {
       "integrity": "sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ=="
     },
@@ -4328,6 +4308,8 @@
       "npm:@ledgerhq/hw-transport-webusb@6.29.12",
       "npm:@ledgerhq/hw-transport@6.31.12",
       "npm:@lobstrco/signer-extension-api@2.0.0",
+      "npm:@metamask/connect-stellar@0.2",
+      "npm:@metamask/multichain-api-client@0.11",
       "npm:@preact/signals@2.9.0",
       "npm:@reown/appkit@1.8.19",
       "npm:@stellar/freighter-api@6.0.0",
