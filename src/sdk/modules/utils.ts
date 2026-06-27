@@ -10,6 +10,7 @@ import { OneKeyModule } from "./onekey.module.ts";
 import { BitgetModule } from "./bitget.module.ts";
 import { FordefiModule } from "./fordefi.module.ts";
 import { CactusLinkModule } from "./cactuslink.module.ts";
+import { AmmaWalletModule } from "./amma-wallet.module.ts";
 
 /**
  * This method returns all modules that don't require extra configuration before they can be loaded
@@ -33,6 +34,7 @@ export function defaultModules(opts?: {
     new OneKeyModule(),
     new BitgetModule(),
     new CactusLinkModule(),
+    new AmmaWalletModule(),
   ];
   return opts?.filterBy ? modules.filter(opts.filterBy) : modules;
 }
