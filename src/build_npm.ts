@@ -97,6 +97,7 @@ await build({
   shims: {
     deno: false,
   },
+  test: false,
   package: {
     name: denoFile.name.replace("@creit-tech", "@creit.tech"),
     version: denoFile.version,

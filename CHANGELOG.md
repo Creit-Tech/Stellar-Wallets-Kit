@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.5.0 (2026-06-24)
+
+### Add
+
+- Add new D'CENT wallet module (PR [#89](https://github.com/Creit-Tech/Stellar-Wallets-Kit/pull/98))
+
+### Change
+
+- Update the wallet connect dependencies (Upgrade reown/appkit to 1.8.21)
+- Disable tests when building the NPM module, tests run with Deno. We will move the tests to the @std library from Deno
+  so they can run on all platforms
+
 ### 2.4.0 (2026-06-24)
 
 ### Change
