@@ -10,6 +10,7 @@ import { OneKeyModule } from "./onekey.module.ts";
 import { BitgetModule } from "./bitget.module.ts";
 import { FordefiModule } from "./fordefi.module.ts";
 import { CactusLinkModule } from "./cactuslink.module.ts";
+import { DcentModule } from "./dcent.module.ts";
 
 /**
  * This method returns all modules that don't require extra configuration before they can be loaded
@@ -33,6 +34,7 @@ export function defaultModules(opts?: {
     new OneKeyModule(),
     new BitgetModule(),
     new CactusLinkModule(),
+    new DcentModule(),
   ];
   return opts?.filterBy ? modules.filter(opts.filterBy) : modules;
 }
@@ -45,6 +47,6 @@ export function defaultModules(opts?: {
  * If your module requires some extra polyfill or configuration then the user of the kit needs to include it manually.
  */
 export function sep43Modules(opts?: { filterBy: (module: ModuleInterface) => boolean }): ModuleInterface[] {
-  const modules: ModuleInterface[] = [new FreighterModule()];
+  const modules: ModuleInterface[] = [new FreighterModule(), new DcentModule()];
   return opts?.filterBy ? modules.filter(opts.filterBy) : modules;
 }
