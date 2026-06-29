@@ -17,7 +17,7 @@
     "@ledgerhq/hw-transport-webusb": "npm:@ledgerhq/hw-transport-webusb@6.29.12",
     "@lobstrco/signer-extension-api": "npm:@lobstrco/signer-extension-api@2.0.0",
     "@preact/signals": "npm:@preact/signals@2.9.0",
-    "@reown/appkit": "npm:@reown/appkit@1.8.19",
+    "@reown/appkit": "npm:@reown/appkit@1.8.21",
     "@std/bytes": "jsr:@std/bytes@1.0.6",
     "@std/encoding": "jsr:@std/encoding@1.0.10",
     "@stellar/freighter-api": "npm:@stellar/freighter-api@6.0.0",
