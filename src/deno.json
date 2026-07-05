@@ -49,6 +49,7 @@
     "./modules/lobstr": "./sdk/modules/lobstr.module.ts",
     "./modules/onekey": "./sdk/modules/onekey.module.ts",
     "./modules/rabet": "./sdk/modules/rabet.module.ts",
+    "./modules/scopuly": "./sdk/modules/scopuly.module.ts",
     "./modules/trezor": "./sdk/modules/trezor.module.ts",
     "./modules/wallet-connect": "./sdk/modules/wallet-connect.module.ts",
     "./modules/xbull": "./sdk/modules/xbull.module.ts",

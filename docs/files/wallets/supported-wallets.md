@@ -11,6 +11,7 @@ These are the current supported wallets/modules:
 | Trezor         | TrezorModule        | /trezor         | No           |
 | Lobstr         | LobstrModule        | /lobstr         | Yes          |
 | Rabet          | RabetModule         | /rabet          | Yes          |
+| Scopuly        | ScopulyModule       | /scopuly        | No           |
 | Wallet connect | WalletConnectModule | /wallet-connect | No           |
 | xBull          | xBullModule         | /xbull          | Yes          |
 | HOT            | HotWalletModule     | /hotwallet      | No           |
