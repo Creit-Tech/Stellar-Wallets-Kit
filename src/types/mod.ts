@@ -218,7 +218,7 @@ export interface ModuleInterface {
    * @param opts.networkPassphrase - The Stellar network to use when signing
    * @param opts.address - The public key of the account that should be used to sign
    *
-   * @return Promise<{ status: "success" | "pending" }> - "success" means the transaction
+   * @return Promise<{ status: "success" | "pending"; hash?: string }> - "success" means the transaction
    * was submitted successfully. "pending" means the wallet is coordinating remaining
    * signatures (common with multisig accounts).
    */
@@ -228,7 +228,7 @@ export interface ModuleInterface {
       networkPassphrase?: string;
       address?: string;
     },
-  ): Promise<{ status: "success" | "pending" }>;
+  ): Promise<{ status: "success" | "pending"; hash?: string }>;
 
   /**
    * A function to request the current selected network in the wallet. This comes

@@ -17,6 +17,7 @@ These are the current supported wallets/modules:
 | Klever         | KleverModule        | /klever         | Yes          |
 | OneKey         | OneKeyModule        | /onekey         | Yes          |
 | Bitget         | BitgetModule        | /bitget         | Yes          |
+| Scopuly        | ScopulyModule        | /scopuly        | Yes          |
 
 ## How to import a wallet's module?
 

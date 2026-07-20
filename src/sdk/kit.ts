@@ -153,7 +153,7 @@ export class StellarWalletsKit {
   static signAndSubmitTransaction(
     xdr: string,
     opts?: { networkPassphrase?: string; address?: string },
-  ): Promise<{ status: "success" | "pending" }> {
+  ): Promise<{ status: "success" | "pending"; hash?: string }> {
     const module = StellarWalletsKit.selectedModule;
 
     if (!module.signAndSubmitTransaction) {
