@@ -15,6 +15,8 @@ import { parseError } from "../utils.ts";
 
 export const SCOPULY_ID = "scopuly";
 
+const SCOPULY_AVAILABILITY_WAIT_MS = 800;
+
 declare const window:
   & Window
   & typeof globalThis
@@ -38,7 +40,10 @@ export class ScopulyModule implements ModuleInterface {
 
   async runChecks(): Promise<void> {
     if (!(await this.isAvailable())) {
-      throw new Error("Scopuly provider is not available. Open the dApp inside Scopuly mobile app.");
+      throw {
+        code: -3,
+        message: "Scopuly provider is not available. Open the dApp inside Scopuly mobile app.",
+      };
     }
   }
 
@@ -47,11 +52,32 @@ export class ScopulyModule implements ModuleInterface {
       return false;
     }
 
-    return window.scopuly?.isScopuly === true && window.scopuly?.platform === "mobile";
+    if (this.isProviderReady()) {
+      return true;
+    }
+
+    return await new Promise<boolean>((resolve) => {
+      let settled = false;
+
+      const finish = (available: boolean): void => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        window.removeEventListener("scopuly#initialized", onInitialized);
+        resolve(available);
+      };
+      const onInitialized = (): void => finish(this.isProviderReady());
+      const timer = setTimeout(() => finish(this.isProviderReady()), SCOPULY_AVAILABILITY_WAIT_MS);
+
+      window.addEventListener("scopuly#initialized", onInitialized, { once: true });
+
+      // Guard the gap between the first readiness check and listener registration.
+      if (this.isProviderReady()) finish(true);
+    });
   }
 
   async isPlatformWrapper(): Promise<boolean> {
-    return this.isAvailable();
+    return this.isProviderReady();
   }
 
   onChange(callback: (event: IOnChangeEvent) => void): void {
@@ -66,6 +92,8 @@ export class ScopulyModule implements ModuleInterface {
     }
 
     const subscribe = () => {
+      if (!this.isProviderReady()) return;
+
       this.removeChangeListener = onProviderChange((event) => {
         callback({
           address: event.address,
@@ -75,7 +103,7 @@ export class ScopulyModule implements ModuleInterface {
       });
     };
 
-    if (window.scopuly?.isScopuly === true) {
+    if (this.isProviderReady()) {
       subscribe();
       return;
     }
@@ -110,6 +138,11 @@ export class ScopulyModule implements ModuleInterface {
       }
 
       const address = await getPublicKey();
+
+      if (!address) {
+        throw { code: -3, message: "Scopuly returned an empty address." };
+      }
+
       return { address };
     } catch (e) {
       throw parseError(e);
@@ -130,8 +163,13 @@ export class ScopulyModule implements ModuleInterface {
 
       if (error) throw error;
 
+      const signedTransaction = signedTxXdr || signedXDR;
+      if (!signedTransaction) {
+        throw { code: -3, message: "Scopuly returned an empty signed transaction." };
+      }
+
       return {
-        signedTxXdr: signedTxXdr || signedXDR || "",
+        signedTxXdr: signedTransaction,
         signerAddress,
       };
     } catch (e) {
@@ -171,6 +209,9 @@ export class ScopulyModule implements ModuleInterface {
       const result = await signAuthEntry(authEntry, opts);
 
       if (result.error) throw result.error;
+      if (!result.signedAuthEntry) {
+        throw { code: -3, message: "Scopuly returned an empty signed auth entry." };
+      }
 
       return {
         signedAuthEntry: result.signedAuthEntry,
@@ -194,6 +235,9 @@ export class ScopulyModule implements ModuleInterface {
       const result = await signMessage(message, opts);
 
       if (result.error) throw result.error;
+      if (!result.signedMessage) {
+        throw { code: -3, message: "Scopuly returned an empty signed message." };
+      }
 
       return {
         signedMessage: result.signedMessage,
@@ -219,5 +263,11 @@ export class ScopulyModule implements ModuleInterface {
 
   async disconnect(): Promise<void> {
     await disconnect();
+  }
+
+  private isProviderReady(): boolean {
+    return typeof window !== "undefined" &&
+      window.scopuly?.isScopuly === true &&
+      window.scopuly?.platform === "mobile";
   }
 }
