@@ -177,7 +177,7 @@ Deno.test("provider methods: delegate supported signing, network, change, and di
       signedTxXdr: "SIGNED_XDR",
       signerAddress: "GSIGNER",
     });
-    assertEquals(await module.signAndSubmitTransaction("XDR"), { status: "success", hash: "TX_HASH" });
+    assertEquals(await module.signAndSubmitTransaction("XDR"), { status: "success" });
     assertEquals(await module.signAuthEntry("AUTH"), {
       signedAuthEntry: "SIGNED_AUTH",
       signerAddress: "GSIGNER",

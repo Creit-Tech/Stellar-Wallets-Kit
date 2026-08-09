@@ -1,15 +1,3 @@
-import {
-  disconnect,
-  getAddress,
-  getNetwork,
-  getPublicKey,
-  onChange as onProviderChange,
-  requestAccess,
-  signAndSubmitTransaction,
-  signAuthEntry,
-  signMessage,
-  signTransaction,
-} from "@scopuly/signer-extension-api";
 import { type IOnChangeEvent, type ModuleInterface, ModuleType } from "../../types/mod.ts";
 import { parseError } from "../utils.ts";
 
@@ -17,14 +5,61 @@ export const SCOPULY_ID = "scopuly";
 
 const SCOPULY_AVAILABILITY_WAIT_MS = 800;
 
+interface ScopulyProviderError {
+  code?: number;
+  message?: string;
+  ext?: string;
+}
+
+interface ScopulyProviderOptions {
+  networkPassphrase?: string;
+  address?: string;
+  path?: string;
+}
+
+interface ScopulyProviderChange {
+  address: string;
+  network: string;
+  networkPassphrase: string;
+}
+
+interface ScopulyProvider {
+  isScopuly?: boolean;
+  platform?: string;
+  requestAccess(): Promise<{ address?: string; error?: ScopulyProviderError }>;
+  getAddress(): Promise<{ address?: string; error?: ScopulyProviderError }>;
+  getPublicKey(): Promise<string>;
+  getNetwork(): Promise<{ network: string; networkPassphrase: string; error?: ScopulyProviderError }>;
+  signTransaction(
+    xdr: string,
+    opts?: ScopulyProviderOptions,
+  ): Promise<{
+    signedTxXdr?: string;
+    signedXDR?: string;
+    signerAddress?: string;
+    error?: ScopulyProviderError;
+  }>;
+  signAndSubmitTransaction(
+    xdr: string,
+    opts?: ScopulyProviderOptions,
+  ): Promise<{ status: "success" | "pending"; error?: ScopulyProviderError }>;
+  signAuthEntry(
+    authEntry: string,
+    opts?: ScopulyProviderOptions,
+  ): Promise<{ signedAuthEntry?: string; signerAddress?: string; error?: ScopulyProviderError }>;
+  signMessage(
+    message: string,
+    opts?: ScopulyProviderOptions,
+  ): Promise<{ signedMessage?: string; signerAddress?: string; error?: ScopulyProviderError }>;
+  disconnect(): Promise<void>;
+  onChange(listener: (event: ScopulyProviderChange) => void): () => void;
+}
+
 declare const window:
   & Window
   & typeof globalThis
   & {
-    scopuly?: {
-      isScopuly?: boolean;
-      platform?: string;
-    };
+    scopuly?: ScopulyProvider;
   };
 
 export class ScopulyModule implements ModuleInterface {
@@ -94,7 +129,7 @@ export class ScopulyModule implements ModuleInterface {
     const subscribe = () => {
       if (!this.isProviderReady()) return;
 
-      this.removeChangeListener = onProviderChange((event) => {
+      this.removeChangeListener = this.getProvider().onChange((event) => {
         callback({
           address: event.address,
           network: event.network,
@@ -120,7 +155,7 @@ export class ScopulyModule implements ModuleInterface {
       await this.runChecks();
 
       if (params?.skipRequestAccess !== true) {
-        const access = await requestAccess();
+        const access = await this.getProvider().requestAccess();
 
         if (access.error) throw access.error;
 
@@ -129,7 +164,7 @@ export class ScopulyModule implements ModuleInterface {
         }
       }
 
-      const addressResult = await getAddress();
+      const addressResult = await this.getProvider().getAddress();
 
       if (addressResult.error) throw addressResult.error;
 
@@ -137,7 +172,7 @@ export class ScopulyModule implements ModuleInterface {
         return { address: addressResult.address };
       }
 
-      const address = await getPublicKey();
+      const address = await this.getProvider().getPublicKey();
 
       if (!address) {
         throw { code: -3, message: "Scopuly returned an empty address." };
@@ -159,7 +194,7 @@ export class ScopulyModule implements ModuleInterface {
   ): Promise<{ signedTxXdr: string; signerAddress?: string }> {
     try {
       await this.runChecks();
-      const { signedTxXdr, signedXDR, signerAddress, error } = await signTransaction(xdr, opts);
+      const { signedTxXdr, signedXDR, signerAddress, error } = await this.getProvider().signTransaction(xdr, opts);
 
       if (error) throw error;
 
@@ -183,14 +218,14 @@ export class ScopulyModule implements ModuleInterface {
       networkPassphrase?: string;
       address?: string;
     },
-  ): Promise<{ status: "success" | "pending"; hash?: string }> {
+  ): Promise<{ status: "success" | "pending" }> {
     try {
       await this.runChecks();
-      const result = await signAndSubmitTransaction(xdr, opts);
+      const result = await this.getProvider().signAndSubmitTransaction(xdr, opts);
 
       if (result.error) throw result.error;
 
-      return { status: result.status, hash: result.hash };
+      return { status: result.status };
     } catch (e) {
       throw parseError(e);
     }
@@ -206,7 +241,7 @@ export class ScopulyModule implements ModuleInterface {
   ): Promise<{ signedAuthEntry: string; signerAddress?: string }> {
     try {
       await this.runChecks();
-      const result = await signAuthEntry(authEntry, opts);
+      const result = await this.getProvider().signAuthEntry(authEntry, opts);
 
       if (result.error) throw result.error;
       if (!result.signedAuthEntry) {
@@ -232,7 +267,7 @@ export class ScopulyModule implements ModuleInterface {
   ): Promise<{ signedMessage: string; signerAddress?: string }> {
     try {
       await this.runChecks();
-      const result = await signMessage(message, opts);
+      const result = await this.getProvider().signMessage(message, opts);
 
       if (result.error) throw result.error;
       if (!result.signedMessage) {
@@ -251,7 +286,7 @@ export class ScopulyModule implements ModuleInterface {
   async getNetwork(): Promise<{ network: string; networkPassphrase: string }> {
     try {
       await this.runChecks();
-      const { network, networkPassphrase, error } = await getNetwork();
+      const { network, networkPassphrase, error } = await this.getProvider().getNetwork();
 
       if (error) throw error;
 
@@ -262,7 +297,18 @@ export class ScopulyModule implements ModuleInterface {
   }
 
   async disconnect(): Promise<void> {
-    await disconnect();
+    await this.getProvider().disconnect();
+  }
+
+  private getProvider(): ScopulyProvider {
+    if (typeof window === "undefined" || !window.scopuly) {
+      throw {
+        code: -3,
+        message: "Scopuly provider is not available. Open the dApp inside Scopuly mobile app.",
+      };
+    }
+
+    return window.scopuly;
   }
 
   private isProviderReady(): boolean {

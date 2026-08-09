@@ -60,7 +60,6 @@ out the [documentation](https://stellarwalletskit.dev/) for more details.
 - Rabet (extension version)
 - WalletConnect
 - Lobstr
-- Scopuly
 - Hana
 - Hot Wallet
 - Klever Wallet
@@ -89,4 +88,5 @@ If you would like to see the kit in action, check these websites that are alread
 Licensed under the MIT License, Copyright © 2023-present Creit Technologies LLP.
 
 Checkout the `LICENSE.md` file for more details.
+
 
