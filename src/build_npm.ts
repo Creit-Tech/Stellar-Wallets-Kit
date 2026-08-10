@@ -69,6 +69,10 @@ await build({
       path: "./sdk/modules/rabet.module.ts",
     },
     {
+      name: "./modules/scopuly",
+      path: "./sdk/modules/scopuly.module.ts",
+    },
+    {
       name: "./modules/trezor",
       path: "./sdk/modules/trezor.module.ts",
     },
