@@ -65,6 +65,7 @@ out the [documentation](https://stellarwalletskit.dev/) for more details.
 - Klever Wallet
 - OneKey Wallet
 - Bitget Wallet
+- Passkeys (Soroban smart wallets, requires configuration)
 
 ## Installation and usage
 
