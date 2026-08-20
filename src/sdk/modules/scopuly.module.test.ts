@@ -30,7 +30,7 @@ function clearWindow(): void {
   delete g.window;
 }
 
-function makeProvider() {
+function makeProvider(platform: "mobile" | "extension" | "unknown" = "mobile") {
   let changeListener: ((event: ProviderChange) => void) | undefined;
   const calls = {
     requestAccess: 0,
@@ -40,7 +40,7 @@ function makeProvider() {
 
   return {
     isScopuly: true,
-    platform: "mobile" as const,
+    platform,
     calls,
     emitChange(event: ProviderChange): void {
       changeListener?.(event);
@@ -81,7 +81,7 @@ Deno.test("isAvailable(): returns false without a browser window", async () => {
   assertEquals(await new ScopulyModule().isAvailable(), false);
 });
 
-Deno.test("isAvailable(): waits for the Scopuly provider initialization event", async () => {
+Deno.test("isAvailable(): waits for the Scopuly mobile provider initialization event", async () => {
   const win = makeWindow();
 
   try {
@@ -93,6 +93,48 @@ Deno.test("isAvailable(): waits for the Scopuly provider initialization event", 
 
     assertEquals(await pending, true);
     assertEquals(await module.isPlatformWrapper(), true);
+  } finally {
+    clearWindow();
+  }
+});
+
+Deno.test("isAvailable(): detects an injected Scopuly browser extension", async () => {
+  const win = makeWindow();
+  win.scopuly = makeProvider("extension");
+
+  try {
+    const module = new ScopulyModule();
+
+    assertEquals(await module.isAvailable(), true);
+    assertEquals(await module.isPlatformWrapper(), false);
+  } finally {
+    clearWindow();
+  }
+});
+
+Deno.test("isAvailable(): waits for the Scopuly browser extension initialization event", async () => {
+  const win = makeWindow();
+
+  try {
+    const module = new ScopulyModule();
+    const pending = module.isAvailable();
+
+    win.scopuly = makeProvider("extension");
+    win.dispatchEvent(new Event("scopuly#initialized"));
+
+    assertEquals(await pending, true);
+    assertEquals(await module.isPlatformWrapper(), false);
+  } finally {
+    clearWindow();
+  }
+});
+
+Deno.test("isAvailable(): rejects an unsupported Scopuly platform", async () => {
+  const win = makeWindow();
+  win.scopuly = makeProvider("unknown");
+
+  try {
+    assertEquals(await new ScopulyModule().isAvailable(), false);
   } finally {
     clearWindow();
   }
