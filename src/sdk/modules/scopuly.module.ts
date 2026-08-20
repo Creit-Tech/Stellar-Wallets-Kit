@@ -25,7 +25,7 @@ interface ScopulyProviderChange {
 
 interface ScopulyProvider {
   isScopuly?: boolean;
-  platform?: string;
+  platform?: "mobile" | "extension";
   requestAccess(): Promise<{ address?: string; error?: ScopulyProviderError }>;
   getAddress(): Promise<{ address?: string; error?: ScopulyProviderError }>;
   getPublicKey(): Promise<string>;
@@ -70,14 +70,15 @@ export class ScopulyModule implements ModuleInterface {
 
   productId: string = SCOPULY_ID;
   productName: string = "Scopuly";
-  productUrl: string = "https://scopuly.com";
+  productUrl: string = "https://extension.scopuly.com/";
   productIcon: string = "https://scopuly.com/img/logo/icon.png";
 
   async runChecks(): Promise<void> {
     if (!(await this.isAvailable())) {
       throw {
         code: -3,
-        message: "Scopuly provider is not available. Open the dApp inside Scopuly mobile app.",
+        message:
+          "Scopuly provider is not available. Install the Scopuly browser extension or open the dApp inside the Scopuly app.",
       };
     }
   }
@@ -112,7 +113,7 @@ export class ScopulyModule implements ModuleInterface {
   }
 
   async isPlatformWrapper(): Promise<boolean> {
-    return this.isProviderReady();
+    return this.isProviderReady() && window.scopuly?.platform === "mobile";
   }
 
   onChange(callback: (event: IOnChangeEvent) => void): void {
@@ -304,7 +305,8 @@ export class ScopulyModule implements ModuleInterface {
     if (typeof window === "undefined" || !window.scopuly) {
       throw {
         code: -3,
-        message: "Scopuly provider is not available. Open the dApp inside Scopuly mobile app.",
+        message:
+          "Scopuly provider is not available. Install the Scopuly browser extension or open the dApp inside the Scopuly app.",
       };
     }
 
@@ -312,8 +314,10 @@ export class ScopulyModule implements ModuleInterface {
   }
 
   private isProviderReady(): boolean {
-    return typeof window !== "undefined" &&
-      window.scopuly?.isScopuly === true &&
-      window.scopuly?.platform === "mobile";
+    if (typeof window === "undefined" || window.scopuly?.isScopuly !== true) {
+      return false;
+    }
+
+    return window.scopuly.platform === "mobile" || window.scopuly.platform === "extension";
   }
 }
