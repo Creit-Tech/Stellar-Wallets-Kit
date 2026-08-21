@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@creit-tech/stellar-wallets-kit": "link:../../src/dist",
-    "@stellar/stellar-sdk": "^14.3.0",
+    "@stellar/stellar-sdk": "^17.0.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
@@ -37,5 +37,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "packageManager": "pnpm@11.22.0+sha512.1ff870c4c6133dfd88fb2afc46dd13d47f09c9794b438c6fdb47ca98caf3bc16381ee0be93a091b8e3824cf01f889f46d7d9e20910fb0be1ab0fb5baa80dd621"
 }

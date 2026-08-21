@@ -4,7 +4,7 @@ If you need to request the user to sign a transaction, an auth entry or a messag
 methods. Call them like this:
 
 ```typescript
-const {signedTxXdr} = await StellarWalletsKit.signTransaction(tx.toXDR(), {
+const {signedTxXdr} = await StellarWalletsKit.signTransaction(tx.toXdr(), {
   networkPassphrase: Networks.PUBLIC,
   address: 'THE_STELLAR_ADDRESS',
 });

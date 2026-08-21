@@ -109,10 +109,10 @@ export class App extends Component<any, any> {
       )
       .build();
 
-    console.log(tx.toXDR());
+    console.log(tx.toXdr());
 
     const {signedTxXdr} = await StellarWalletsKit.signTransaction(
-      tx.toXDR(),
+      tx.toXdr(),
       {
         networkPassphrase: Networks.PUBLIC,
         address,
