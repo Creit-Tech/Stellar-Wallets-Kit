@@ -60,7 +60,7 @@ StellarWalletsKit.createButton(buttonWrapper);
 ```typescript
 const {address} = await StellarWalletsKit.getAddress();
 
-const {signedTxXdr} = await StellarWalletsKit.signTransaction(tx.toXDR(), {
+const {signedTxXdr} = await StellarWalletsKit.signTransaction(tx.toXdr(), {
   networkPassphrase: Networks.PUBLIC,
   address,
 });

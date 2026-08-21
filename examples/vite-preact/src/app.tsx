@@ -81,7 +81,7 @@ async function signTransaction(): Promise<void> {
     )
     .build();
 
-  const { signedTxXdr } = await StellarWalletsKit.signTransaction(tx.toXDR(), {
+  const { signedTxXdr } = await StellarWalletsKit.signTransaction(tx.toXdr(), {
     networkPassphrase: Networks.PUBLIC,
     address,
   });
@@ -108,8 +108,8 @@ async function signAuthEntry() {
 
   const authEntry = xdr.HashIdPreimage.envelopeTypeSorobanAuthorization(
     new xdr.HashIdPreimageSorobanAuthorization({
-      networkId: hash(new TextEncoder().encode(Networks.PUBLIC) as any),
-      nonce: new xdr.Int64("2490954433969549058"),
+      networkId: hash(Networks.PUBLIC),
+      nonce: xdr.Int64("2490954433969549058"),
       invocation: new xdr.SorobanAuthorizedInvocation({
         function: xdr.SorobanAuthorizedFunction
           .sorobanAuthorizedFunctionTypeContractFn(
@@ -128,7 +128,7 @@ async function signAuthEntry() {
   );
 
   const { signedAuthEntry } = await StellarWalletsKit.signAuthEntry(
-    authEntry.toXDR("base64"),
+    authEntry.toXdr("base64"),
     {
       networkPassphrase: Networks.PUBLIC,
       address,
