@@ -65,6 +65,7 @@ out the [documentation](https://stellarwalletskit.dev/) for more details.
 - Klever Wallet
 - OneKey Wallet
 - Bitget Wallet
+- Passkey (a Soroban smart account controlled by a device passkey)
 
 ## Installation and usage
 
