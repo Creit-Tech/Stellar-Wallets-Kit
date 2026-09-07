@@ -1,0 +1,26 @@
+{
+  "name": "passkey-vite",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@creit-tech/stellar-wallets-kit": "link:../../src/dist",
+    "@noble/curves": "^1.9.7",
+    "@noble/hashes": "^1.8.0",
+    "@soropass/core": "^0.3.1",
+    "@stellar/stellar-sdk": "^17.0.0",
+    "buffer": "^6.0.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "@types/node": "^24.6.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.1.7"
+  }
+}

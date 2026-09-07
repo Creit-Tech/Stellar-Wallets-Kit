@@ -105,6 +105,10 @@ await build({
       path: "./sdk/modules/dcent.module.ts",
     },
     {
+      name: "./modules/passkey",
+      path: "./sdk/modules/passkey.module.ts",
+    },
+    {
       name: "./modules/utils",
       path: "./sdk/modules/utils.ts",
     },

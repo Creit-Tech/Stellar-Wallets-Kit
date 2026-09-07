@@ -38,6 +38,7 @@ export default defineConfig({
           {text: 'Ledger Wallets', link: '/wallets/ledger'},
           {text: 'Trezor Wallets', link: '/wallets/trezor'},
           {text: 'Wallet Connect', link: '/wallets/wallet-connect'},
+          {text: 'Passkey', link: '/wallets/passkey'},
           {text: 'Add your wallet', link: '/wallets/create-wallet-module'},
         ]
       },

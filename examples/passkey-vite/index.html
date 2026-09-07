@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SoroPass / Stellar Wallets Kit Demo</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"/>
+
+  <script type="module">
+    import { Buffer } from 'buffer';
+
+    window.Buffer = Buffer;
+  </script>
+
+  <style>
+    :root {
+      --brand: oklch(0.55 0.18 264);
+      --brand-hover: oklch(0.49 0.18 264);
+      --on-brand: oklch(0.99 0.01 264);
+      --brand-soft: color-mix(in oklch, var(--brand) 12%, transparent);
+      --bg: oklch(0.985 0.003 264);
+      --surface: #fff;
+      --sunken: oklch(0.975 0.004 264);
+      --text: oklch(0.26 0.02 271);
+      --muted: oklch(0.55 0.018 271);
+      --faint: oklch(0.68 0.014 271);
+      --border: oklch(0.92 0.005 271);
+      --border-strong: oklch(0.86 0.006 271);
+      --success: oklch(0.62 0.14 158);
+      --success-text: oklch(0.45 0.14 158);
+      --success-soft: color-mix(in oklch, var(--success) 14%, transparent);
+      --error: oklch(0.59 0.20 25);
+      --error-text: oklch(0.50 0.20 25);
+      --error-soft: color-mix(in oklch, var(--error) 13%, transparent);
+      --warn: oklch(0.75 0.13 85);
+      --warn-text: oklch(0.52 0.12 85);
+      --warn-soft: color-mix(in oklch, var(--warn) 22%, transparent);
+      --sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: var(--sans); font-size: 15px; line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--brand); }
+    a:hover { color: var(--brand-hover); }
+    code, pre, .mono { font-family: var(--mono); }
+    button { font: inherit; cursor: pointer; }
+    h1, h2, h3, h4, p, dl, dd { margin: 0; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      height: 44px; padding: 0 20px; border-radius: 12px; font-weight: 500; font-size: 15px;
+      border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); white-space: nowrap;
+    }
+    .btn:hover { border-color: var(--faint); }
+    .btn:disabled { opacity: .45; cursor: not-allowed; }
+    .btn-primary { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+    .btn-primary:hover { background: var(--brand-hover); border-color: var(--brand-hover); }
+    .btn-ghost { height: 32px; padding: 0 12px; font-size: 13px; border-radius: 8px; }
+    .btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+    .linkbtn { background: none; border: 0; padding: 0; color: var(--muted); font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
+    .linkbtn:hover { color: var(--text); }
+
+    .topbar { position: sticky; top: 0; z-index: 5; border-bottom: 1px solid var(--border); background: var(--surface); }
+    .container { width: 1160px; max-width: calc(100% - 48px); margin: 0 auto; }
+    .topbar .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 56px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 14px; white-space: nowrap; }
+    .brand .mark { width: 22px; height: 22px; border-radius: 6px; background: var(--brand); }
+    .brand b { font-weight: 600; }
+    .brand .sep { color: var(--faint); }
+    .brand span:last-child { color: var(--muted); }
+    .topbar-right { display: flex; align-items: center; gap: 12px; white-space: nowrap; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px;
+      border: 1px solid var(--border); border-radius: 999px; font-size: 12.5px; color: var(--muted); background: var(--surface);
+    }
+    .chip .dot { width: 7px; height: 7px; border-radius: 999px; background: var(--success); }
+    .chip .dot.off { background: var(--error); }
+    .chip.mode { border-color: var(--warn-text); color: var(--warn-text); }
+
+    .layout { padding: 36px 0 80px; display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 28px; align-items: start; }
+    .steps { display: flex; flex-direction: column; gap: 16px; }
+    .heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 600; line-height: 1.25; margin-bottom: 4px; }
+    .lede { color: var(--muted); text-wrap: pretty; }
+    .lede code { font-size: 13px; }
+    .progress { text-align: right; flex-shrink: 0; }
+    .progress .count { font-size: 13px; color: var(--muted); display: flex; gap: 10px; justify-content: flex-end; align-items: baseline; }
+    .progress .bar { width: 160px; height: 6px; border-radius: 999px; background: var(--border); margin-top: 6px; overflow: hidden; margin-left: auto; }
+    .progress .bar i { display: block; height: 100%; width: 0; background: var(--success); transition: width .2s; }
+
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; }
+
+    /* ---- step card ---- */
+    .step { padding: 22px 24px 20px; display: flex; flex-direction: column; gap: 16px; }
+    .step.is-active { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-soft); }
+    .step.is-disabled { opacity: .55; }
+    .step-head { display: flex; align-items: center; gap: 14px; }
+    .num {
+      width: 32px; height: 32px; border-radius: 999px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+      font-weight: 600; font-size: 14px; border: 1.5px solid var(--border-strong); color: var(--faint);
+    }
+    .is-pass .num { background: var(--success); border-color: var(--success); color: #fff; }
+    .is-fail .num { background: var(--error); border-color: var(--error); color: #fff; }
+    .is-active .num { background: var(--brand); border-color: var(--brand); color: #fff; }
+    .step h3 { font-size: 18px; font-weight: 600; line-height: 1.25; flex: 1; }
+    .stamp {
+      display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 999px; flex-shrink: 0;
+      font-size: 12px; font-weight: 600; letter-spacing: .04em;
+      background: var(--sunken); color: var(--muted); border: 1px dashed var(--border-strong);
+    }
+    .is-pass .stamp { background: var(--success-soft); color: var(--success-text); border: 0; }
+    .is-fail .stamp { background: var(--error-soft); color: var(--error-text); border: 0; }
+    .is-progress .stamp { background: var(--warn-soft); color: var(--warn-text); border: 0; }
+
+    .step-action { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .step-action .intro { font-size: 14px; color: var(--muted); flex: 1; min-width: 240px; text-wrap: pretty; }
+    .step-action .buttons { display: flex; gap: 8px; }
+    .is-active .buttons .btn:not(:disabled):first-child { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+    .is-active .buttons .btn:not(:disabled):first-child:hover { background: var(--brand-hover); }
+
+    .checks { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .checks-title { font-size: 11.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 8px 14px; background: var(--sunken); border-bottom: 1px solid var(--border); }
+    .check-row { display: grid; grid-template-columns: 24px 1fr auto; gap: 12px; align-items: center; padding: 10px 14px; border-top: 1px solid var(--border); font-size: 14px; }
+    .check-row:first-of-type { border-top: 0; }
+    .check-row .ico { width: 22px; height: 22px; border-radius: 999px; display: flex; align-items: center; justify-content: center; border: 1.5px solid var(--border-strong); color: transparent; }
+    .check-row.is-ok .ico { background: var(--success); border-color: var(--success); color: #fff; }
+    .check-row.is-bad .ico { background: var(--error); border-color: var(--error); color: #fff; }
+    .check-row .ico svg { width: 14px; height: 14px; }
+    .check-row .who { font-size: 11.5px; color: var(--faint); white-space: nowrap; letter-spacing: .02em; }
+    .check-row .detail { display: block; font-family: var(--mono); font-size: 12px; color: var(--muted); margin-top: 2px; word-break: break-all; }
+    .check-row .detail:empty { display: none; }
+
+    .result {
+      padding: 10px 12px; border-radius: 8px; background: var(--sunken);
+      font-family: var(--mono); font-size: 12.5px; color: oklch(0.40 0.018 271); word-break: break-all; line-height: 1.6;
+    }
+    .result:empty { display: none; }
+    .step-foot { display: flex; align-items: center; gap: 12px; }
+    .note { flex: 1; height: 34px; border: 1px solid var(--border); border-radius: 8px; font: inherit; font-size: 13px; padding: 0 10px; color: var(--text); background: var(--surface); }
+    .note::placeholder { color: var(--faint); }
+    .note:focus { outline: 2px solid var(--brand); outline-offset: 1px; }
+    .flag { height: 34px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--border); background: transparent; font-size: 13px; color: var(--muted); white-space: nowrap; }
+    .flag.on { border-color: var(--error); color: var(--error-text); background: var(--error-soft); }
+
+    /* ---- other calls ---- */
+    .calls-head { padding: 20px 24px 12px; display: flex; align-items: baseline; gap: 12px; }
+    .calls-head h2 { font-size: 18px; font-weight: 600; }
+    .calls-head span { font-size: 13.5px; color: var(--muted); }
+    .call-row { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 20px; align-items: start; padding: 16px 24px; border-top: 1px solid var(--border); }
+    .call-row .btn { width: 100%; }
+    .call-row .intro { font-size: 14px; color: var(--muted); text-wrap: pretty; }
+    .call-row .intro code { font-size: 12.5px; color: var(--text); }
+    .call-row .result { margin-top: 10px; }
+
+    /* ---- session aside ---- */
+    aside { position: sticky; top: 76px; display: flex; flex-direction: column; gap: 16px; }
+    .session { padding: 18px 20px; }
+    .session-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .eyebrow { font-size: 11.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+    .conn { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px; }
+    .conn-ico { width: 38px; height: 38px; border-radius: 10px; background: var(--brand-soft); color: var(--brand); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .conn-ico svg { width: 20px; height: 20px; }
+    .conn-main { flex: 1; min-width: 0; }
+    .conn-name { font-size: 15px; font-weight: 600; line-height: 1.3; }
+    .conn-sub { font-size: 12px; color: var(--faint); }
+    .conn-state { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); flex-shrink: 0; }
+    .conn-state .dot { width: 7px; height: 7px; border-radius: 999px; background: var(--success); }
+    .conn-state .dot.off { background: var(--border-strong); }
+
+    .acct { display: flex; align-items: center; gap: 6px; margin-top: 8px; padding: 8px 10px 8px 12px; border-radius: 10px; background: var(--sunken); }
+    .acct code { flex: 1; font-size: 13px; letter-spacing: .02em; color: var(--text); }
+    .iconbtn { width: 28px; height: 28px; border-radius: 8px; border: 0; background: transparent; color: var(--muted); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .iconbtn:hover { background: color-mix(in oklch, var(--text) 8%, transparent); color: var(--text); }
+    .iconbtn svg { width: 15px; height: 15px; }
+    .iconbtn.copied { color: var(--success-text); }
+
+    .srows { margin-top: 6px; }
+    .srow { display: flex; align-items: center; gap: 10px; padding: 9px 2px; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .srow:last-child { border-bottom: 0; }
+    .sico { width: 28px; height: 28px; border-radius: 8px; background: var(--sunken); color: var(--muted); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .sico svg { width: 15px; height: 15px; }
+    .slabel { width: 74px; color: var(--muted); font-size: 12.5px; flex-shrink: 0; }
+    .sval { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .sval.mono { font-size: 12.5px; letter-spacing: .02em; }
+    .sval.muted { color: var(--faint); font-style: normal; }
+    .srow.err { color: var(--error-text); }
+    .srow.err .sico { background: var(--error-soft); color: var(--error-text); }
+    .srow.err .sval { white-space: normal; font-size: 12.5px; font-family: var(--mono); }
+    .log-head { margin-top: 12px; font-size: 12px; color: var(--faint); display: flex; justify-content: space-between; }
+    pre.log { margin: 6px 0 0; padding: 10px 12px; border-radius: 8px; background: var(--sunken); font-size: 11.5px; line-height: 1.6; max-height: 260px; overflow: auto; white-space: pre-wrap; word-break: break-all; color: oklch(0.40 0.018 271); }
+    pre.log.open { max-height: 70vh; }
+
+    @media (max-width: 1100px) {
+      .layout { grid-template-columns: 1fr; }
+      aside { position: static; }
+    }
+    @media (max-width: 760px) {
+      .topbar .container { height: auto; flex-wrap: wrap; padding: 10px 0; }
+      .heading { flex-direction: column; align-items: flex-start; }
+      .progress { text-align: left; }
+      .progress .bar { margin-left: 0; }
+      .step-foot { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="container">
+  <div class="brand">
+    <div class="mark"></div>
+    <b>SoroPass</b>
+    <span class="sep">/</span>
+    <span>Stellar Wallets Kit Demo</span>
+  </div>
+  <div class="topbar-right">
+    <span class="chip mode" data-testid="mode-chip" hidden></span>
+    <span class="chip"><span class="dot" data-testid="env-dot"></span><span data-testid="env">detecting…</span></span>
+    <span class="chip"><span class="dot"></span>testnet</span>
+  </div>
+  </div>
+</header>
+
+<div class="layout container">
+<main class="steps">
+  <div class="heading">
+    <div>
+      <h1>Test run: passkey wallet through the kit</h1>
+      <p class="lede">Five steps, in order. Press the button; the page checks the result. Every button calls <code>StellarWalletsKit</code>, never the module.</p>
+    </div>
+    <div class="progress">
+      <div class="count"><span data-testid="progress">0 of 5 passed</span></div>
+      <div class="bar"><i data-testid="progress-bar"></i></div>
+    </div>
+  </div>
+
+  <!-- 1 -->
+  <section class="card step" data-step="connect">
+    <div class="step-head"><div class="num">1</div><h3>Connect through the kit picker</h3><span class="stamp" data-stamp="connect">NOT RUN</span></div>
+    <div class="step-action">
+      <div class="buttons"><button class="btn" data-testid="connect">Connect wallet</button></div>
+      <p class="intro" data-intro="connect"></p>
+    </div>
+    <div class="checks" data-checks="connect"></div>
+    <div class="result" data-result="connect"></div>
+    <div class="step-foot"><input class="note" data-note="connect" placeholder="note (optional)"/><button class="flag" data-flag="connect">Flag a problem</button></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="card step" data-step="sign">
+    <div class="step-head"><div class="num">2</div><h3>Sign a transaction</h3><span class="stamp" data-stamp="sign">NOT RUN</span></div>
+    <div class="step-action">
+      <div class="buttons"><button class="btn" data-testid="sign-tx">Sign transaction</button></div>
+      <p class="intro" data-intro="sign"></p>
+    </div>
+    <div class="checks" data-checks="sign"></div>
+    <div class="result" data-result="sign" data-testid="verdict"></div>
+    <div class="step-foot"><input class="note" data-note="sign" placeholder="note (optional)"/><button class="flag" data-flag="sign">Flag a problem</button></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="card step" data-step="wrong-key" data-needs="testnet">
+    <div class="step-head"><div class="num">3</div><h3>Reject a wrong key</h3><span class="stamp" data-stamp="wrong-key">NOT RUN</span></div>
+    <div class="step-action">
+      <div class="buttons"><button class="btn" data-testid="wrong-key">Submit with a wrong key</button></div>
+      <p class="intro" data-intro="wrong-key"></p>
+    </div>
+    <div class="checks" data-checks="wrong-key"></div>
+    <div class="result" data-result="wrong-key" data-testid="verdict-wrong-key"></div>
+    <div class="step-foot"><input class="note" data-note="wrong-key" placeholder="note (optional)"/><button class="flag" data-flag="wrong-key">Flag a problem</button></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="card step" data-step="reconnect">
+    <div class="step-head"><div class="num">4</div><h3>Disconnect, then reconnect</h3><span class="stamp" data-stamp="reconnect">NOT RUN</span></div>
+    <div class="step-action">
+      <div class="buttons"><button class="btn" data-testid="disconnect">Disconnect</button><button class="btn" data-testid="reconnect">Reconnect</button></div>
+      <p class="intro" data-intro="reconnect"></p>
+    </div>
+    <div class="checks" data-checks="reconnect"></div>
+    <div class="result" data-result="reconnect"></div>
+    <div class="step-foot"><input class="note" data-note="reconnect" placeholder="note (optional)"/><button class="flag" data-flag="reconnect">Flag a problem</button></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="card step" data-step="returning" data-needs="testnet">
+    <div class="step-head"><div class="num">5</div><h3>Come back as a returning visitor</h3><span class="stamp" data-stamp="returning">NOT RUN</span></div>
+    <div class="step-action">
+      <div class="buttons"><button class="btn" data-testid="reload">Reload</button><button class="btn" data-testid="returning-connect" hidden>Connect wallet</button></div>
+      <p class="intro" data-intro="returning"></p>
+    </div>
+    <div class="checks" data-checks="returning"></div>
+    <div class="result" data-result="returning"></div>
+    <div class="step-foot"><input class="note" data-note="returning" placeholder="note (optional)"/><button class="flag" data-flag="returning">Flag a problem</button></div>
+  </section>
+
+  <!-- other calls -->
+  <section class="card calls">
+    <div class="calls-head"><h2>Other kit calls</h2><span>Off the main path. Each row shows the kit's response.</span></div>
+    <div class="call-row">
+      <button class="btn" data-testid="sign-auth-entry">Sign auth entry</button>
+      <div><p class="intro"><code>signAuthEntry()</code> on a single Soroban auth entry for the account. In memory modes the page verifies it with <code>__check_auth</code>.</p><div class="result" data-testid="result-sign-auth-entry"></div></div>
+    </div>
+    <div class="call-row">
+      <button class="btn" data-testid="sign-message">Sign message</button>
+      <div><p class="intro"><code>signMessage("hello from the kit")</code>. Returns a self-contained JSON envelope: authenticatorData, clientDataJSON, signature.</p><div class="result" data-testid="result-sign-message"></div></div>
+    </div>
+    <div class="call-row">
+      <button class="btn" data-testid="silent">Silent getAddress</button>
+      <div><p class="intro"><code>getAddress({ skipRequestAccess: true })</code>. Answers from cache or refuses. Never prompts.</p><div class="result" data-testid="result-silent"></div></div>
+    </div>
+    <div class="call-row">
+      <button class="btn" data-testid="profile">Profile modal</button>
+      <div><p class="intro"><code>profileModal()</code>. The kit's own account view: C-address, copy, disconnect.</p><div class="result" data-testid="result-profile"></div></div>
+    </div>
+    <div class="call-row">
+      <button class="btn" data-testid="reset">Reset credential</button>
+      <div><p class="intro">Forgets the remembered credential and the fee source. Reload afterwards for a true first run. The passkey itself stays in your authenticator.</p><div class="result" data-testid="result-reset"></div></div>
+    </div>
+  </section>
+
+</main>
+
+<aside>
+  <section class="card session">
+    <div class="session-head"><div class="eyebrow">Session</div><button class="btn btn-ghost" data-testid="reset-run" title="Forget the run, the credential and the fee source, disconnect, and reload for a true first run.">Reset and start over</button></div>
+
+    <!-- raw values, read by the automated suite -->
+    <div hidden>
+      <span data-testid="wallet">-</span>
+      <span data-testid="address">-</span>
+      <span data-testid="network">-</span>
+      <span data-testid="factory">-</span>
+      <span data-testid="source">-</span>
+      <span data-testid="error">-</span>
+    </div>
+
+    <div class="conn">
+      <div class="conn-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 10a4 4 0 1 0-6.5 3.1L4 16.6V20h3.4l6.1-6.1A4 4 0 0 0 14 10z"/><circle cx="16.5" cy="7.5" r="0.5"/><path d="M15 3h6v6"/><path d="M21 3l-5.5 5.5"/></svg>
+      </div>
+      <div class="conn-main">
+        <div class="conn-name" data-ui="conn-name">Not connected</div>
+        <div class="conn-sub" data-ui="conn-sub">Step 1 opens the kit modal</div>
+      </div>
+      <span class="conn-state" data-ui="conn-state"><span class="dot off"></span>offline</span>
+    </div>
+
+    <div class="acct" data-ui="acct" hidden>
+      <code data-ui="acct-short"></code>
+      <button class="iconbtn" data-copy="address" title="Copy the full address">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      </button>
+      <a class="iconbtn" data-ui="acct-link" target="_blank" rel="noreferrer" title="View the contract on Stellar Expert" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M21 3l-9 9"/></svg>
+      </a>
+    </div>
+
+    <div class="srows">
+      <div class="srow">
+        <span class="sico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3.5 9h17M3.5 15h17"/></svg></span>
+        <span class="slabel">Network</span>
+        <span class="sval" data-ui="network">-</span>
+      </div>
+      <div class="srow">
+        <span class="sico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg></span>
+        <span class="slabel">Factory</span>
+        <span class="sval mono" data-ui="factory">-</span>
+        <button class="iconbtn" data-copy="factory" title="Copy the factory contract id" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+      </div>
+      <div class="srow">
+        <span class="sico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></svg></span>
+        <span class="slabel">Fee source</span>
+        <span class="sval mono" data-ui="source">-</span>
+        <button class="iconbtn" data-copy="source" title="Copy the fee source address" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+      </div>
+      <div class="srow err" data-ui="error-row" hidden>
+        <span class="sico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2z"/><path d="M12 10v5"/><path d="M12 18h.01"/></svg></span>
+        <span class="slabel">Error</span>
+        <span class="sval" data-ui="error">-</span>
+      </div>
+    </div>
+
+    <div class="log-head"><span>Log, newest first</span><a href="#" data-testid="log-toggle">expand</a></div>
+    <pre class="log" data-testid="log"></pre>
+  </section>
+</aside>
+</div>
+
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>

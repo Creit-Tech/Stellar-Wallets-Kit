@@ -18,6 +18,7 @@
     "@lobstrco/signer-extension-api": "npm:@lobstrco/signer-extension-api@2.0.0",
     "@preact/signals": "npm:@preact/signals@2.9.0",
     "@reown/appkit": "npm:@reown/appkit@1.8.21",
+    "@soropass/core": "npm:@soropass/core@^0.3.1",
     "@std/bytes": "jsr:@std/bytes@1.0.6",
     "@std/encoding": "jsr:@std/encoding@1.0.11",
     "@stellar/freighter-api": "npm:@stellar/freighter-api@6.0.0",
@@ -54,6 +55,7 @@
     "./modules/xbull": "./sdk/modules/xbull.module.ts",
     "./modules/cactuslink": "./sdk/modules/cactuslink.module.ts",
     "./modules/dcent": "./sdk/modules/dcent.module.ts",
+    "./modules/passkey": "./sdk/modules/passkey.module.ts",
     "./modules/utils": "./sdk/modules/utils.ts"
   },
   "fmt": {
