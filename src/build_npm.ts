@@ -53,6 +53,10 @@ await build({
       path: "./sdk/modules/freighter.module.ts",
     },
     {
+      name: "./modules/ghostsig",
+      path: "./sdk/modules/ghostsig.module.ts",
+    },
+    {
       name: "./modules/hana",
       path: "./sdk/modules/hana.module.ts",
     },
