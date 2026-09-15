@@ -17,13 +17,14 @@ export class xBullModule implements ModuleInterface {
   }
 
   async getAddress(): Promise<{ address: string }> {
+    const bridge: xBullWalletConnect = new xBullWalletConnect();
     try {
-      const bridge: xBullWalletConnect = new xBullWalletConnect();
       const publicKey: string = await bridge.connect();
-      bridge.closeConnections();
       return { address: publicKey };
     } catch (e) {
       throw parseError(e);
+    } finally {
+      bridge.closeConnections();
     }
   }
 
@@ -35,19 +36,19 @@ export class xBullModule implements ModuleInterface {
       path?: string;
     },
   ): Promise<{ signedTxXdr: string; signerAddress?: string }> {
+    const bridge: xBullWalletConnect = new xBullWalletConnect();
     try {
-      const bridge: xBullWalletConnect = new xBullWalletConnect();
-
       const signedXdr: string = await bridge.sign({
         xdr,
         publicKey: opts?.address,
         network: opts?.networkPassphrase,
       });
 
-      bridge.closeConnections();
       return { signedTxXdr: signedXdr, signerAddress: opts?.address };
     } catch (e) {
       throw parseError(e);
+    } finally {
+      bridge.closeConnections();
     }
   }
 
@@ -66,18 +67,18 @@ export class xBullModule implements ModuleInterface {
       path?: string;
     },
   ): Promise<{ signedMessage: string; signerAddress?: string }> {
+    const bridge: xBullWalletConnect = new xBullWalletConnect();
     try {
-      const bridge: xBullWalletConnect = new xBullWalletConnect();
-
       const result = await bridge.signMessage(message, {
         address: opts?.address,
         networkPassphrase: opts?.networkPassphrase,
       });
 
-      bridge.closeConnections();
       return result;
     } catch (e: any) {
       throw parseError(e);
+    } finally {
+      bridge.closeConnections();
     }
   }
 

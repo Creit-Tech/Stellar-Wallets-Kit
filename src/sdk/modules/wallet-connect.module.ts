@@ -69,6 +69,7 @@ export class WalletConnectModule implements ModuleInterface {
       featuredWalletIds: [
         "997a355c8f682468706a76cff1b004a7115f505fb962dac54b6e9b442dd1c380", // Freighter
         "76a3d548a08cf402f5c7d021f24fd2881d767084b387a5325df88bc3d4b6f21b", // Lobstr
+        "9c78aee7d8a771255942334d06d2cbab89e2178ee49fee4ea3b6c78032fcac76", // Scopuly
       ],
       ...(wcParams.appKitOptions || {}),
     });

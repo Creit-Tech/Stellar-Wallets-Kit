@@ -2,8 +2,8 @@ import TrezorConnectImport from "@trezor/connect-web";
 const TrezorConnect: any = "default" in TrezorConnectImport
   ? (TrezorConnectImport as any).default
   : (TrezorConnectImport as any);
-import { transformTransaction } from "@trezor/connect-plugin-stellar";
 import { Transaction } from "@stellar/stellar-sdk";
+import { transformTransaction } from "./trezor-transform.ts";
 import { decodeHex, encodeBase64 } from "@std/encoding";
 import { hardwareWalletPaths, mnemonicPath, selectedNetwork } from "../../state/mod.ts";
 import { type HardwareWalletModuleInterface, ModuleType } from "../../types/mod.ts";
@@ -157,7 +157,7 @@ export class TrezorModule implements HardwareWalletModuleInterface {
     if (!network) throw parseError(new Error("You need to provide or set a network passphrase"));
 
     const tx: Transaction = new Transaction(xdr, network);
-    const parsedTx = transformTransaction(mnemonicPathValue, tx as any);
+    const parsedTx = transformTransaction(mnemonicPathValue, tx);
     const result = await TrezorConnect.stellarSignTransaction(parsedTx);
 
     if (!result.success) {
@@ -167,7 +167,7 @@ export class TrezorModule implements HardwareWalletModuleInterface {
     tx.addSignature(account, encodeBase64(decodeHex(result.payload.signature)));
 
     return {
-      signedTxXdr: tx.toXDR(),
+      signedTxXdr: tx.toXdr(),
       signerAddress: account,
     };
   }

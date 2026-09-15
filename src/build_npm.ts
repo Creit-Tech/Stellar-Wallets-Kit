@@ -3,6 +3,18 @@ import denoFile from "./deno.json" with { type: "json" };
 
 await emptyDir("./dist");
 
+// Ignore builds that aren't needed for the kit to work
+await Deno.writeTextFile(
+  "./dist/pnpm-workspace.yaml",
+  `
+allowBuilds:
+  '@reown/appkit': false
+  bufferutil: false
+  secp256k1: false
+  utf-8-validate: false
+`,
+);
+
 await build({
   esModule: true,
   packageManager: "pnpm",
@@ -67,6 +79,10 @@ await build({
     {
       name: "./modules/rabet",
       path: "./sdk/modules/rabet.module.ts",
+    },
+    {
+      name: "./modules/scopuly",
+      path: "./sdk/modules/scopuly.module.ts",
     },
     {
       name: "./modules/trezor",

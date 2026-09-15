@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 
-const KitButton = dynamic(() => import("./kit-button.tsx"), { ssr: false });
+const KitButton = dynamic(() => import("./kit-button"), { ssr: false });
 
 export default function Home() {
   return (

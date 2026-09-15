@@ -144,7 +144,7 @@ export class LedgerModule implements HardwareWalletModuleInterface {
     tx.addSignature(account, encodeBase64(result.signature));
 
     return {
-      signedTxXdr: tx.toXDR(),
+      signedTxXdr: tx.toXdr(),
       signerAddress: account,
     };
   }

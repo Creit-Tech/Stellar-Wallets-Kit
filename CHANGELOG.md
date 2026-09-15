@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.6.0 (2026-08-21)
+
+### Change
+
+- Update @stellar/stellar-sdk to v17.0.0 (see the
+  [migration guide](https://stellar.github.io/js-stellar-sdk/guides/00-migration/) for details). This
+  renames `Transaction#toXDR()` to `toXdr()` and the same rename applies to the raw XDR classes (e.g.
+  `xdr.HashIdPreimage#toXdr()`); `Transaction#hash()`/`signatureBase()` now return `Uint8Array` instead
+  of `Buffer`.
+- Drop the `@trezor/connect-plugin-stellar` dependency and replace it with a local
+  `transformTransaction` (`sdk/modules/trezor-transform.ts`). That package's version of the function
+  reads offer prices via a method-chain (`xdrOperation.body().value().price().n()/.d()`) that
+  stellar-sdk v17's rebuilt XDR layer no longer supports (those became plain properties), so signing a
+  Trezor `manageBuyOffer`, `manageSellOffer`, or `createPassiveSellOffer` transaction threw. The local
+  replacement fixes the property access and isn't blocked on Trezor shipping a v17-compatible release.
+
 ### 2.5.0 (2026-06-24)
 
 ### Add

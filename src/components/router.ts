@@ -1,6 +1,6 @@
-import type { SwkAppRoute } from '../types/mod.ts';
-import { route, routerHistory } from '../state/mod.ts';
-import { html } from 'htm/preact';
+import type { SwkAppRoute } from "../types/mod.ts";
+import { route, routerHistory } from "../state/mod.ts";
+import { html } from "htm/preact";
 import { useEffect, useState } from "preact/hooks";
 import type { VNode } from "preact";
 
@@ -42,10 +42,11 @@ function PageTransition({ children, isActive, duration = 300 }: PageTransitionPr
 
   if (!shouldRender) return null;
   const styles = {
-    position: visible ? 'relative' : 'absolute',
+    position: visible ? "relative" : "absolute",
     inset: 0,
     transition: `opacity ${duration}ms ease, transform ${duration}ms ease, position ${duration}ms ease`,
     opacity: visible ? 1 : 0,
+    scrollbarWidth: "none",
   };
 
   return html`<div style=${styles}>${children}</div>`;
@@ -61,9 +62,11 @@ export function MultiPageAnimator({ currentRoute, pages, duration = 300 }: Multi
     html`
       <${PageTransition} id=${key} key=${key} isActive=${currentRoute === key} duration=${duration}>
         <${Component} />
-      <//>
+        <//>
     `
   );
 
-  return html`<div style=${{ position: 'relative', width: '100%', height: '100%' }}>${entries}</div>`;
+  return html`
+    <div style=${{ position: "relative", width: "100%", height: "100%" }}>${entries}</div>
+  `;
 }

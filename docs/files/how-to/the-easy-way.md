@@ -83,7 +83,7 @@ with your website's logic. For example, if the user needs to sign a transaction,
 const {address} = await StellarWalletsKit.getAddress();
 
 // We request the signature for the transaction `tx` using the PUBLIC network and the address we just fetched.
-const {signedTxXdr} = await StellarWalletsKit.signTransaction(tx.toXDR(), {
+const {signedTxXdr} = await StellarWalletsKit.signTransaction(tx.toXdr(), {
   networkPassphrase: Networks.PUBLIC,
   address,
 });

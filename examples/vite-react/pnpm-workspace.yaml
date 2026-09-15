@@ -1,8 +1,8 @@
 allowBuilds:
   '@reown/appkit': false
-  '@stellar/stellar-sdk': false
   blake-hash: false
   bufferutil: false
+  esbuild: false
   protobufjs: false
   secp256k1: false
   sharp: false
