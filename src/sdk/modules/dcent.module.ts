@@ -75,7 +75,7 @@ export class DcentModule implements ModuleInterface {
   moduleType: ModuleType = ModuleType.HOT_WALLET;
 
   productId: string = DCENT_ID;
-  productName: string = "D'CENT Wallet";
+  productName: string = "DCENT Wallet";
   productUrl: string = "https://dcentwallet.com";
   productIcon: string = "https://assets.dcentwallet.com/images/dcent-symbol.svg";
 
