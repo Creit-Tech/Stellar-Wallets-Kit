@@ -5,6 +5,7 @@ import {
     activeModule,
 } from "@creit.tech/stellar-wallets-kit/state";
 import {AlbedoModule} from "@creit.tech/stellar-wallets-kit/modules/albedo";
+import {DcentModule} from "@creit.tech/stellar-wallets-kit/modules/dcent";
 import {FreighterModule} from "@creit.tech/stellar-wallets-kit/modules/freighter";
 import {HanaModule} from "@creit.tech/stellar-wallets-kit/modules/hana";
 import {LobstrModule} from "@creit.tech/stellar-wallets-kit/modules/lobstr";
@@ -26,6 +27,7 @@ StellarWalletsKit.init({
     theme: SwkAppDarkTheme,
     modules: [
         new AlbedoModule(),
+        new DcentModule(),
         new FreighterModule(),
         new HanaModule(),
         new LobstrModule(),
