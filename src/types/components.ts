@@ -32,8 +32,8 @@ export type SwkAppTheme = {
 };
 
 export const SwkAppLightTheme: SwkAppTheme = {
-  "background": "#fcfcfcff",
-  "background-secondary": "#f8f8f8ff",
+  "background": "#ffffff",
+  "background-secondary": "#f4f6f8",
   "foreground-strong": "#000000",
   "foreground": "#161619ff",
   "foreground-secondary": "#2d2d31ff",
