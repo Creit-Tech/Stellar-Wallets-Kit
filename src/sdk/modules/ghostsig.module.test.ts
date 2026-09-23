@@ -6,8 +6,8 @@ import { GhostsigModule } from "./ghostsig.module.ts";
 /**
  * GHOSTSIG is a hosted wallet reached through a popup. The module opens
  * ghostsig.dev and sends one request per signature over postMessage, taking
- * replies from that origin and that popup only. These tests play the app's
- * window and script the page's replies.
+ * replies from that origin and that popup only. These tests install the app's
+ * window as the global `window` and script the page's replies.
  */
 
 // deno-lint-ignore no-explicit-any
@@ -61,6 +61,7 @@ function makeWindowPair() {
       this.post({ ghostsig: 1, id, type: "error", error });
     },
   };
+  globalThis.window = dapp;
   return { dapp, page, popup };
 }
 
@@ -68,8 +69,8 @@ const ACCOUNT = { address: "GGHOSTSIG", publicKey: "ab".repeat(32) };
 const SIGNED = { ...ACCOUNT, hash: "CAFE", blob: "AAAAAgAA", signature: "ff".repeat(64) };
 
 Deno.test("metadata: a hot wallet, always available, with its icon", async () => {
-  const { dapp } = makeWindowPair();
-  const mod = new GhostsigModule({ win: dapp });
+  makeWindowPair();
+  const mod = new GhostsigModule();
   assertEquals(mod.productId, "ghostsig");
   assertEquals(mod.productName, "GHOSTSIG");
   assertEquals(mod.productIcon.startsWith("data:image/svg+xml;base64,"), true);
@@ -78,7 +79,7 @@ Deno.test("metadata: a hot wallet, always available, with its icon", async () =>
 
 Deno.test("getAddress asks the page on the module's network and returns the address", async () => {
   const { dapp, page } = makeWindowPair();
-  const mod = new GhostsigModule({ network: Networks.TESTNET, win: dapp });
+  const mod = new GhostsigModule({ network: Networks.TESTNET });
   const pending = mod.getAddress();
   assertEquals(dapp.opened, 1);
   page.ready();
@@ -90,8 +91,8 @@ Deno.test("getAddress asks the page on the module's network and returns the addr
 });
 
 Deno.test("signTransaction returns the signed envelope and the signer, on the passphrase the call names", async () => {
-  const { dapp, page } = makeWindowPair();
-  const mod = new GhostsigModule({ win: dapp });
+  const { page } = makeWindowPair();
+  const mod = new GhostsigModule();
   const pending = mod.signTransaction("AAAA", { networkPassphrase: Networks.PUBLIC, address: "GGHOSTSIG" });
   page.ready();
   assertEquals(page.last().method, "sign");
@@ -104,7 +105,7 @@ Deno.test("signTransaction returns the signed envelope and the signer, on the pa
 
 Deno.test("signAuthEntry and signMessage return the base64 signature the page gives", async () => {
   const { dapp, page } = makeWindowPair();
-  const mod = new GhostsigModule({ network: Networks.TESTNET, win: dapp });
+  const mod = new GhostsigModule({ network: Networks.TESTNET });
   const auth = mod.signAuthEntry("AAAACQ", { address: "GGHOSTSIG" });
   page.ready();
   page.reply(page.last().id, { ...ACCOUNT, hash: "H", blob: "AAAACQ", signature: "c2ln" });
@@ -116,18 +117,51 @@ Deno.test("signAuthEntry and signMessage return the base64 signature the page gi
   assertEquals(dapp.opened, 2, "a signature closes the page, so the next request opens a popup");
 });
 
-Deno.test("an unknown passphrase is refused with -3 before any popup; a declined prompt is -4", async () => {
+Deno.test("an unknown passphrase is refused with -3 before any popup and leaves the network; a declined prompt is -4", async () => {
   const { dapp, page } = makeWindowPair();
-  const mod = new GhostsigModule({ win: dapp });
+  const mod = new GhostsigModule();
   const e = await assertRejects(() =>
     mod.signTransaction("AAAA", { networkPassphrase: "Standalone Network ; February 2017" })
   );
   assertEquals((e as { code: number }).code, -3);
   assertEquals(dapp.opened, 0);
+  assertEquals(await mod.getNetwork(), { network: "PUBLIC", networkPassphrase: Networks.PUBLIC });
   const pending = mod.getAddress();
   page.ready();
   page.fail(page.last().id, { code: -4, message: "declined" });
   const declined = await assertRejects(() => pending);
   assertEquals((declined as { code: number; message: string }).code, -4);
   assertEquals((declined as { code: number; message: string }).message, "declined");
+});
+
+Deno.test("signAndSubmitTransaction: success once validated, pending while open, refused when nothing went out", async () => {
+  const { page } = makeWindowPair();
+  const mod = new GhostsigModule({ network: Networks.TESTNET });
+  const submit = (answer: Any) => {
+    const pending = mod.signAndSubmitTransaction("AAAA", { address: "GGHOSTSIG" });
+    page.ready();
+    assertEquals(page.last().params, { payload: "AAAA", submit: true, address: "GGHOSTSIG" });
+    page.reply(page.last().id, { ...SIGNED, ...answer });
+    return pending;
+  };
+  const refused = async (answer: Any) => await assertRejects(() => submit(answer));
+
+  assertEquals(await submit({ submitted: { kind: "validated", ledger: 7, ok: true } }), { status: "success" });
+  for (const submitted of [{ kind: "lost" }, { kind: "unknown" }, { kind: "validated", ledger: 7, ok: null }]) {
+    assertEquals(await submit({ submitted }), { status: "pending" });
+  }
+  for (const kind of ["offline", "unsent", "locked", "moved"]) {
+    assertEquals(await refused({ submitted: { kind } }), {
+      code: -2,
+      message: `Nothing was submitted: ${kind}. Transaction hash: CAFE`,
+    });
+  }
+  assertEquals(await refused({ handOver: "a login challenge for app.example" }), {
+    code: -2,
+    message: "Nothing was submitted: a login challenge for app.example. Transaction hash: CAFE",
+  });
+  assertEquals(await refused({ submitted: { kind: "refused", code: "tx_bad_seq", ok: false } }), {
+    code: -2,
+    message: "The transaction failed: tx_bad_seq. Transaction hash: CAFE",
+  });
 });
