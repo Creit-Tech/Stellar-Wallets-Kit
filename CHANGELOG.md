@@ -3,21 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### 2.6.0 (2026-08-21)
+### 2.7.0 (2026-09-23)
+
+### Change
+
+- Add modules for Metamask (PR [#92](https://github.com/Creit-Tech/Stellar-Wallets-Kit/pull/92)) and Ghostsig
+  (PR [#114](https://github.com/Creit-Tech/Stellar-Wallets-Kit/pull/114))
+
+### Fix
+
+- Update the xBull wallet module (PR #110)
+
+### 2.6.0 (2026-08-27)
 
 ### Change
 
 - Update @stellar/stellar-sdk to v17.0.0 (see the
-  [migration guide](https://stellar.github.io/js-stellar-sdk/guides/00-migration/) for details). This
-  renames `Transaction#toXDR()` to `toXdr()` and the same rename applies to the raw XDR classes (e.g.
-  `xdr.HashIdPreimage#toXdr()`); `Transaction#hash()`/`signatureBase()` now return `Uint8Array` instead
-  of `Buffer`.
+  [migration guide](https://stellar.github.io/js-stellar-sdk/guides/00-migration/) for details). This renames
+  `Transaction#toXDR()` to `toXdr()` and the same rename applies to the raw XDR classes (e.g.
+  `xdr.HashIdPreimage#toXdr()`); `Transaction#hash()`/`signatureBase()` now return `Uint8Array` instead of `Buffer`.
 - Drop the `@trezor/connect-plugin-stellar` dependency and replace it with a local
-  `transformTransaction` (`sdk/modules/trezor-transform.ts`). That package's version of the function
-  reads offer prices via a method-chain (`xdrOperation.body().value().price().n()/.d()`) that
-  stellar-sdk v17's rebuilt XDR layer no longer supports (those became plain properties), so signing a
-  Trezor `manageBuyOffer`, `manageSellOffer`, or `createPassiveSellOffer` transaction threw. The local
-  replacement fixes the property access and isn't blocked on Trezor shipping a v17-compatible release.
+  `transformTransaction` (`sdk/modules/trezor-transform.ts`). That package's version of the function reads offer prices
+  via a method-chain (`xdrOperation.body().value().price().n()/.d()`) that stellar-sdk v17's rebuilt XDR layer no longer
+  supports (those became plain properties), so signing a Trezor `manageBuyOffer`, `manageSellOffer`, or
+  `createPassiveSellOffer` transaction threw. The local replacement fixes the property access and isn't blocked on
+  Trezor shipping a v17-compatible release.
+- Include Scopuly Module
+- Upgrade some dependencies
 
 ### 2.5.0 (2026-06-24)
 
@@ -42,14 +54,14 @@ See [standard-version](https://github.com/conventional-changelog/standard-versio
 
 ### Add
 
-- Adds support to sign both messages and authorization entries using WalletConnect (
-  following https://docs.freighter.app/mobile-walletconnect/signing)
+- Adds support to sign both messages and authorization entries using WalletConnect
+  (following https://docs.freighter.app/mobile-walletconnect/signing)
 
 ### Fix
 
-- It upgrades the Trezor libraries to the latest ALPHA releases. This is because when a website is using modern
-  bundling (ESM only), the process breaks since the `@trezor/connect-plugin-stellar` package is looking for ESM code
-  that isn't available in old `@trezor/connect-web` versions.
+- It upgrades the Trezor libraries to the latest ALPHA releases. This is because when a website is using modern bundling
+  (ESM only), the process breaks since the `@trezor/connect-plugin-stellar` package is looking for ESM code that isn't
+  available in old `@trezor/connect-web` versions.
 
 ### 2.2.0 (2026-05-08)
 
@@ -273,8 +285,8 @@ See [standard-version](https://github.com/conventional-changelog/standard-versio
 
 ### Fix
 
-- Add `Buffer` package to correctly convert the response from a signed message/auth entry with
-  Freighter ([Ticket created](https://github.com/stellar/freighter/issues/1626))
+- Add `Buffer` package to correctly convert the response from a signed message/auth entry with Freighter
+  ([Ticket created](https://github.com/stellar/freighter/issues/1626))
 - Check if `window` is `undefined` before using it with Rabet and Hana so it works on server side flows.
 
 ### [1.2.3](https://github.com/Creit-Tech/Stellar-Wallets-Kit/compare/v1.2.2...v1.2.3) (2024-10-09)

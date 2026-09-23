@@ -1,6 +1,6 @@
 {
   "name": "@creit-tech/stellar-wallets-kit",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "license": "MIT",
   "tasks": {
     "build-npm": "deno run -A build_npm.ts",
@@ -28,8 +28,8 @@
     "@twind/preset-tailwind": "npm:@twind/preset-tailwind@1.1.4",
     "@walletconnect/sign-client": "npm:@walletconnect/sign-client@2.23.0",
     "@walletconnect/types": "npm:@walletconnect/types@2.23.9",
-    "@metamask/multichain-api-client": "npm:@metamask/multichain-api-client@^0.12.0",
-    "@metamask/connect-stellar": "npm:@metamask/connect-stellar@^0.2.0",
+    "@metamask/multichain-api-client": "npm:@metamask/multichain-api-client@0.12.0",
+    "@metamask/connect-stellar": "npm:@metamask/connect-stellar@0.3.0",
     "htm": "npm:htm@3.1.1",
     "preact": "npm:preact@^10.29.0"
   },

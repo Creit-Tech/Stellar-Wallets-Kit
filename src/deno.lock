@@ -19,16 +19,16 @@
     "npm:@ledgerhq/hw-transport-webusb@6.29.12": "6.29.12",
     "npm:@ledgerhq/hw-transport@6.31.12": "6.31.12",
     "npm:@lobstrco/signer-extension-api@2.0.0": "2.0.0",
-    "npm:@metamask/connect-stellar@0.2": "0.2.0",
-    "npm:@metamask/multichain-api-client@0.12": "0.12.0",
+    "npm:@metamask/connect-stellar@0.3.0": "0.3.0",
+    "npm:@metamask/multichain-api-client@0.12.0": "0.12.0",
     "npm:@preact/signals@2.9.0": "2.9.0_preact@10.29.8",
     "npm:@reown/appkit@1.8.21": "1.8.21_@types+react@19.2.18_typescript@7.0.2",
     "npm:@stellar/freighter-api@6.0.0": "6.0.0",
-    "npm:@stellar/stellar-sdk@17": "17.0.0",
+    "npm:@stellar/stellar-sdk@17": "17.0.1",
     "npm:@trezor/connect-web@10.0.0-beta.1": "10.0.0-beta.1_tslib@2.8.1",
     "npm:@twind/core@1.1.3": "1.1.3_typescript@7.0.2",
-    "npm:@twind/preset-autoprefix@1.0.7": "1.0.7_@twind+core@1.1.3_typescript@7.0.2",
-    "npm:@twind/preset-tailwind@1.1.4": "1.1.4_@twind+core@1.1.3_typescript@7.0.2",
+    "npm:@twind/preset-autoprefix@1.0.7": "1.0.7_@twind+core@1.1.3__typescript@7.0.2_typescript@7.0.2",
+    "npm:@twind/preset-tailwind@1.1.4": "1.1.4_@twind+core@1.1.3__typescript@7.0.2_typescript@7.0.2",
     "npm:@walletconnect/sign-client@2.23.0": "2.23.0_typescript@7.0.2",
     "npm:@walletconnect/types@2.23.9": "2.23.9",
     "npm:htm@3.1.1": "3.1.1",
@@ -152,13 +152,13 @@
         "tweetnacl-util"
       ]
     },
-    "@exodus/bytes@1.15.1_@noble+hashes@2.3.0": {
+    "@exodus/bytes@1.15.1_@noble+hashes@2.4.0": {
       "integrity": "sha512-S6mL0yNB/Abt9Ei4tq8gDhcczc4S3+vQ4ra7vxnAf+YHC02srtqxKKZghx2Dq6p0e66THKwR6r8N6P95wEty7Q==",
       "dependencies": [
-        "@noble/hashes@2.3.0"
+        "@noble/hashes@2.4.0"
       ],
       "optionalPeers": [
-        "@noble/hashes@2.3.0"
+        "@noble/hashes@2.4.0"
       ]
     },
     "@hot-wallet/sdk@1.0.11_near-api-js@5.1.1_typescript@7.0.2": {
@@ -234,8 +234,8 @@
     "@lobstrco/signer-extension-api@2.0.0": {
       "integrity": "sha512-jwlVyzMFF296iaNgMWn1lu+EU6BeUD4mgPurEsy8EygYNCrjA8igLpsDlXhfvXhst9tX5w4wRuTDX+FZtpfCug=="
     },
-    "@metamask/connect-stellar@0.2.0": {
-      "integrity": "sha512-IJ5cGOUBEdSkvWOBOQuQGVkEder6nmnM9r/JxIgl7sTs0WuGi0WUfWJ9L0M7HwUQcgEZ/ZbP7n0aOuZC5pHV9g==",
+    "@metamask/connect-stellar@0.3.0": {
+      "integrity": "sha512-c5FloCdbfzxneQeSFrdk02/wZy6VwK6jAAPaCeDhhBMwL+A9uyFg0x1WU93chbBz+ENIHWqSwYmSkdS9rGu4Fw==",
       "dependencies": [
         "@metamask/multichain-api-client"
       ]
@@ -393,8 +393,8 @@
         "@noble/hashes@1.8.0"
       ]
     },
-    "@noble/ed25519@3.1.0": {
-      "integrity": "sha512-pfcObRY3CtvwfaG9Mt5XqZdKmAQppl37tHUeuBhDUbiwJBCVY4/A4lbMvb1xKhMDx96AqAqZpMWuBX1HulhX4g=="
+    "@noble/ed25519@3.2.0": {
+      "integrity": "sha512-criDgRlnUA09hchYrTy/JUWPIEap5rZxQe6wDWzRx51oWWpDRcUpuNzlgPxDJaOK6AsW9c0wKcj3rKRv6t+bPQ=="
     },
     "@noble/hashes@1.3.3": {
       "integrity": "sha512-V7/fPHgl+jsVPXqqeOzT8egNj2iBIVt+ECeMMG8TdcnTikP3oaBtUVqpT/gYCR68aEBJSF+XbYUxStjbFMqIIA=="
@@ -411,8 +411,8 @@
     "@noble/hashes@1.8.0": {
       "integrity": "sha512-jCs9ldd7NwzpgXDIf6P3+NrHh9/sD6CQdxHyjQI+h/6rDNo88ypBxxz45UDuZHz9r3tNz7N/VInSVoVdtXEI4A=="
     },
-    "@noble/hashes@2.3.0": {
-      "integrity": "sha512-oN+QwyX7VSHotibwubG3kpzbwKrfnyR6OOO+3Nk/53ADL7FmgHHz4TgrbaYKvvOw09u6QTx0oiH1cNCIOuN0CQ=="
+    "@noble/hashes@2.4.0": {
+      "integrity": "sha512-X5XaVWZIBCT7HHZGm5I7ZQXDwLG+bGXuSrMQAW+7Zvl87h1kmc1ZB1VSRJcpUfoUrGQp4Fkoxm5kZ+Ms+aW+eA=="
     },
     "@phosphor-icons/webcomponents@2.1.5": {
       "integrity": "sha512-JcvQkZxvcX2jK+QCclm8+e8HXqtdFW9xV4/kk2aL9Y3dJA2oQVt+pzbv1orkumz3rfx4K9mn9fDoMr1He1yr7Q==",
@@ -465,7 +465,7 @@
         "buffer"
       ]
     },
-    "@reown/appkit-scaffold-ui@1.8.21_@types+react@19.2.18_typescript@7.0.2_valtio@2.1.7": {
+    "@reown/appkit-scaffold-ui@1.8.21_@types+react@19.2.18_typescript@7.0.2_valtio@2.1.7__@types+react@19.2.18": {
       "integrity": "sha512-bJxHdZmjwwAd1fIQmMgr0jjvyT1EI0KetFP+7UlTs51SxOflXzZ+rz9ZcWKNSLFtSQOro1+Xu6aPRO+5OapmhA==",
       "dependencies": [
         "@reown/appkit-common",
@@ -488,7 +488,7 @@
         "qrcode"
       ]
     },
-    "@reown/appkit-utils@1.8.21_valtio@2.1.7_@types+react@19.2.18_typescript@7.0.2": {
+    "@reown/appkit-utils@1.8.21_valtio@2.1.7__@types+react@19.2.18_@types+react@19.2.18_typescript@7.0.2": {
       "integrity": "sha512-WzEYji9oQIh9P8WkqXiqrLyx/ZYy+svpwT4u2ZC8n7sMSl0j+AzRqMaVrblyFEYAFkW/BtxVqJEqstDZ8f0FYw==",
       "dependencies": [
         "@reown/appkit-common",
@@ -578,13 +578,13 @@
     "@sinclair/typebox@0.34.52": {
       "integrity": "sha512-XiMQh7qqVlxZzcVD+kkGMNGMzcTrDMLWI7S4x7z1MkCkbDPrekpZXEUK0eZqZFMuHQg2a2DZOcDIh9o5v3Gonw=="
     },
-    "@solana-program/system@0.10.0_@solana+kit@5.5.1_typescript@7.0.2": {
+    "@solana-program/system@0.10.0_@solana+kit@5.5.1__typescript@7.0.2_typescript@7.0.2": {
       "integrity": "sha512-Go+LOEZmqmNlfr+Gjy5ZWAdY5HbYzk2RBewD9QinEU/bBSzpFfzqDRT55JjFRBGJUvMgf3C2vfXEGT4i8DSI4g==",
       "dependencies": [
         "@solana/kit"
       ]
     },
-    "@solana-program/token@0.9.0_@solana+kit@5.5.1_typescript@7.0.2": {
+    "@solana-program/token@0.9.0_@solana+kit@5.5.1__typescript@7.0.2_typescript@7.0.2": {
       "integrity": "sha512-vnZxndd4ED4Fc56sw93cWZ2djEeeOFxtaPS8SPf5+a+JZjKA/EnKqzbE1y04FuMhIVrLERQ8uR8H2h72eZzlsA==",
       "dependencies": [
         "@solana/kit"
@@ -1159,7 +1159,7 @@
         "typescript"
       ]
     },
-    "@solana/wallet-adapter-base@0.9.27_@solana+web3.js@1.98.4_typescript@7.0.2": {
+    "@solana/wallet-adapter-base@0.9.27_@solana+web3.js@1.98.4__typescript@7.0.2_typescript@7.0.2": {
       "integrity": "sha512-kXjeNfNFVs/NE9GPmysBRKQ/nf+foSaq3kfVSeMcO/iVgigyRmB551OjU3WyAolLG/1jeEfKLqF9fKwMCRkUqg==",
       "dependencies": [
         "@solana/wallet-standard-features",
@@ -1206,12 +1206,12 @@
     "@stellar/js-xdr@5.0.0": {
       "integrity": "sha512-HBDNKnxr+ecdaEmbZ0mcKkirOF8tXXEbWSw34P3wT40Tn3g+u+cCH17xAWZymzscq8cojHB8340pR8QNVaD32w=="
     },
-    "@stellar/stellar-sdk@17.0.0": {
-      "integrity": "sha512-L9Y+xXmBMK44rxQQPkbgHuEL0fYh3F1OZKVDBfG0+r00KAxXJejw1E5xRRRBWDja7stnpf0+mhSP4bXkTLG3AQ==",
+    "@stellar/stellar-sdk@17.0.1": {
+      "integrity": "sha512-fsHHbzJ14N5Ttq5Qpz4AX0ytmPSLCzcy4XC3uIgSQz0cBkEgv0Zb4KE6tWEd3nDQUk/1qP8ZX9cRonIaUXO3Sw==",
       "dependencies": [
         "@exodus/bytes",
         "@noble/ed25519",
-        "@noble/hashes@2.3.0",
+        "@noble/hashes@2.4.0",
         "@stellar/js-xdr",
         "@types/json-schema",
         "axios@1.18.0",
@@ -1313,7 +1313,7 @@
         "typescript"
       ]
     },
-    "@twind/preset-autoprefix@1.0.7_@twind+core@1.1.3_typescript@7.0.2": {
+    "@twind/preset-autoprefix@1.0.7_@twind+core@1.1.3__typescript@7.0.2_typescript@7.0.2": {
       "integrity": "sha512-3wmHO0pG/CVxYBNZUV0tWcL7CP0wD5KpyWAQE/KOalWmOVBj+nH6j3v6Y3I3pRuMFaG5DC78qbYbhA1O11uG3w==",
       "dependencies": [
         "@twind/core",
@@ -1324,7 +1324,7 @@
         "typescript"
       ]
     },
-    "@twind/preset-tailwind@1.1.4_@twind+core@1.1.3_typescript@7.0.2": {
+    "@twind/preset-tailwind@1.1.4_@twind+core@1.1.3__typescript@7.0.2_typescript@7.0.2": {
       "integrity": "sha512-zv85wrP/DW4AxgWrLfH7kyGn/KJF3K04FMLVl2AjoxZGYdCaoZDkL8ma3hzaKQ+WGgBFRubuB/Ku2Rtv/wjzVw==",
       "dependencies": [
         "@twind/core",
@@ -2867,8 +2867,8 @@
         "@types/react"
       ]
     },
-    "viem@2.55.19_typescript@7.0.2_zod@3.22.4": {
-      "integrity": "sha512-4QPIX0eYPLsOBk53NKswVMkQoxuP7GlOBnB4wM6dkDokREO4QENNc3bmyPKK1PBTViXh0TPJCHLjIuU20Qi3fg==",
+    "viem@2.56.0_typescript@7.0.2_zod@3.22.4": {
+      "integrity": "sha512-JmkgIk4jN+im4oguLxwPv19pwSaGH9kcGSq25Ilm55106ULBBMNR3eWKKA0wZoeyLPSHIiOwZ4sGceEYEIq7LA==",
       "dependencies": [
         "@noble/curves@1.9.1",
         "@noble/hashes@1.8.0",
@@ -2979,8 +2979,8 @@
       "npm:@ledgerhq/hw-transport-webusb@6.29.12",
       "npm:@ledgerhq/hw-transport@6.31.12",
       "npm:@lobstrco/signer-extension-api@2.0.0",
-      "npm:@metamask/connect-stellar@0.2",
-      "npm:@metamask/multichain-api-client@0.12",
+      "npm:@metamask/connect-stellar@0.3.0",
+      "npm:@metamask/multichain-api-client@0.12.0",
       "npm:@preact/signals@2.9.0",
       "npm:@reown/appkit@1.8.21",
       "npm:@stellar/freighter-api@6.0.0",
