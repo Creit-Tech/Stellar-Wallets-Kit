@@ -146,6 +146,7 @@ const GHOSTSIG_ICON =
 
 // ghostsig-popup:begin
 const GHOSTSIG_PROTOCOL = 1;
+/** The page the client opens, unless a request names a copy on localhost. */
 const GHOSTSIG_URL = "https://ghostsig.dev/?connect";
 /** How long a connect's popup is reused. The page holds it open a little longer than this. */
 const GHOSTSIG_REUSE_MS = 1_500;
@@ -154,6 +155,10 @@ const GHOSTSIG_TIMEOUT_MS = 60_000;
 
 /** SEP-43 codes: -1 internal, -2 external service, -3 bad request or unsupported, -4 rejected. */
 type GhostsigCode = -1 | -2 | -3 | -4;
+/**
+ * The client's own failures, which the page never sends: the popup blocked or closed, no answer,
+ * a reply for another account, or a malformed one.
+ */
 type GhostsigExt =
   | "popup_blocked"
   | "popup_closed"
@@ -162,6 +167,10 @@ type GhostsigExt =
   | "account_mismatch"
   | "bad_reply";
 
+/**
+ * What {@linkcode ghostsigRequest} rejects with: a SEP-43 `code`, and `ext` when the client failed
+ * rather than the page.
+ */
 class GhostsigError extends Error {
   readonly code: GhostsigCode;
   readonly ext?: GhostsigExt;
@@ -173,16 +182,25 @@ class GhostsigError extends Error {
   }
 }
 
+/** What `connect` returns: the address, and its raw 32-byte ed25519 public key as hex. */
 interface GhostsigConnectResult {
   address: string;
   publicKey: string;
 }
+/**
+ * The page's report on a submission: `kind` says whether the transaction went out, and `ok`
+ * whether the ledger applied it.
+ */
 interface GhostsigSubmitted {
   kind: string;
   code?: string;
   ledger?: number | string;
   ok?: boolean;
 }
+/**
+ * What `sign` returns: the signed transaction as `blob`, its `hash` and `signature`.
+ * `handOver` says why it came back unsubmitted, and `submitted` reports a submission.
+ */
 interface GhostsigSignResult extends GhostsigConnectResult {
   hash: string;
   blob: string;
@@ -191,6 +209,10 @@ interface GhostsigSignResult extends GhostsigConnectResult {
   submitted?: GhostsigSubmitted;
 }
 
+/**
+ * One request: `chain` and `network` as the page names them, the `method` and its `params`. `url`
+ * opens a copy of the page on localhost, and `timeoutMs` bounds the wait, a minute by default.
+ */
 interface GhostsigRequest {
   chain: string;
   network: string;
