@@ -43,6 +43,7 @@
     "./modules/bitget": "./sdk/modules/bitget.module.ts",
     "./modules/fordefi": "./sdk/modules/fordefi.module.ts",
     "./modules/freighter": "./sdk/modules/freighter.module.ts",
+    "./modules/ghostsig": "./sdk/modules/ghostsig.module.ts",
     "./modules/hana": "./sdk/modules/hana.module.ts",
     "./modules/hotwallet": "./sdk/modules/hotwallet.module.ts",
     "./modules/klever": "./sdk/modules/klever.module.ts",
