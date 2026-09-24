@@ -16,7 +16,7 @@ export class BitgetModule implements ModuleInterface {
   provider: any;
 
   constructor() {
-    this.provider = window.bitkeep?.stellar;
+    this.provider = typeof window !== "undefined" ? window.bitkeep?.stellar : undefined;
   }
 
   async runChecks(): Promise<void> {
