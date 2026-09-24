@@ -77,6 +77,10 @@ await build({
       path: "./sdk/modules/lobstr.module.ts",
     },
     {
+      name: "./modules/metamask",
+      path: "./sdk/modules/metamask.module.ts",
+    },
+    {
       name: "./modules/onekey",
       path: "./sdk/modules/onekey.module.ts",
     },
