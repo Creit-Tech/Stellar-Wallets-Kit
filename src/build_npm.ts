@@ -85,6 +85,10 @@ await build({
       path: "./sdk/modules/onekey.module.ts",
     },
     {
+      name: "./modules/passkey",
+      path: "./sdk/modules/passkey/passkey.module.ts",
+    },
+    {
       name: "./modules/rabet",
       path: "./sdk/modules/rabet.module.ts",
     },
