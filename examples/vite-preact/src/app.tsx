@@ -1,6 +1,6 @@
 import "./app.css";
 import preactLogo from "./assets/preact.svg";
-import { SwkAppLightTheme } from "@creit-tech/stellar-wallets-kit";
+import { SwkAppDarkTheme } from "@creit-tech/stellar-wallets-kit";
 import { StellarWalletsKit } from "@creit-tech/stellar-wallets-kit/sdk";
 import {
   activeAddress,
@@ -30,7 +30,7 @@ import {
 } from "@stellar/stellar-sdk";
 
 StellarWalletsKit.init({
-  theme: SwkAppLightTheme,
+  theme: SwkAppDarkTheme,
   modules: [
     new AlbedoModule(),
     new FreighterModule(),

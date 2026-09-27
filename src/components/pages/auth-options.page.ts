@@ -19,18 +19,28 @@ import { css } from "@twind/core";
 import { navigateTo } from "../router.ts";
 
 const walletBtn = css`
+  button.swk-wallet-logo {
+    flex-shrink: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+  }
   button.swk-wallet-btn {
-    width: 100% !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    width: auto !important;
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
     gap: 0.75rem !important;
     padding: 0.875rem 1rem !important;
     border-radius: var(--swk-border-radius, 0.5rem) !important;
-    background-color: #ffffff !important;
-    color: #161619 !important;
-    border: 1px solid rgba(15, 23, 42, 0.12) !important;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06) !important;
+    background-color: var(--swk-background-secondary, #2c2c2e) !important;
+    color: var(--swk-foreground, #f5f5f7) !important;
+    border: 1px solid var(--swk-border, rgba(255, 255, 255, 0.1)) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
     cursor: pointer !important;
     text-align: left !important;
     transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease, box-shadow 150ms ease !important;
@@ -169,16 +179,20 @@ function WalletOption({ wallet }: { wallet: ISupportedWallet }): VNode {
   const isSelected = selectedModuleId.value === wallet.id;
 
   return html`
-    <li class="${tw("w-full")}">
+    <li class="${tw("w-full flex items-center gap-3")}">
+      <button
+        type="button"
+        class="swk-wallet-logo"
+        onClick="${() => onWalletSelected(wallet)}"
+      >
+        <${Avatar} alt="${wallet.name} icon" image="${wallet.icon}" size="${AvatarSize.md}" />
+      </button>
       <button
         type="button"
         class="swk-wallet-btn ${isSelected ? "is-selected" : ""}"
         onClick="${() => onWalletSelected(wallet)}"
       >
-        <div class="${tw("flex items-center gap-3 min-w-0")}">
-          <${Avatar} alt="${wallet.name} icon" image="${wallet.icon}" size="${AvatarSize.md}" />
-          <p class="${tw("font-semibold truncate")}">${wallet.name}</p>
-        </div>
+        <p class="${tw("font-semibold truncate")}">${wallet.name}</p>
 
         ${showInstallLabel.value && !wallet.isAvailable
           ? html`
