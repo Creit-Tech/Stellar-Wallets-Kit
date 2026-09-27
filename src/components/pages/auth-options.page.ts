@@ -36,7 +36,7 @@ const walletBtn = css`
     align-items: center !important;
     gap: 0.75rem !important;
     padding: 0.875rem 1rem !important;
-    border-radius: var(--swk-border-radius, 0.5rem) !important;
+    border-radius: 1.25rem !important;
     background-color: var(--swk-background-secondary, #2c2c2e) !important;
     color: var(--swk-foreground, #f5f5f7) !important;
     border: 1px solid var(--swk-border, rgba(255, 255, 255, 0.1)) !important;
