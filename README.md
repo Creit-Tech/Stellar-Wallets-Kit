@@ -58,6 +58,7 @@ out the [documentation](https://stellarwalletskit.dev/) for more details.
 - Albedo
 - Freighter (extension and mobile)
 - Rabet (extension version)
+- [Scopuly](https://stellarwalletskit.dev/wallets/scopuly) (browser extension and in-app browser)
 - WalletConnect
 - Lobstr
 - Hana
@@ -88,5 +89,4 @@ If you would like to see the kit in action, check these websites that are alread
 Licensed under the MIT License, Copyright © 2023-present Creit Technologies LLP.
 
 Checkout the `LICENSE.md` file for more details.
-
 
