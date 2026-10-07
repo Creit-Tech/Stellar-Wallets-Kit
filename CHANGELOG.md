@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.7.1 (2026-10-07)
+
+### Change
+
+- Metamask update (PR [#115](https://github.com/Creit-Tech/Stellar-Wallets-Kit/pull/115))
+- Bitget update (PR [#117](https://github.com/Creit-Tech/Stellar-Wallets-Kit/pull/117))
+
 ### 2.7.0 (2026-09-23)
 
 ### Change
