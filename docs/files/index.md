@@ -81,6 +81,7 @@ the [documentation](/installation) for more details.
 - Albedo
 - Freighter
 - Rabet (extension version)
+- [Scopuly](/wallets/scopuly) (browser extension and in-app browser)
 - WalletConnect
 - Lobstr
 - Hana
