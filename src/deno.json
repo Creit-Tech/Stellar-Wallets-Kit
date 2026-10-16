@@ -58,6 +58,7 @@
     "./modules/cactuslink": "./sdk/modules/cactuslink.module.ts",
     "./modules/dcent": "./sdk/modules/dcent.module.ts",
     "./modules/metamask": "./sdk/modules/metamask.module.ts",
+    "./modules/veil": "./sdk/modules/veil.module.ts",
     "./modules/utils": "./sdk/modules/utils.ts"
   },
   "fmt": {
