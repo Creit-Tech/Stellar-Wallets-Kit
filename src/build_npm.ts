@@ -69,6 +69,10 @@ await build({
       path: "./sdk/modules/klever.module.ts",
     },
     {
+      name: "./modules/lantern",
+      path: "./sdk/modules/lantern.module.ts",
+    },
+    {
       name: "./modules/ledger",
       path: "./sdk/modules/ledger.module.ts",
     },

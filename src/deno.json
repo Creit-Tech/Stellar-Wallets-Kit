@@ -47,6 +47,7 @@
     "./modules/hana": "./sdk/modules/hana.module.ts",
     "./modules/hotwallet": "./sdk/modules/hotwallet.module.ts",
     "./modules/klever": "./sdk/modules/klever.module.ts",
+    "./modules/lantern": "./sdk/modules/lantern.module.ts",
     "./modules/ledger": "./sdk/modules/ledger.module.ts",
     "./modules/lobstr": "./sdk/modules/lobstr.module.ts",
     "./modules/onekey": "./sdk/modules/onekey.module.ts",
