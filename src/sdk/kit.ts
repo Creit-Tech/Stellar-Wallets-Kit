@@ -111,7 +111,7 @@ export class StellarWalletsKit {
    * This method will fetch the address from the selected module and update the internal kit's memory
    *
    * NOTE: We suggest that you use `getAddress` when possible instead of this method. Trying to fetch the address from a module
-   * that is not ready might cause unexpected behaviors (for example with Freighter if no permission has been granted or when the user is using a hardware wallet);
+   * that is not ready might cause unexpected behaviors (for example with Varial if no permission has been granted or when the user is using a hardware wallet);
    */
   static async fetchAddress(): Promise<{ address: string }> {
     const { address } = await StellarWalletsKit.selectedModule.getAddress();

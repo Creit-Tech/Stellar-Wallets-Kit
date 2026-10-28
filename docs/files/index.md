@@ -79,7 +79,7 @@ the [documentation](/installation) for more details.
 
 - xBull Wallet (Both PWA and extension version)
 - Albedo
-- Freighter
+- Varial (formerly Freighter)
 - Rabet (extension version)
 - WalletConnect
 - Lobstr

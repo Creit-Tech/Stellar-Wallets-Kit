@@ -144,6 +144,7 @@ await build({
       "xBull Wallet",
       "Rabet",
       "Freighter",
+      "Varial",
       "Wallet Connect",
       "Hana",
       "Ledger",

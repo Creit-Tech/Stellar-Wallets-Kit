@@ -117,7 +117,7 @@ export interface ModuleInterface {
 
   /**
    * This method will take care of letting the kit know if the user is currently using this wallet to open the dapp.
-   * An example will be how Freighter, xBull, Lobstr, etc have in-app browsers in their mobile versions
+   * An example will be how Varial, xBull, Lobstr, etc have in-app browsers in their mobile versions
    *
    * Important:
    * Your wallet/library needs to be able to answer this request in less than 500ms.

@@ -5,7 +5,7 @@ These are the current supported wallets/modules:
 | Wallet         | Module class        | Path            | Default list |
 |----------------|---------------------|-----------------|--------------|
 | Albedo         | AlbedoModule        | /albedo         | Yes          |
-| Freigther      | FreighterModule     | /freighter      | Yes          |
+| Varial         | FreighterModule     | /freighter      | Yes          |
 | Hana           | HanaModule          | /hana           | Yes          |
 | Ledger         | LedgerModule        | /ledger         | No           |
 | Trezor         | TrezorModule        | /trezor         | No           |

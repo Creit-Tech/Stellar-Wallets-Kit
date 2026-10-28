@@ -56,7 +56,7 @@ out the [documentation](https://stellarwalletskit.dev/) for more details.
 
 - xBull Wallet (Both PWA and extension version)
 - Albedo
-- Freighter (extension and mobile)
+- Varial, formerly Freighter (extension and mobile)
 - Rabet (extension version)
 - WalletConnect
 - Lobstr

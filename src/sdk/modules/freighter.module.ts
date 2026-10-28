@@ -28,18 +28,18 @@ export class FreighterModule implements ModuleInterface {
   moduleType: ModuleType = ModuleType.HOT_WALLET;
 
   productId: string = FREIGHTER_ID;
-  productName: string = "Freighter";
-  productUrl: string = "https://freighter.app";
-  productIcon: string = "https://stellar.creit.tech/wallet-icons/freighter.png";
+  productName: string = "Varial";
+  productUrl: string = "https://varialwallet.com";
+  productIcon: string = "https://stellar.creit.tech/wallet-icons/varial.png";
 
   async runChecks(): Promise<void> {
     if (!(await this.isAvailable())) {
-      throw new Error("Freighter is not connected");
+      throw new Error("Varial is not connected");
     }
   }
 
   async isAvailable(): Promise<boolean> {
-    // If these values are set it means we are loading the module from the Freighter's mobile version and so we need to
+    // If these values are set it means we are loading the module from the Varial mobile app and so we need to
     // use WalletConnect instead.
     if (window.stellar?.provider === "freighter" && window.stellar?.platform === "mobile") return false;
 
@@ -66,7 +66,7 @@ export class FreighterModule implements ModuleInterface {
       if (!address) {
         return Promise.reject({
           code: -3,
-          message: "Getting the address from Freighter is not allowed, please request access first.",
+          message: "Getting the address from Varial is not allowed, please request access first.",
         });
       }
 
@@ -120,7 +120,7 @@ export class FreighterModule implements ModuleInterface {
       if (!signedAuthEntry) {
         return Promise.reject({
           code: -3,
-          message: "signedAuthEntry returned from Freighter is undefined.",
+          message: "signedAuthEntry returned from Varial is undefined.",
         });
       }
 
@@ -155,7 +155,7 @@ export class FreighterModule implements ModuleInterface {
       if (!signedMessage) {
         return Promise.reject({
           code: -3,
-          message: "signedMessage returned from Freighter is undefined.",
+          message: "signedMessage returned from Varial is undefined.",
         });
       }
 
