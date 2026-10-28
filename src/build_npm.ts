@@ -50,7 +50,11 @@ await build({
     },
     {
       name: "./modules/freighter",
-      path: "./sdk/modules/freighter.module.ts",
+      path: "./sdk/modules/varial.module.ts",
+    },
+    {
+      name: "./modules/varial",
+      path: "./sdk/modules/varial.module.ts",
     },
     {
       name: "./modules/ghostsig",

@@ -1,6 +1,6 @@
 import type { ModuleInterface } from "../../types/mod.ts";
 import { AlbedoModule } from "./albedo.module.ts";
-import { FreighterModule } from "./freighter.module.ts";
+import { VarialModule } from "./varial.module.ts";
 import { LobstrModule } from "./lobstr.module.ts";
 import { RabetModule } from "./rabet.module.ts";
 import { xBullModule } from "./xbull.module.ts";
@@ -27,7 +27,7 @@ export function defaultModules(opts?: {
 }): ModuleInterface[] {
   const modules: ModuleInterface[] = [
     new AlbedoModule(),
-    new FreighterModule(),
+    new VarialModule(),
     new FordefiModule(),
     new RabetModule(),
     new xBullModule(),
@@ -54,7 +54,7 @@ export function defaultModules(opts?: {
  */
 export function sep43Modules(opts?: { filterBy: (module: ModuleInterface) => boolean }): ModuleInterface[] {
   const modules: ModuleInterface[] = [
-    new FreighterModule(),
+    new VarialModule(),
     new DcentModule(),
     new MetaMaskModule(),
     new GhostsigModule(),

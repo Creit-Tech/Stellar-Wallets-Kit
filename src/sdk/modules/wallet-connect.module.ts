@@ -85,6 +85,10 @@ export class WalletConnectModule implements ModuleInterface {
         provider: "freighter",
         platform: "mobile",
       },
+      {
+        provider: "varial",
+        platform: "mobile",
+      },
     ];
 
     return !!options.find(({ provider, platform }): boolean => {

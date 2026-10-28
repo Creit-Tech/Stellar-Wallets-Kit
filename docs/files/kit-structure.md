@@ -25,17 +25,17 @@ import { StellarWalletsKit, SwkAppDarkTheme } from '@creit-tech/stellar-wallets-
 On the other hand, wallet modules are not exported at the root level so you will need to import them like this:
 
 ```typescript
-import { StellarWalletsKit, SwkAppDarkTheme } from '@creit-tech/stellar-wallets-kit'
-import { AlbedoModule } from "@creit-tech/stellar-wallets-kit/modules/albedo";
-import { FreighterModule } from "@creit-tech/stellar-wallets-kit/modules/freighter";
-import { LobstrModule } from "@creit-tech/stellar-wallets-kit/modules/lobstr";
-import { xBullModule } from "@creit-tech/stellar-wallets-kit/modules/xbull";
+import {StellarWalletsKit, SwkAppDarkTheme} from '@creit-tech/stellar-wallets-kit'
+import {AlbedoModule} from "@creit-tech/stellar-wallets-kit/modules/albedo";
+import {VarialModule} from "@creit-tech/stellar-wallets-kit/modules/freighter";
+import {LobstrModule} from "@creit-tech/stellar-wallets-kit/modules/lobstr";
+import {xBullModule} from "@creit-tech/stellar-wallets-kit/modules/xbull";
 
 StellarWalletsKit.init({
   theme: SwkAppDarkTheme,
   modules: [
     new AlbedoModule(),
-    new FreighterModule(),
+    new VarialModule(),
     new LobstrModule(),
     new xBullModule(),
   ],
@@ -48,8 +48,8 @@ Or if you're ok with supporting all the default wallets, just import them like t
 more options that are not included in the default list like Wallet Connect, Ledger and others:
 
 ```typescript
-import { StellarWalletsKit, SwkAppDarkTheme } from '@creit-tech/stellar-wallets-kit'
-import { defaultModules } from '@creit-tech/stellar-wallets-kit/modules/utils';
+import {StellarWalletsKit, SwkAppDarkTheme} from '@creit-tech/stellar-wallets-kit'
+import {defaultModules} from '@creit-tech/stellar-wallets-kit/modules/utils';
 
 StellarWalletsKit.init({
   theme: SwkAppDarkTheme,

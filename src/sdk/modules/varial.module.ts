@@ -22,12 +22,12 @@ declare const window:
     };
   };
 
-export const FREIGHTER_ID: string = "freighter";
+export const VARIAL_ID: string = "varial";
 
-export class FreighterModule implements ModuleInterface {
+export class VarialModule implements ModuleInterface {
   moduleType: ModuleType = ModuleType.HOT_WALLET;
 
-  productId: string = FREIGHTER_ID;
+  productId: string = VARIAL_ID;
   productName: string = "Varial";
   productUrl: string = "https://varialwallet.com";
   productIcon: string = "https://stellar.creit.tech/wallet-icons/varial.png";
@@ -42,6 +42,7 @@ export class FreighterModule implements ModuleInterface {
     // If these values are set it means we are loading the module from the Varial mobile app and so we need to
     // use WalletConnect instead.
     if (window.stellar?.provider === "freighter" && window.stellar?.platform === "mobile") return false;
+    if (window.stellar?.provider === "varial" && window.stellar?.platform === "mobile") return false;
 
     try {
       const response = await isConnected();
@@ -182,3 +183,15 @@ export class FreighterModule implements ModuleInterface {
     }
   }
 }
+
+/**
+ * @deprecated - Freighter is now Varial, use `VarialModule` from `@creit-tech/stellar-wallets-kit/modules/varial` instead.
+ * The `FreighterModule` will be removed in future updates
+ */
+export class FreighterModule extends VarialModule {}
+
+/**
+ * @deprecated - Freighter is now Varial, use FREIGHTER_ID from `@creit-tech/stellar-wallets-kit/modules/varial` instead.
+ * The `FREIGHTER_ID` will be removed in future updates
+ */
+export const FREIGHTER_ID = VARIAL_ID;

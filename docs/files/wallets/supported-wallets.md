@@ -5,7 +5,7 @@ These are the current supported wallets/modules:
 | Wallet         | Module class        | Path            | Default list |
 |----------------|---------------------|-----------------|--------------|
 | Albedo         | AlbedoModule        | /albedo         | Yes          |
-| Varial         | FreighterModule     | /freighter      | Yes          |
+| Varial         | VarialModule        | /freighter      | Yes          |
 | Hana           | HanaModule          | /hana           | Yes          |
 | Ledger         | LedgerModule        | /ledger         | No           |
 | Trezor         | TrezorModule        | /trezor         | No           |
@@ -22,11 +22,10 @@ These are the current supported wallets/modules:
 ## How to import a wallet's module?
 
 All wallets modules are exported at the `/modules` path so you can add the wallet's `path` and get the module from
-there.
-Here is an example for importing xBull Wallet's module:
+there. Here is an example for importing xBull Wallet's module:
 
 ```typescript
-import { xBullModule } from "@creit-tech/stellar-wallets-kit/modules/xbull";
+import {xBullModule} from "@creit-tech/stellar-wallets-kit/modules/xbull";
 ```
 
 ## What is a default wallet?
@@ -35,7 +34,7 @@ Default wallets are all wallets included in the `default list`, this list includ
 any extra configuration or dependency. You can import all the wallets in this list like this:
 
 ```typescript
-import { defaultModules } from '@creit-tech/stellar-wallets-kit/modules/utils';
+import {defaultModules} from '@creit-tech/stellar-wallets-kit/modules/utils';
 ```
 
 You can see the difference for the developer using the kit between wallets being or not in the default
