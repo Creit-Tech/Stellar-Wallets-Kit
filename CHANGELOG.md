@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.8.0 (2026-10-28)
+
+### Change
+
+- Migrate FreighterModule to VarialModule
+
 ### 2.7.1 (2026-10-07)
 
 ### Change
