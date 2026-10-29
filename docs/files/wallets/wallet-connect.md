@@ -1,5 +1,8 @@
 # Wallet Connect
 
+Scopuly is included in the module's default featured wallets. For the Scopuly connection flow and the alternative
+browser extension integration, see [Scopuly](/wallets/scopuly).
+
 To import and include the module you can do it like this:
 
 ```typescript

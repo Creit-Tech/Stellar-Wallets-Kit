@@ -37,6 +37,7 @@ export default defineConfig({
           {text: 'Supported wallets', link: '/wallets/supported-wallets'},
           {text: 'Ledger Wallets', link: '/wallets/ledger'},
           {text: 'Trezor Wallets', link: '/wallets/trezor'},
+          {text: 'Scopuly', link: '/wallets/scopuly'},
           {text: 'Wallet Connect', link: '/wallets/wallet-connect'},
           {text: 'Add your wallet', link: '/wallets/create-wallet-module'},
         ]
