@@ -50,6 +50,7 @@
     "./modules/klever": "./sdk/modules/klever.module.ts",
     "./modules/ledger": "./sdk/modules/ledger.module.ts",
     "./modules/lobstr": "./sdk/modules/lobstr.module.ts",
+    "./modules/noir": "./sdk/modules/noir.module.ts",
     "./modules/onekey": "./sdk/modules/onekey.module.ts",
     "./modules/rabet": "./sdk/modules/rabet.module.ts",
     "./modules/scopuly": "./sdk/modules/scopuly.module.ts",
