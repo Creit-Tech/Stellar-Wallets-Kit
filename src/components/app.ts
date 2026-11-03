@@ -21,8 +21,9 @@ const pages: Record<SwkAppRoute, any> = {
 
 const glass = css`
   .glass {
-    backdrop-filter: blur(10px);
-    background-color: color-mix(in srgb, var(--swk-background) 25%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    background-color: color-mix(in srgb, #ffffff 16%, transparent);
   }
 `;
 
@@ -43,7 +44,7 @@ export function SwkApp(): VNode {
 
       <section
         class="${tw(
-          "w-full h-fit relative max-w-[22rem] max-h-[39.4375rem] grid grid-cols-1 grid-rows-[auto_1fr_auto] bg-background rounded-default shadow-default transition-all duration-[0.5s] ease-in-out overflow-hidden max-h-[400px] overflow-y-scroll",
+          "w-full h-fit relative max-w-[22rem] max-h-[39.4375rem] grid grid-cols-1 grid-rows-[auto_1fr_auto] bg-background rounded-[1.75rem] shadow-default transition-all duration-[0.5s] ease-in-out overflow-hidden max-h-[400px] overflow-y-scroll",
         )}"
       >
         <div class="${tw("col-span-1 top-0 sticky z-50")} glass">
