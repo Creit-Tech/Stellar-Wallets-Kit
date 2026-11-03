@@ -14,6 +14,7 @@ import { CactusLinkModule } from "./cactuslink.module.ts";
 import { DcentModule } from "./dcent.module.ts";
 import { ScopulyModule } from "./scopuly.module.ts";
 import { GhostsigModule } from "./ghostsig.module.ts";
+import { VeilModule } from "./veil.module.ts";
 
 /**
  * This method returns all modules that don't require extra configuration before they can be loaded
@@ -41,6 +42,7 @@ export function defaultModules(opts?: {
     new ScopulyModule(),
     new MetaMaskModule(),
     new GhostsigModule(),
+    new VeilModule(),
   ];
   return opts?.filterBy ? modules.filter(opts.filterBy) : modules;
 }
@@ -58,6 +60,7 @@ export function sep43Modules(opts?: { filterBy: (module: ModuleInterface) => boo
     new DcentModule(),
     new MetaMaskModule(),
     new GhostsigModule(),
+    new VeilModule(),
   ];
   return opts?.filterBy ? modules.filter(opts.filterBy) : modules;
 }

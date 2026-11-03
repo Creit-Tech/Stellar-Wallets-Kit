@@ -117,6 +117,10 @@ await build({
       path: "./sdk/modules/dcent.module.ts",
     },
     {
+      name: "./modules/veil",
+      path: "./sdk/modules/veil.module.ts",
+    },
+    {
       name: "./modules/utils",
       path: "./sdk/modules/utils.ts",
     },
