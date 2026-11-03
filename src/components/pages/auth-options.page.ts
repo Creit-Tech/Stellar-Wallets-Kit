@@ -6,6 +6,7 @@ import {
   addressUpdatedEvent,
   allowedWallets,
   installText,
+  notAvailableText,
   modalTitle,
   moduleSelectedEvent,
   selectedModuleId,
@@ -118,7 +119,12 @@ export function AuthOptionsPage(): VNode {
         <div class="${tw("flex items-center gap-2")}">
           <${Avatar} class="${tw("mr-2")}" alt="${wallet.name} icon" image="${wallet.icon}" size="${AvatarSize
             .sm}" />
-          <p class="${tw("text-foreground font-semibold")}">${wallet.name}</p>
+          <div class="${tw("flex flex-col")}">
+            <p class="${tw("text-foreground font-semibold text-sm")}">${wallet.name}</p>
+            <span class="${tw("text-[10px] text-gray uppercase tracking-wider font-medium")}">
+              ${wallet.type === ModuleType.HW_WALLET ? "Hardware" : wallet.type === ModuleType.BRIDGE_WALLET ? "Bridge" : "Extension / Web"}
+            </span>
+          </div>
         </div>
 
         ${showInstallLabel.value && !wallet.isAvailable
@@ -126,16 +132,18 @@ export function AuthOptionsPage(): VNode {
             <div class="${tw("ml-4 flex items-center")}">
               <small
                 class="${tw(
-                  "inline-flex items-center border-1 border-border px-2 py-1 rounded-default text-foreground-secondary text-xs bg-background-secondary",
+                  "inline-flex items-center gap-1 border-1 border-border px-2 py-1 rounded-default text-foreground-secondary text-xs bg-background-secondary",
                 )}"
               >
-                ${installText.value}
+                ${wallet.url ? installText.value : notAvailableText.value}
 
-                <svg class="${tw(
-                  "w-4 h-4",
-                )}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"></path>
-                </svg>
+                ${wallet.url
+                  ? html`<svg class="${tw(
+                      "w-3.5 h-3.5",
+                    )}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"></path>
+                    </svg>`
+                  : ""}
               </small>
             </div>
           `

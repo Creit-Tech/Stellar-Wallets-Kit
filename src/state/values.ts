@@ -20,6 +20,7 @@ export const modalTitle: Signal<string> = signal<string>("Connect a Wallet");
 export const showInstallLabel: Signal<boolean> = signal<boolean>(true);
 export const hideUnsupportedWallets: Signal<boolean> = signal<boolean>(true);
 export const installText: Signal<string> = signal<string>("Install");
+export const notAvailableText: Signal<string> = signal<string>("Not Available");
 export const horizonUrl: Signal<string> = signal<string>("https://horizon.stellar.org");
 export const selectedNetwork: Signal<Networks> = signal<Networks>(Networks.PUBLIC);
 export const theme: Signal<SwkAppTheme> = signal<SwkAppTheme>(SwkAppLightTheme);
