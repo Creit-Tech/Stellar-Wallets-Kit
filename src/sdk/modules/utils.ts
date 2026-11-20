@@ -14,6 +14,7 @@ import { CactusLinkModule } from "./cactuslink.module.ts";
 import { DcentModule } from "./dcent.module.ts";
 import { ScopulyModule } from "./scopuly.module.ts";
 import { GhostsigModule } from "./ghostsig.module.ts";
+import { NoirModule } from "./noir.module.ts";
 import { LockerModule } from "./locker.module.ts";
 
 /**
@@ -42,6 +43,7 @@ export function defaultModules(opts?: {
     new ScopulyModule(),
     new MetaMaskModule(),
     new GhostsigModule(),
+    new NoirModule(),
     new LockerModule(),
   ];
   return opts?.filterBy ? modules.filter(opts.filterBy) : modules;
@@ -60,6 +62,7 @@ export function sep43Modules(opts?: { filterBy: (module: ModuleInterface) => boo
     new DcentModule(),
     new MetaMaskModule(),
     new GhostsigModule(),
+    new NoirModule(),
     new LockerModule(),
   ];
   return opts?.filterBy ? modules.filter(opts.filterBy) : modules;

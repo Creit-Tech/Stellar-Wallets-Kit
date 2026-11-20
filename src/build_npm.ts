@@ -89,6 +89,10 @@ await build({
       path: "./sdk/modules/metamask.module.ts",
     },
     {
+      name: "./modules/noir",
+      path: "./sdk/modules/noir.module.ts",
+    },
+    {
       name: "./modules/onekey",
       path: "./sdk/modules/onekey.module.ts",
     },
