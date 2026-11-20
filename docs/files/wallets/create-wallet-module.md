@@ -111,15 +111,15 @@ export interface ModuleInterface {
   ): Promise<{ signedAuthEntry: string; signerAddress?: string }>;
 
   /**
-   * A function to request a wallet to sign an AuthEntry XDR.
+   * A function to request a wallet to sign an arbitrary message.
    *
    * @param message - An arbitrary string rather than a transaction or auth entry
    * @param opts - Options compatible with https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0043.md#signmessage
    * @param opts.networkPassphrase - The Stellar network to use when signing
    * @param opts.address - The public key of the account that should be used to sign
-   * @param opts.path - This options is added for special cases like Hardware wallets
+   * @param opts.path - This option is added for special cases like Hardware wallets
    *
-   * @return - Promise<{ signedMessage: string; signerAddress: string }>
+   * @return - Promise<{ signedMessage: string; signerAddress: string }> Note: While SEP-43 references HEX encoding, extension-based modules (such as Freighter) resolve with base64-encoded signatures. Consumers verifying signatures should support base64 or decode accordingly.
    */
   signMessage(
     message: string,
