@@ -127,7 +127,15 @@ export interface ModuleInterface {
 
   /**
    * This method is optional and is only used if the wallet can handle changes in its state.
-   * For example if the user changes the current state of the wallet like it switches to another network, this should be triggered
+   * For example if the user changes the current state of the wallet like it switches to another account, this should be triggered
+   *
+   * The kit subscribes to this hook for the selected module and uses it to keep its active address
+   * in sync. The `network` and `networkPassphrase` of the event are ignored: listening to network
+   * changes is not part of SEP-43, so the network stays the one the app selected with `setNetwork`.
+   *
+   * Important:
+   * The kit cannot unsubscribe from this hook, so it subscribes at most once per module and drops the
+   * events of a module that is no longer selected.
    */
   onChange?(callback: (event: IOnChangeEvent) => void): void;
 

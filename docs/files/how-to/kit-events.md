@@ -13,6 +13,13 @@ const sub = StellarWalletsKit.on(KitEventType.STATE_UPDATED, event => {
 // To unsubscribe from the updates, do this: `sub()`
 ```
 
+`STATE_UPDATED` also fires when the wallet itself reports that the user switched to another account,
+for the wallets whose module implements the optional `onChange` hook. You don't have to poll
+`fetchAddress` to detect it.
+
+Network changes are not reported: listening to them is not part of SEP-43, so the network stays the
+one you selected with `setNetwork`.
+
 The available event types and expected payloads are:
 
 ```typescript
