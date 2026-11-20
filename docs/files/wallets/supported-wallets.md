@@ -19,6 +19,7 @@ These are the current supported wallets/modules:
 | Bitget         | BitgetModule        | /bitget         | Yes          |
 | GHOSTSIG       | GhostsigModule      | /ghostsig       | Yes          |
 | Noir           | NoirModule          | /noir           | Yes          |
+| Locker Wallet  | LockerModule        | /locker         | Yes          |
 
 ## How to import a wallet's module?
 

@@ -15,6 +15,7 @@ import { DcentModule } from "./dcent.module.ts";
 import { ScopulyModule } from "./scopuly.module.ts";
 import { GhostsigModule } from "./ghostsig.module.ts";
 import { NoirModule } from "./noir.module.ts";
+import { LockerModule } from "./locker.module.ts";
 
 /**
  * This method returns all modules that don't require extra configuration before they can be loaded
@@ -43,6 +44,7 @@ export function defaultModules(opts?: {
     new MetaMaskModule(),
     new GhostsigModule(),
     new NoirModule(),
+    new LockerModule(),
   ];
   return opts?.filterBy ? modules.filter(opts.filterBy) : modules;
 }
@@ -61,6 +63,7 @@ export function sep43Modules(opts?: { filterBy: (module: ModuleInterface) => boo
     new MetaMaskModule(),
     new GhostsigModule(),
     new NoirModule(),
+    new LockerModule(),
   ];
   return opts?.filterBy ? modules.filter(opts.filterBy) : modules;
 }

@@ -65,6 +65,10 @@ await build({
       path: "./sdk/modules/hana.module.ts",
     },
     {
+      name: "./modules/locker",
+      path: "./sdk/modules/locker.module.ts",
+    },
+    {
       name: "./modules/hotwallet",
       path: "./sdk/modules/hotwallet.module.ts",
     },
